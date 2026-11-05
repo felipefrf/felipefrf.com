@@ -16,10 +16,10 @@ export const person = {
 
 // Números grandes abaixo do hero. `count` anima a partir de 0 quando entra na tela.
 export const impact = [
-  { value: '24º', label: 'de 4.033 no vestibular do ITA', detail: '144 vagas na escola de engenharia mais respeitada do Brasil', logo: '/img/ita.png' },
-  { value: '1º', label: 'lugar geral, maior nota', detail: 'Olimpíada Iberoamericana de Física 2020', accent: true },
-  { value: '50+', count: 50, suffix: '+', label: 'medalhas em olimpíadas', detail: 'Duas internacionais, 2017–2020' },
-  { value: '1 de 5', label: 'alunos do ITA escolhidos', detail: 'Para o Future Lab, primeira edição, da Telles Foundation, 2026' },
+  { value: '24º', label: 'de 4.033 no vestibular do ITA', detail: '144 vagas na engenharia mais respeitada do país', logo: '/img/ita.png' },
+  { value: '1º', label: 'lugar geral, ouro', detail: 'Iberoamericana de Física 2020', accent: true },
+  { value: '50+', count: 50, suffix: '+', label: 'medalhas', detail: 'Em olimpíadas, 2 internacionais, 2017–2020' },
+  { value: '1 de 5', label: 'alunos do ITA escolhidos', detail: 'Future Lab da Telles Foundation, 1ª edição, 2026' },
   { value: 'Melhor', label: 'projeto conceitual de satélite', detail: 'Matsumoto-2, II SPOCS no ITA, 2026' },
 ];
 
@@ -202,13 +202,13 @@ export const jobs: Job[] = [
 // Passagens mais curtas: aparecem compactas abaixo dos cargos principais.
 export const earlier = [
   { company: 'Safra', role: 'US Equities Summer Intern', dates: 'jan — fev 2025', note: 'Pipeline de NLP sobre 10-Ks do SEC EDGAR' },
-  { company: 'BTG Pactual', role: 'Automation Engineer Intern', dates: 'abr — ago 2024', note: 'Automações para o Jurídico e o negócio de reflorestamento; um período como PM' },
+  { company: 'BTG Pactual', role: 'Automation Engineer Intern', dates: 'abr — ago 2024', note: 'Automações no Jurídico e no reflorestamento; também PM' },
   { company: 'XP Inc.', role: 'Product Control Summer Intern', dates: 'dez 2023 — fev 2024', note: 'Automação de planilhas para product control' },
   { company: 'CNPq', role: 'Iniciação científica, ML', dates: 'ago 2023 — abr 2024', note: 'MLPs vs CNNs no MNIST, acurácia de 97,4% → 99,2%' },
 ];
 
 export const building = [
-  { name: 'Comissão de Estágios do ITA', role: 'Presidente', dates: '2023 — 2024', note: 'Organizei a maior feira de carreiras do interior do Brasil, 1.800+ participantes' },
+  { name: 'Comissão de Estágios do ITA', role: 'Presidente', dates: '2023 — 2024', note: 'A maior feira de carreiras do interior do país, 1.800+ pessoas' },
   { name: 'Fundação Estudar', role: 'Multiplicador', dates: 'mar — out 2024', note: 'Workshops e mentoria para estudantes de grupos sub-representados' },
   { name: 'Iniciativa Feynman', role: 'Cofundador e Coordenador', dates: 'set 2019 — abr 2021', note: '0 → 81 voluntários em menos de 6 meses, 350+ alunos de escola pública na pandemia' },
 ];

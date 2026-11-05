@@ -5,7 +5,6 @@ import Footer from '../components/Footer.astro';
 import Handwriting from '../components/Handwriting.astro';
 import Medal from '../components/Medal.astro';
 import Systems from '../components/Systems.astro';
-import CuroChat from '../components/CuroChat.astro';
 import '../styles/home.css';
 import { getSite } from '../data';
 import { ui, type Lang } from '../i18n/ui';
@@ -247,7 +246,20 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                   <Handwriting alt={t.penpadAlt} replay={t.writeAgain} />
                 </div>
               )}
-              {p.slug === 'curo' && <CuroChat lang={lang} />}
+              {p.slug === 'curo' && (
+                <div class="browser">
+                  <div class="browser-bar" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <span>usecuro.vercel.app</span>
+                  </div>
+                  <video data-inview muted loop playsinline preload="metadata" poster={lang === 'pt' ? '/media/curo-poster.jpg' : '/media/curo-en-poster.jpg'} aria-label={t.curoVideo}>
+                    <source src={lang === 'pt' ? '/media/curo.webm' : '/media/curo-en.webm'} type="video/webm" />
+                    <source src={lang === 'pt' ? '/media/curo.mp4' : '/media/curo-en.mp4'} type="video/mp4" />
+                  </video>
+                </div>
+              )}
               {p.slug === 'flights' && (
                 <div class="route" aria-label={t.routeAria}>
                   <svg viewBox="0 0 560 360" role="img">
@@ -291,6 +303,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
 
       <!-- Ápice -->
       <article class="apice" data-reveal>
+        <div class="apice-left">
         <div class="apice-head">
           <div class="feature-meta mono">
             <span>{apice.kind}</span>
@@ -311,6 +324,21 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
             ))
           }
         </ul>
+        </div>
+        <div class="apice-media">
+          <div class="browser">
+            <div class="browser-bar" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+              <span>software-house-six.vercel.app</span>
+            </div>
+            <video data-inview muted loop playsinline preload="metadata" poster="/media/apice-poster.jpg" aria-label={t.apiceVideo}>
+              <source src="/media/apice.webm" type="video/webm" />
+              <source src="/media/apice.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
       </article>
 
       <ul class="index" data-reveal>

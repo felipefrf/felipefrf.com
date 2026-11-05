@@ -1560,3 +1560,25 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ---------- Ápice card with its recording ---------- */
+.apice {
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: center;
+}
+.apice-left {
+  display: grid;
+  gap: 24px;
+}
+.apice-media .browser {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7);
+}
+.apice:hover .apice-media .browser {
+  transform: translateY(-6px);
+}
+@media (max-width: 820px) {
+  .apice-media {
+    order: -1;
+  }
+}
