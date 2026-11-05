@@ -13,11 +13,11 @@ export const person = {
 
 // Big numbers under the hero. `count` animates from 0 when it scrolls into view.
 export const impact = [
-  { value: '28th', label: 'of 4,033 in ITA’s entrance exam', detail: '144 seats · Brazil’s most respected engineering school', logo: '/img/ita.png' },
+  { value: '24th', label: 'of 4,033 in ITA’s entrance exam', detail: '144 seats at Brazil’s most respected engineering school', logo: '/img/ita.png' },
   { value: '1st', label: 'overall, top gold', detail: 'Iberoamerican Physics Olympiad 2020', accent: true },
   { value: '50+', count: 50, suffix: '+', label: 'olympiad medals', detail: 'Two international, 2017–2020' },
-  { value: '0/34', label: 'prompt-injection leaks', detail: 'On the debt-negotiation agent at NG.CASH' },
-  { value: '~95%', label: 'of manual review removed', detail: 'Legal’s judicial-notification triage' },
+  { value: '1 of 5', label: 'ITA students picked', detail: 'For Future Lab, Telles Foundation’s first edition, 2026' },
+  { value: 'Best', label: 'satellite concept design', detail: 'Matsumoto-2, II SPOCS at ITA, 2026' },
 ];
 
 export type Link = { label: string; href: string };
@@ -314,8 +314,46 @@ export const medalList = [
   { year: 2017, medal: 'gold', name: 'Brazilian Public Schools Physics Olympiad (OBFEP)', scope: 'National' },
 ];
 
+// Photo gallery under the medals, newest first.
 export const otherHonors = [
-  { title: '2nd place', event: 'SkyLens · Nameless Hackathon (VC-backed), 2025', note: 'CBERS-4A satellite imagery from INPE, pansharpened to 2 m mosaics, to find urban growth in rural-taxed land', photo: '/img/skylens-award.jpg' },
+  {
+    title: 'Best satellite concept',
+    event: 'Matsumoto-2 · II SPOCS, ITA · July 2026',
+    note: 'A C-band SAR satellite to map farmland in Rio Grande do Norte, designed by a team of six. Best graduation project at ITA’s satellite concept design seminar.',
+    photo: '/img/spocs-award.jpg',
+    w: 1400,
+    h: 1054,
+    alt: 'Four of the Matsumoto-2 team holding “Melhor Trabalho de Graduação” certificates next to the satellite poster at ITA',
+  },
+  {
+    title: 'Future Lab 2026',
+    event: 'Telles Foundation · July–August 2026',
+    note: 'One of five ITA students selected for the first edition, a six-week program for up to 50 people, all by nomination.',
+    photo: '/img/futurelab.jpg',
+    w: 933,
+    h: 1400,
+    alt: 'Felipe listening during a Future Lab session in São Paulo',
+    focus: '50% 30%',
+  },
+  {
+    title: 'Brasil Project',
+    event: 'Harvard & MIT · Cambridge, 2026',
+    note: 'Invited to the conference where Brazilians at the frontier of research and industry discuss the country’s future.',
+    photo: '/img/brasil-project.jpg',
+    w: 1400,
+    h: 1050,
+    alt: 'Felipe and three friends at the Brasil Project conference in Cambridge',
+    focus: '50% 40%',
+  },
+  {
+    title: '2nd place',
+    event: 'SkyLens · Nameless Hackathon (VC-backed), 2025',
+    note: 'CBERS-4A satellite imagery from INPE, pansharpened to 2 m mosaics, to find urban growth in rural-taxed land.',
+    photo: '/img/skylens-award.jpg',
+    w: 1600,
+    h: 1200,
+    alt: 'The SkyLens team on stage at the Nameless Hackathon, under a screen that reads “2º lugar · SkyLens”',
+  },
 ];
 
 export const education = {
@@ -324,7 +362,7 @@ export const education = {
   dates: 'Feb 2023 — Dec 2027',
   note: 'Run by the Brazilian Air Force since 1950 and widely regarded as the best engineering school in Brazil.',
   entry: [
-    { value: '28th', label: 'place in the entrance exam' },
+    { value: '24th', label: 'place in the entrance exam' },
     { value: '4,033', label: 'open-track applicants' },
     { value: '144', label: 'seats' },
   ],

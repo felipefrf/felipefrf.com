@@ -36,7 +36,10 @@
 - Nordic-Baltic Physics Olympiad 2020: also the special prize for the best solution to Problem 1
 - 50+ olympiad medals (2017–2020), including 4× gold in physics (OBF 2017–2020), 2× gold in astronomy (OBA), 2× gold and a silver in robotics (OBR), and gold in math (OBMEP)
 - 2nd place, Nameless Hackathon (2025) with SkyLens: CBERS-4A satellite imagery to find urban growth in rural-taxed land
-- ITA entrance exam: 28th of 4,033 open-track applicants for 144 seats
+- ITA entrance exam: 24th of 4,033 open-track applicants for 144 seats
+- Future Lab 2026 (Telles Foundation): one of five ITA students selected for the first edition
+- Invited to the Brasil Project 2026 at Harvard & MIT
+- Best graduation project at ITA's II SPOCS satellite concept design seminar (2026) for Matsumoto-2, a C-band SAR satellite concept
 
 ## Contact
 

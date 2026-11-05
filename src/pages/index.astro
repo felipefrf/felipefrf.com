@@ -529,15 +529,14 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
         </figure>
       </div>
 
-      <div class="honor-row">
+      <h3 class="mono sub-head gallery-head" data-reveal>Recent recognition</h3>
+      <div class="gallery">
         {
           otherHonors.map((h) => (
             <figure class="honor-mini" data-reveal>
-              {h.photo && (
-                <div class="honor-photo">
-                  <img src={h.photo} width="1600" height="1200" loading="lazy" decoding="async" alt="The SkyLens team on stage at the Nameless Hackathon, under a screen that reads “2º lugar · SkyLens”" />
-                </div>
-              )}
+              <div class="honor-photo">
+                <img src={h.photo} width={h.w} height={h.h} loading="lazy" decoding="async" alt={h.alt} style={h.focus ? `object-position:${h.focus}` : undefined} />
+              </div>
               <figcaption>
                 <b>{h.title}</b>
                 <span>{h.event}</span>
@@ -546,6 +545,9 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
             </figure>
           ))
         }
+      </div>
+
+      <div class="honor-row">
         <div class="school" data-reveal>
           <img class="school-logo" src={education.logo} alt="ITA emblem" width="496" height="188" loading="lazy" />
           <div class="school-copy">

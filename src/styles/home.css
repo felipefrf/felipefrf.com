@@ -1530,3 +1530,33 @@
     width: 120px;
   }
 }
+
+/* ---------- recognition gallery ---------- */
+.gallery-head {
+  margin-top: clamp(40px, 6vw, 64px);
+  margin-bottom: 20px;
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.gallery .honor-mini b {
+  font-size: 30px;
+}
+.gallery .honor-mini span {
+  font-size: 14px;
+}
+.honor-row {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (max-width: 1020px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .gallery {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
