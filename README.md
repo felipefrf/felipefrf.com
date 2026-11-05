@@ -6,7 +6,13 @@ Static [Astro](https://astro.build) site, deployed to GitHub Pages on every push
 
 ## Editing
 
-All copy (projects, jobs, honors, toolbox, trajectory waypoints) lives in [`src/data/site.ts`](src/data/site.ts). Layout is in `src/pages/index.astro`, styles in `src/styles/global.css`. Keep `public/llms.txt` in sync when the content changes.
+The site is in English (`/`) and Brazilian Portuguese (`/pt/`).
+
+- Content (projects, jobs, honors, trajectory) lives in [`src/data/site.ts`](src/data/site.ts) and its translation [`src/data/site.pt.ts`](src/data/site.pt.ts); the system diagrams in `src/data/systems.ts` / `systems.pt.ts`. Keep each pair in the same shape.
+- Interface copy for both languages is in [`src/i18n/ui.ts`](src/i18n/ui.ts).
+- The home page is `src/components/Home.astro`, rendered by `src/pages/index.astro` and `src/pages/pt/index.astro`. `/penpad/` is English only.
+- Visitors are routed in `src/layouts/Base.astro`: a saved choice from the EN | PT switch wins; otherwise a Portuguese browser goes to `/pt/`. If the domain is proxied through Cloudflare (orange cloud), visitors from Portuguese-speaking countries are also sent to `/pt/`, read from `/cdn-cgi/trace`.
+- Keep `public/llms.txt` in sync when the content changes.
 
 ```sh
 pnpm install

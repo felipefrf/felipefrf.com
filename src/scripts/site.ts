@@ -362,3 +362,14 @@ document.querySelectorAll<HTMLElement>('[data-medals]').forEach((card) => {
     if (e.key === 'Escape' && !list.hidden) set(false);
   });
 });
+
+// ---------- language choice sticks ----------
+document.querySelectorAll<HTMLAnchorElement>('[data-set-lang]').forEach((a) => {
+  a.addEventListener('click', () => {
+    try {
+      localStorage.setItem('lang', a.dataset.setLang ?? 'en');
+    } catch {
+      /* storage blocked: the link still works */
+    }
+  });
+});

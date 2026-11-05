@@ -1,7 +1,16 @@
 ---
 // Tabbed, animated architecture diagrams. Paths are computed here; the
 // build-up, the travelling packets and the log are driven by site.ts.
-import { systems, type SysNode, type SysEdge } from '../data/systems';
+import type { SysNode, SysEdge } from '../data/systems';
+import { getSystems } from '../data';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const t = ui[lang];
+const systems = getSystems(lang);
 
 const VB_W = 1000;
 const VB_H = 460;
@@ -34,18 +43,11 @@ const data = systems.map((s) => ({
   // ordering for the build-up: nodes left to right, top to bottom
   order: [...s.nodes].sort((p, q) => p.x - q.x || p.y - q.y).map((n) => n.id),
 }));
-const kindLabel: Record<string, string> = {
-  model: 'model',
-  code: 'code',
-  store: 'data',
-  channel: 'channel',
-  person: 'person',
-  meta: 'quality',
-};
+const kindLabel = t.kinds;
 ---
 
 <div class="sys" data-systems>
-  <div class="sys-tabs" role="tablist" aria-label="Systems">
+  <div class="sys-tabs" role="tablist" aria-label={t.sysTabs}>
     {
       data.map((s, i) => (
         <button type="button" role="tab" class="sys-tab" data-sys-tab={s.id} aria-selected={i === 0 ? 'true' : 'false'}>
@@ -61,7 +63,7 @@ const kindLabel: Record<string, string> = {
     data.map((s, i) => (
       <div class:list={['sys-panel', { active: i === 0 }]} data-sys={s.id} role="tabpanel" data-steps={JSON.stringify(s.steps)} data-edges={JSON.stringify(s.edges.map((e) => ({ id: e.id, from: e.from, to: e.to })))}>
         <div class="sys-graph">
-          <svg viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-label={`${s.title}: architecture diagram`}>
+          <svg viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-label={`${s.title}: ${t.sysDiagram}`}>
             <defs>
               <pattern id={`grid-${s.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
                 <circle cx="1" cy="1" r="1" class="dotgrid" />
@@ -92,7 +94,7 @@ const kindLabel: Record<string, string> = {
             <circle class="halo" r="14" cx="-50" cy="-50" />
             <circle class="packet" r="6" cx="-50" cy="-50" />
           </svg>
-          <span class="sys-hint mono" aria-hidden="true">Swipe to explore →</span>
+          <span class="sys-hint mono" aria-hidden="true">{t.sysSwipe}</span>
         </div>
 
         <aside class="sys-side">
@@ -110,9 +112,9 @@ const kindLabel: Record<string, string> = {
           <div class="sys-log-wrap">
             <div class="sys-log-head mono">
               <span>
-                <i class="rec" aria-hidden="true" /> trace
+                <i class="rec" aria-hidden="true" /> {t.sysTrace}
               </span>
-              <span>illustrative run</span>
+              <span>{t.sysIllustrative}</span>
             </div>
             <ol class="sys-log" aria-live="off">
               {s.steps.map((st) => (

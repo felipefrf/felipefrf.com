@@ -7,13 +7,14 @@ import data from '../data/penpad-lines.json';
 interface Props {
   alt: string;
   class?: string;
+  replay?: string;
 }
-const { alt, class: cls } = Astro.props;
+const { alt, class: cls, replay = '↻ Write it again' } = Astro.props;
 ---
 
 <div class:list={['hw', cls]} data-hw data-lines={JSON.stringify(data.lines)} data-w={data.w} data-h={data.h}>
   <img src="/penpad/img/hero.jpg" width={data.w} height={data.h} alt={alt} loading="lazy" decoding="async" />
   <canvas width={data.w} height={data.h} aria-hidden="true"></canvas>
   <span class="hw-pen" aria-hidden="true"></span>
-  <button class="hw-replay mono" type="button" hidden>↻ Write it again</button>
+  <button class="hw-replay mono" type="button" hidden>{replay}</button>
 </div>

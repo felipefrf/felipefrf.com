@@ -899,7 +899,7 @@ section.block {
   margin-top: 40px;
 }
 .copy[data-copied='true'] .label::after {
-  content: ' · copied';
+  content: ' · ' attr(data-copied-text);
   color: var(--accent);
 }
 footer.foot {
@@ -1098,4 +1098,38 @@ footer.foot a:hover {
 .hw-replay:hover {
   color: var(--ink);
   border-color: var(--accent);
+}
+
+/* ---------- language switch ---------- */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 11px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+.lang-switch span {
+  padding: 5px 8px;
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.lang-switch span.on {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+.lang-switch:hover span:not(.on) {
+  color: var(--ink);
+}
+@media (max-width: 820px) {
+  .nav-pill {
+    gap: 6px;
+  }
+  .lang-switch {
+    margin-left: auto;
+  }
 }

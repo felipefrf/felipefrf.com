@@ -1,17 +1,25 @@
 ---
-import { person } from '../data/site';
+import { getSite } from '../data';
+import { ui, localePath, switchPath, type Lang } from '../i18n/ui';
 
 interface Props {
   links: { href: string; label: string }[];
   cta: { href: string; label: string; external?: boolean };
   brand?: string;
+  lang?: Lang;
+  /** show the EN | PT switch (pages that exist in both languages) */
+  translated?: boolean;
 }
-const { links, cta, brand = person.name } = Astro.props;
+const { links, cta, lang = 'en', translated = true } = Astro.props;
+const { person } = getSite(lang);
+const brand = Astro.props.brand ?? person.name;
+const other: Lang = lang === 'pt' ? 'en' : 'pt';
+const t = ui[lang];
 ---
 
 <header class="nav" id="nav">
   <nav class="nav-pill" aria-label="Main">
-    <a class="brand" href="/" aria-label={`${person.name}, home`}>
+    <a class="brand" href={localePath(lang, '/')} aria-label={`${person.name}, home`}>
       <img src="/favicon.svg" alt="" width="26" height="26" />
       <span>{brand}</span>
     </a>
@@ -24,6 +32,14 @@ const { links, cta, brand = person.name } = Astro.props;
         ))
       }
     </ul>
+    {
+      translated && (
+        <a class="lang-switch mono" href={switchPath(Astro.url.pathname, other)} hreflang={other === 'pt' ? 'pt-BR' : 'en'} lang={other === 'pt' ? 'pt-BR' : 'en'} data-set-lang={other} aria-label={t.otherLangLabel}>
+          <span class:list={{ on: lang === 'en' }}>EN</span>
+          <span class:list={{ on: lang === 'pt' }}>PT</span>
+        </a>
+      )
+    }
     <a class="btn btn-primary btn-sm" href={cta.href} {...(cta.external ? { target: '_blank', rel: 'noopener' } : {})}>{cta.label}</a>
   </nav>
 </header>
