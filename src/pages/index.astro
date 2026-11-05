@@ -15,6 +15,7 @@ import {
   earlier,
   building,
   medals,
+  receipts,
   national,
   otherHonors,
   education,
@@ -433,6 +434,70 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
             <li class="more">and many more</li>
           </ul>
         </div>
+      </div>
+
+      <div class="receipts">
+        <figure class="receipt cert" data-reveal>
+          <div class="paper">
+            <img src={receipts.certificate.src} width="1100" height="778" loading="lazy" decoding="async" alt="Certificate of the Olimpiada Iberoamericana de Física virtual 2020 issued to Felipe Farias Ribeiro Filho, representing Brazil" />
+          </div>
+          <figcaption>
+            <span>{receipts.certificate.caption}</span>
+            <a class="textlink mono" href={receipts.certificate.verify} target="_blank" rel="noopener">Verify ↗</a>
+          </figcaption>
+        </figure>
+
+        <figure class="receipt table" data-reveal>
+          <div class="sheet-doc">
+            <div class="doc-title">
+              <span>Olimpiada Iberoamericana de Física 2020</span>
+              <b>MEDALLERO</b>
+            </div>
+            <table>
+              <thead>
+                <tr>{receipts.oibfRow.cols.map((c) => <th>{c}</th>)}</tr>
+              </thead>
+              <tbody>
+                <tr class="me">{receipts.oibfRow.row.map((c, i) => <td class:list={{ gold: i === 3 }}>{c}</td>)}</tr>
+                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
+                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
+                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
+                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
+                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
+                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figcaption>
+            <span>{receipts.oibfRow.caption}</span>
+          </figcaption>
+        </figure>
+
+        <figure class="receipt score" data-reveal>
+          <div class="sheet-doc">
+            <div class="doc-title">
+              <span>NBPhO 2020 final results</span>
+              <b><em>{receipts.nbpho.total}</em> / {receipts.nbpho.max} pts · #{receipts.nbpho.rank}</b>
+            </div>
+            <ul class="bars">
+              {
+                receipts.nbpho.problems.map((pr) => (
+                  <li style={`--w:${((pr.got / pr.max) * 100).toFixed(1)}%`} class:list={{ full: pr.got === pr.max }}>
+                    <span class="mono">P{pr.n}</span>
+                    <i />
+                    <span class="mono v">
+                      {pr.got}/{pr.max}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <figcaption>
+            <span>Silver, 16th overall</span>
+            <a class="textlink mono" href={receipts.nbpho.href} target="_blank" rel="noopener">Official results ↗</a>
+          </figcaption>
+        </figure>
       </div>
 
       <div class="honor-row">

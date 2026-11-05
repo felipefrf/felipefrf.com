@@ -247,7 +247,7 @@ export const medals = [
     year: '2020',
     ring: 'OLIMPÍADA IBEROAMERICANA DE FÍSICA · 2020 · ',
     logo: '/img/olympiads/oibf.png',
-    note: 'The top physics students from Latin America, Spain and Portugal, four per country.',
+    note: 'First in the official medal table, plus the special prize for the best solution to Problem 2.',
   },
   {
     kind: 'silver' as const,
@@ -258,9 +258,36 @@ export const medals = [
     year: '2020',
     ring: 'NORDIC-BALTIC PHYSICS OLYMPIAD · 2020 · ',
     logo: '/img/olympiads/nbpho.png',
-    note: 'Brazil was invited in 2020; theory and experimental exams, held online.',
+    note: '16th overall with 21.4 of 36.5 points, full marks on problems 1 and 3. Brazil’s first year as a guest.',
   },
 ];
+
+// Proof, straight from the organizers' documents.
+export const receipts = {
+  certificate: {
+    src: '/img/olympiads/oibf-2020-certificate.jpg',
+    verify: 'http://bit.ly/37qHpai',
+    caption: 'OIbF virtual 2020 certificate, 5–13 December 2020',
+  },
+  oibfRow: {
+    cols: ['Nombre', 'Apellido', 'País', 'Medalla', 'Premio especial'],
+    row: ['Felipe', 'Farias Ribeiro Filho', 'Brasil', 'ORO', 'Mejor resolución del problema 2'],
+    caption: 'Row 1 of the official OIbF 2020 medal table (46 awardees)',
+  },
+  nbpho: {
+    href: 'https://nbpho.ee/wp-content/uploads/2020/05/NB_final_results_publish.pdf',
+    total: 21.4,
+    max: 36.5,
+    rank: 16,
+    problems: [
+      { n: 1, got: 6, max: 6 },
+      { n: 2, got: 2, max: 10 },
+      { n: 3, got: 3, max: 3 },
+      { n: 4, got: 5.2, max: 9 },
+      { n: 5, got: 5.2, max: 8.5 },
+    ],
+  },
+};
 
 export const national = [
   { name: 'OBF', full: 'Brazilian Physics Olympiad', result: '3× gold' },
