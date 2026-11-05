@@ -1,0 +1,19 @@
+---
+// A penpad page that writes itself: a canvas draws the grid, then reveals the
+// ink of the real render line by line. Without JS (or with reduced motion) the
+// finished page image is shown instead.
+import data from '../data/penpad-lines.json';
+
+interface Props {
+  alt: string;
+  class?: string;
+}
+const { alt, class: cls } = Astro.props;
+---
+
+<div class:list={['hw', cls]} data-hw data-lines={JSON.stringify(data.lines)} data-w={data.w} data-h={data.h}>
+  <img src="/penpad/img/hero.jpg" width={data.w} height={data.h} alt={alt} loading="lazy" decoding="async" />
+  <canvas width={data.w} height={data.h} aria-hidden="true"></canvas>
+  <span class="hw-pen" aria-hidden="true"></span>
+  <button class="hw-replay mono" type="button" hidden>↻ Write it again</button>
+</div>

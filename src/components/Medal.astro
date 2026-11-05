@@ -1,0 +1,64 @@
+---
+// A rendered medal: ribbon, rim, engraved ring text and a moving shine.
+interface Props {
+  kind: 'gold' | 'silver';
+  mark: string;
+  sub: string;
+  ring: string;
+}
+const { kind, mark, sub, ring } = Astro.props;
+const id = `m-${kind}`;
+const metal =
+  kind === 'gold'
+    ? ['#fff4c2', '#f6cf55', '#d9a531', '#9b6a14']
+    : ['#ffffff', '#e3e6ea', '#b3b9c2', '#737a85'];
+const rim = kind === 'gold' ? ['#e9b949', '#8c5d10'] : ['#d6dae0', '#6b717b'];
+const engrave = kind === 'gold' ? '#7a5410' : '#4f5660';
+const ribbon = kind === 'gold' ? { base: '#1d4ed8', stripe: '#f8fafc' } : { base: '#13306b', stripe: '#f2c230' };
+---
+
+<svg class:list={['medal', kind]} viewBox="0 0 240 320" role="img" aria-label={`${kind} medal`}>
+  <defs>
+    <radialGradient id={`${id}-metal`} cx="36%" cy="30%" r="78%">
+      <stop offset="0" stop-color={metal[0]} />
+      <stop offset="0.38" stop-color={metal[1]} />
+      <stop offset="0.72" stop-color={metal[2]} />
+      <stop offset="1" stop-color={metal[3]} />
+    </radialGradient>
+    <linearGradient id={`${id}-rim`} x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color={rim[0]} />
+      <stop offset="1" stop-color={rim[1]} />
+    </linearGradient>
+    <linearGradient id={`${id}-shine`} x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0" />
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0.75" />
+      <stop offset="1" stop-color="#fff" stop-opacity="0" />
+    </linearGradient>
+    <clipPath id={`${id}-clip`}><circle cx="120" cy="214" r="86" /></clipPath>
+    <path id={`${id}-ring`} d="M120,214 m-67,0 a67,67 0 1,1 134,0 a67,67 0 1,1 -134,0" />
+  </defs>
+
+  <!-- ribbon -->
+  <g class="ribbon">
+    <polygon points="64,0 110,0 136,136 104,136" fill={ribbon.base} />
+    <polygon points="80,0 94,0 124,136 114,136" fill={ribbon.stripe} opacity="0.9" />
+    <polygon points="130,0 176,0 136,136 104,136" fill={ribbon.base} filter="brightness(0.82)" />
+    <polygon points="146,0 160,0 126,136 116,136" fill={ribbon.stripe} opacity="0.75" />
+  </g>
+  <rect x="106" y="122" width="28" height="18" rx="5" fill={`url(#${id}-rim)`} />
+
+  <!-- disc -->
+  <circle cx="120" cy="214" r="88" fill={`url(#${id}-rim)`} />
+  <circle cx="120" cy="214" r="78" fill={`url(#${id}-metal)`} />
+  <circle cx="120" cy="214" r="59" fill="none" stroke={engrave} stroke-opacity="0.35" stroke-width="1.4" />
+  <circle cx="120" cy="214" r="76" fill="none" stroke="#fff" stroke-opacity="0.45" stroke-width="1" />
+  <text class="ring-text" fill={engrave} fill-opacity="0.85">
+    <textPath href={`#${id}-ring`} startOffset="0" textLength="414" lengthAdjust="spacing">{ring}</textPath>
+  </text>
+  <text x="120" y="226" text-anchor="middle" class="mark" fill={engrave}>{mark}</text>
+  <text x="120" y="250" text-anchor="middle" class="sub" fill={engrave} fill-opacity="0.8">{sub}</text>
+
+  <g clip-path={`url(#${id}-clip)`}>
+    <rect class="shine" x="-60" y="120" width="70" height="200" fill={`url(#${id}-shine)`} transform="rotate(18 120 214)" />
+  </g>
+</svg>

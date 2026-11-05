@@ -26,26 +26,6 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --paper: #0e0e0d;
-    --paper-2: #161615;
-    --card: #141413;
-    --ink: #edebe6;
-    --ink-2: #aaa59b;
-    --ink-3: #6f6b64;
-    --rule: #262523;
-    --rule-2: #34322f;
-    --accent: #ff6a33;
-    --accent-ink: #ff8a5c;
-    --mark: rgba(255, 106, 51, 0.22);
-    --glass: rgba(14, 14, 13, 0.7);
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
-    --dark-surface: #171a19;
-    color-scheme: dark;
-  }
-}
-
 /* ---------- base ---------- */
 *,
 *::before,
@@ -442,7 +422,7 @@ a {
 
 /* ---------- sections ---------- */
 section.block {
-  padding: clamp(80px, 12vw, 150px) 0 0;
+  padding-top: clamp(80px, 12vw, 150px);
 }
 .sec-head {
   display: grid;
@@ -586,7 +566,7 @@ section.block {
   min-height: 360px;
   overflow: hidden;
 }
-.feature-media img {
+.feature-media > img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -594,45 +574,8 @@ section.block {
   object-fit: cover;
   transition: transform 1.2s var(--ease);
 }
-.feature:hover .feature-media img {
+.feature:hover .feature-media > img {
   transform: scale(1.025);
-}
-
-/* MedAlvo: dark product shot sits on a dark panel */
-.feature.medalvo .feature-media {
-  background: radial-gradient(120% 90% at 80% 20%, #17322d 0%, #0d1312 60%);
-}
-.feature.medalvo .feature-media img {
-  inset: 10% auto auto 8%;
-  width: 150%;
-  height: auto;
-  max-width: none;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
-  object-fit: contain;
-}
-.feature.medalvo:hover .feature-media img {
-  transform: translateY(-6px);
-}
-
-/* penpad: graph paper behind a tilted page */
-.feature.penpad .feature-media {
-  background-color: #fbfaf5;
-  background-image: linear-gradient(#e6e3d8 1px, transparent 1px), linear-gradient(90deg, #e6e3d8 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-.feature.penpad .feature-media img {
-  inset: 9% 10% auto auto;
-  width: 78%;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 30px 60px -20px rgba(40, 30, 10, 0.3);
-  transform: rotate(-2deg);
-  object-fit: contain;
-}
-.feature.penpad:hover .feature-media img {
-  transform: rotate(-1deg) translateY(-6px);
 }
 
 /* ---------- project index ---------- */
@@ -937,7 +880,7 @@ section.block {
 
 /* ---------- contact ---------- */
 .contact {
-  padding: clamp(100px, 14vw, 180px) 0 0;
+  padding-top: clamp(100px, 14vw, 180px);
 }
 .contact h2 {
   margin: 0;
@@ -1100,4 +1043,59 @@ footer.foot a:hover {
   margin: 12px 0 0 !important;
   font-size: 11px !important;
   color: var(--ink-3) !important;
+}
+
+/* ---------- self-writing penpad page ---------- */
+.hw {
+  position: relative;
+}
+.hw img,
+.hw canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.hw canvas {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  opacity: 0;
+}
+.hw.hw-on canvas {
+  opacity: 1;
+}
+.hw.hw-on img {
+  visibility: hidden;
+}
+.hw-pen {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--mark);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.hw.hw-writing .hw-pen {
+  opacity: 1;
+}
+.hw-replay {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 7px 12px;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink-2);
+  font-size: 11px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.hw-replay:hover {
+  color: var(--ink);
+  border-color: var(--accent);
 }

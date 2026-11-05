@@ -98,17 +98,18 @@
   min-height: 420px;
   overflow: hidden;
 }
-.sheet img {
+.sheet .hw {
   position: absolute;
   top: 7%;
   left: 9%;
   width: 84%;
   border-radius: 6px;
+  overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 30px 60px -20px rgba(40, 30, 10, 0.32);
   transform: rotate(-1.5deg);
   transition: transform 0.8s var(--ease);
 }
-.io-out:hover .sheet img {
+.io-out:hover .sheet .hw {
   transform: rotate(-0.5deg) translateY(-6px);
 }
 
@@ -354,16 +355,6 @@
 .intended .mono {
   color: var(--accent-ink);
   font-size: 11px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .md .m {
-    color: #6cb4ff;
-  }
-  :root:not([data-theme='light']) .styles .frame,
-  :root:not([data-theme='light']) .sheet.small {
-    border-color: var(--rule-2);
-  }
 }
 
 @media (max-width: 1020px) {
