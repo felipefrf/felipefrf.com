@@ -57,10 +57,10 @@ export const featured: Project[] = [
     ],
     stack: ['Python', 'resvg', 'LaTeX'],
     links: [
-      { label: 'Project page', href: 'https://felipefrf.github.io/penpad/' },
+      { label: 'Project page', href: '/penpad/' },
       { label: 'GitHub', href: 'https://github.com/felipefrf/penpad' },
     ],
-    image: { src: '/img/penpad-notes.jpg', alt: 'A page of damped-oscillator physics notes rendered in handwriting by penpad' },
+    image: { src: '/penpad/img/hero.jpg', alt: 'A page of damped-oscillator physics notes rendered in handwriting by penpad' },
   },
 ];
 

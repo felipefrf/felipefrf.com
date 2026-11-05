@@ -12,7 +12,7 @@
 ## Projects
 
 - [MedAlvo](https://medalvo.com.br): adaptive prep platform for Brazilian medical residency exams (FSRS v6, Thompson Sampling, 2PL IRT, Bayesian Knowledge Tracing; FastAPI, Postgres/pgvector, Cloud Run). Founder.
-- [penpad](https://github.com/felipefrf/penpad): open-source tool that turns Markdown + LaTeX notes into realistic handwritten PDF/PNG pages for tablets. Project page: https://felipefrf.github.io/penpad/
+- [penpad](https://github.com/felipefrf/penpad): open-source tool that turns Markdown + LaTeX notes into realistic handwritten PDF/PNG pages for tablets. Project page: https://felipefrf.com/penpad/
 - [Editable Pets](https://github.com/felipefrf/editable-pets): macOS desktop companion for Claude Code and Codex sessions.
 - [yt-to-md](https://github.com/felipefrf/yt-to-md): YouTube video to structured Markdown for AI agents, no API key.
 - [dual-subtitles-extension](https://github.com/felipefrf/dual-subtitles-extension): Chrome extension with two synced subtitle languages on YouTube.

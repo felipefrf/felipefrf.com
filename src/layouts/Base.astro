@@ -9,17 +9,21 @@ import { person } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  jsonLd?: object;
 }
 
 const {
   title = `${person.name}, ${person.role}`,
   description = 'Felipe Ribeiro builds AI agents that do real work: founding engineer at a stealth AI startup, founder of MedAlvo, aerospace engineering at ITA, international physics olympiad medalist.',
+  ogImage: ogPath = '/og.png',
+  jsonLd: pageJsonLd,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL('/og.png', Astro.site);
+const ogImage = new URL(ogPath, Astro.site);
 
-const jsonLd = {
+const personLd = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: person.name,
@@ -28,6 +32,7 @@ const jsonLd = {
   alumniOf: 'Instituto Tecnológico de Aeronáutica (ITA)',
   sameAs: [person.github, person.linkedin],
 };
+const jsonLd = pageJsonLd ?? personLd;
 ---
 
 <!doctype html>
@@ -57,5 +62,8 @@ const jsonLd = {
   </head>
   <body>
     <slot />
+    <script>
+      import '../scripts/site.ts';
+    </script>
   </body>
 </html>

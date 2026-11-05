@@ -1,0 +1,29 @@
+---
+import { person } from '../data/site';
+
+interface Props {
+  links: { href: string; label: string }[];
+  cta: { href: string; label: string; external?: boolean };
+  brand?: string;
+}
+const { links, cta, brand = person.name } = Astro.props;
+---
+
+<header class="nav" id="nav">
+  <nav class="nav-pill" aria-label="Main">
+    <a class="brand" href="/" aria-label={`${person.name}, home`}>
+      <img src="/favicon.svg" alt="" width="26" height="26" />
+      <span>{brand}</span>
+    </a>
+    <ul class="nav-links">
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href}>{l.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <a class="btn btn-primary btn-sm" href={cta.href} {...(cta.external ? { target: '_blank', rel: 'noopener' } : {})}>{cta.label}</a>
+  </nav>
+</header>

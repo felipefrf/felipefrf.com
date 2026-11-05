@@ -1,0 +1,383 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/penpad.css';
+
+const repo = 'https://github.com/felipefrf/penpad';
+const install = 'pip install "git+https://github.com/felipefrf/penpad"';
+const pageUrl = 'https://felipefrf.com/penpad/';
+
+const features = [
+  {
+    title: 'Math in handwriting',
+    body: 'A practical subset of LaTeX: \\frac, \\int_a^b, \\sqrt, \\vec, \\hat, \\dot, \\left( \\right), Greek letters, \\partial, \\nabla, boxed results and colored pens.',
+  },
+  {
+    title: 'Believable variation',
+    body: 'Slant, size and baseline drift slowly like a real hand. Each letter has a few shapes and never repeats one back to back, while a legibility clamp keeps everything readable.',
+  },
+  {
+    title: 'Tablet-ready pages',
+    body: 'Presets for the Goodnotes page, A4 and US Letter (grid, lined, dotted, plain) and reMarkable. PDFs come out at the real page size, ready to import.',
+  },
+  {
+    title: 'Installs anywhere',
+    body: 'Pure pip dependencies (resvg, Pillow, fontTools) and bundled open fonts. No Cairo, no LaTeX, no browser, no API key, no network. Tested on Linux, macOS and Windows.',
+  },
+  {
+    title: 'Reproducible',
+    body: 'The same seed gives the same page, pixel for pixel. Change the seed for a different hand.',
+  },
+];
+
+const layers = [
+  { n: '01', title: 'Writer state', body: 'Slant, rotation, size and baseline follow mean-reverting random processes, so neighbouring letters lean and float together and the line wanders, then comes back.' },
+  { n: '02', title: 'Allographs', body: 'Each character gets a fixed repertoire of shapes derived from the seed. The writer draws an “a” in one of four ways and never the same way twice in a row.' },
+  { n: '03', title: 'Instance noise', body: 'Every use redraws part of the outline deformation, so no two letters on a page are pixel-identical.' },
+];
+
+const styles = [
+  { name: 'cursive', paper: 'Goodnotes grid', src: '/penpad/img/style-cursive.png', w: 558 },
+  { name: 'print', paper: 'A4 lined', src: '/penpad/img/style-print.png', w: 510 },
+  { name: 'casual', paper: 'A4 dots', src: '/penpad/img/style-casual.png', w: 505 },
+];
+
+const markup = [
+  ['# Title', 'Title in the accent pen (blue)'],
+  ['## Heading', 'Heading in purple'],
+  ['text with $...$', 'Paragraph with inline math, wrapped to the page'],
+  ['$$ ... $$', 'Equation on its own line, shrunk to fit if too wide'],
+  ['$$! ... $$', 'Boxed result'],
+  ['- item, (a) item, 1. item', 'List item with hanging indent'],
+  ['> note', 'Side note in purple'],
+  ['{red} line', 'Pen color: black, blue, red, purple, green, gray or #hex'],
+  ['---', 'New page'],
+];
+
+const faqs = [
+  {
+    q: 'How do I get the notes into Goodnotes, Notability or a reMarkable?',
+    a: 'Import the PDF. The default goodnotes paper matches the Goodnotes page size and grid, so imported pages line up with the ones you write by hand.',
+  },
+  { q: 'Does it need LaTeX installed?', a: 'No. penpad reads LaTeX math syntax and draws it itself.' },
+  {
+    q: 'Can it write in my own handwriting?',
+    a: 'Yes, through a font. Turn your writing into a font (for example with Calligraphr), load it with register_font, and run penpad calibrate on a page you wrote to match paper, grid and pen colors.',
+  },
+  { q: 'Is it free? Does it work offline?', a: 'Yes to both. It is MIT-licensed and nothing is uploaded anywhere.' },
+  { q: 'Is the output deterministic?', a: 'Yes. Keep --seed for identical output, change it for a different hand.' },
+];
+
+const mdSample = `# 2) Damped oscillator
+A mass $m$ on a spring $k$ with viscous damping $c$:
+$$ m\\ddot{x} + c\\dot{x} + kx = 0 $$
+$$! x(t) = A e^{-\\zeta\\omega_n t} \\cos\\left(\\omega_d t - \\phi\\right) $$
+(a) underdamped, $\\zeta < 1$: oscillates with $\\omega_d = \\omega_n\\sqrt{1 - \\zeta^2}$
+> Energy lost per cycle: $\\Delta E = \\pi c \\omega X^2$
+{red} Lightly damped: about $1/(2\\pi\\zeta) \\approx 1.6$ cycles per e-fold decay.`;
+
+// Light syntax colouring for the Markdown sample: math in blue, markers in accent.
+const esc = (t: string) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const mdHtml = mdSample
+  .split('\n')
+  .map((line) => {
+    let html = esc(line).replace(/(\$\$!?|\$)([^$]*?)(\$\$|\$)/g, '<span class="m">$1$2$3</span>');
+    html = html.replace(/^(#+ |&gt; |\{red\} |\(a\) )/, '<span class="k">$1</span>');
+    return html;
+  })
+  .join('\n');
+
+const pySample = `from penpad import Notebook
+
+nb = Notebook(paper="goodnotes", style="cursive", seed=21)
+nb.title("Free-body diagram")
+nb.text("Block on an incline, no friction:")
+
+def incline(nb, x0, y0):
+    nb.line(x0 + 40, y0 + 230, x0 + 520, y0 + 230)
+    nb.line(x0 + 40, y0 + 230, x0 + 520, y0 + 30)
+    nb.arrow(x0 + 300, y0 + 120, x0 + 300, y0 + 220, color="red")
+    nb.write(x0 + 308, y0 + 214, "mg", color="red")
+
+nb.figure(260, incline)
+nb.math(r"\\sum F_{\\parallel} = mg\\sin\\theta = ma \\Rightarrow a = g\\sin\\theta", box=True)
+nb.save("incline.pdf")`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SoftwareApplication',
+      name: 'penpad',
+      description:
+        'Open-source text-to-handwriting generator that turns Markdown notes with LaTeX math into realistic handwritten PDF or PNG pages for tablets (iPad with Goodnotes or Notability, reMarkable, Kindle Scribe, Boox) and print.',
+      applicationCategory: 'EducationalApplication',
+      applicationSubCategory: 'Handwriting generator',
+      operatingSystem: 'Windows, macOS, Linux',
+      softwareRequirements: 'Python 3.9+',
+      license: 'https://opensource.org/licenses/MIT',
+      isAccessibleForFree: true,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      url: pageUrl,
+      downloadUrl: repo,
+      codeRepository: repo,
+      programmingLanguage: 'Python',
+      image: 'https://felipefrf.com/penpad/img/hero.jpg',
+      author: { '@type': 'Person', name: 'Felipe Ribeiro', url: 'https://felipefrf.com/' },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+};
+
+const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<Base
+  title="penpad: Markdown and LaTeX notes to realistic handwriting"
+  description="penpad is a free, open-source text-to-handwriting generator that understands math. Write Markdown with LaTeX and get realistic handwritten PDF pages for iPad (Goodnotes, Notability), reMarkable, Kindle Scribe or print. Offline, pip install, no API key."
+  ogImage="/penpad/og.png"
+  jsonLd={jsonLd}
+>
+  <a class="skip" href="#main">Skip to content</a>
+  <Nav
+    links={[
+      { href: '#features', label: 'Features' },
+      { href: '#hand', label: 'The hand' },
+      { href: '#use', label: 'Install' },
+      { href: '#faq', label: 'FAQ' },
+    ]}
+    cta={{ href: repo, label: 'GitHub', external: true }}
+  />
+
+  <main id="main" class="pp">
+    <!-- hero -->
+    <section class="hero wrap" aria-labelledby="pp-title">
+      <a class="now rise back" style="--i:0" href="/">
+        <span class="pulse" aria-hidden="true"></span>
+        <span><b>penpad</b> · Open source · MIT · Python 3.9–3.13</span>
+      </a>
+
+      <h1 id="pp-title">
+        <span class="line rise" style="--i:1">Typed notes in,</span>
+        <span class="line rise fade" style="--i:2"><span class="serif">handwritten</span> pages out.</span>
+      </h1>
+
+      <div class="hero-row">
+        <p class="lead rise" style="--i:3">
+          Write Markdown with LaTeX math and get realistic handwritten <strong>PDF or PNG</strong> pages for your iPad
+          (Goodnotes, Notability), reMarkable, Kindle Scribe or printer. Free, offline, and it installs with
+          <span class="mark">pip alone.</span>
+        </p>
+        <div class="ctas rise" style="--i:4">
+          <a class="btn btn-primary" href={repo} target="_blank" rel="noopener">Get it on GitHub <Fragment set:html={arrow} /></a>
+          <a class="btn btn-ghost" href="#use">Quick start</a>
+        </div>
+      </div>
+
+      <div class="install rise" style="--i:5">
+        <span class="mono prompt" aria-hidden="true">$</span>
+        <code>{install}</code>
+        <button class="btn btn-ghost btn-sm copy" type="button" data-copy={install}><span class="label">Copy</span></button>
+      </div>
+
+      <figure class="io rise" style="--i:6">
+        <div class="io-in">
+          <div class="io-head mono"><span>Fig. 1</span><span>notes.md</span></div>
+          <pre class="md"><code set:html={mdHtml} /></pre>
+        </div>
+        <div class="io-arrow mono" aria-hidden="true">penpad render notes.md →</div>
+        <div class="io-out">
+          <div class="io-head mono"><span>Fig. 2</span><span>notes.pdf</span></div>
+          <div class="sheet">
+            <img
+              src="/penpad/img/hero.jpg"
+              width="1100"
+              height="1238"
+              alt="Handwritten physics notes on Goodnotes-style grid paper, generated by penpad from the Markdown on the left: damped oscillator equations with a boxed solution"
+            />
+          </div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- features -->
+    <section class="block wrap" id="features" aria-labelledby="f-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>01</i><span>Features</span></div>
+          <h2 id="f-title">What it <span class="serif">does</span></h2>
+        </div>
+        <p>It lays notes out on a page the way a person would write them, math included, and every letter stays legible.</p>
+      </div>
+      <ol class="feat" data-reveal>
+        {
+          features.map((f, i) => (
+            <li>
+              <span class="mono n">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- the hand -->
+    <section class="block wrap" id="hand" aria-labelledby="h-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>02</i><span>The hand</span></div>
+          <h2 id="h-title">One writer, <span class="serif">never twice</span> the same</h2>
+        </div>
+        <p>Font-based generators either repeat the same glyph or jitter every letter on its own. Both look mechanical. penpad models a writer instead.</p>
+      </div>
+
+      <figure class="paper-strip" data-reveal>
+        <img src="/penpad/img/variation.png" width="1100" height="309" loading="lazy" alt="The same sentence handwritten several times by penpad, with natural differences between the letters" />
+        <figcaption class="mono">Fig. 3: One hand, the same sentence, again and again</figcaption>
+      </figure>
+
+      <div class="layers" data-reveal>
+        {
+          layers.map((l) => (
+            <div>
+              <span class="mono n">{l.n}</span>
+              <h3>{l.title}</h3>
+              <p>{l.body}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="styles" data-reveal>
+        {
+          styles.map((s) => (
+            <figure>
+              <div class="frame">
+                <img src={s.src} width={s.w} height="360" loading="lazy" alt={`The same notes in the ${s.name} style on ${s.paper} paper`} />
+              </div>
+              <figcaption>
+                <code>--style {s.name}</code>
+                <span class="mono">{s.paper}</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- install & format -->
+    <section class="block wrap" id="use" aria-labelledby="u-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>03</i><span>Install & write</span></div>
+          <h2 id="u-title">Two commands, <span class="serif">one page</span></h2>
+        </div>
+        <p>Pages render in parallel on every core. Output and errors are one line each.</p>
+      </div>
+
+      <div class="use-grid">
+        <div data-reveal>
+          <div class="terminal">
+            <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <pre><span class="p">~</span> {install}
+<span class="p">~</span> penpad demo                <span class="muted"># writes penpad-demo.pdf</span>
+<span class="p">~</span> penpad render notes.md     <span class="muted"># writes notes.pdf</span>
+<span class="p">~</span> penpad render notes.md --style print --paper a4-lines</pre>
+          </div>
+          <div class="alt">
+            <div>
+              <span class="mono">No install, with uv</span>
+              <code>uvx --from git+https://github.com/felipefrf/penpad penpad render notes.md</code>
+            </div>
+            <div>
+              <span class="mono">Docker</span>
+              <code>docker build -t penpad https://github.com/felipefrf/penpad.git</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="markup" data-reveal>
+          <div class="markup-head mono"><span>You write</span><span>You get</span></div>
+          {
+            markup.map(([k, v]) => (
+              <div class="row">
+                <code>{k}</code>
+                <span>{v}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- python -->
+    <section class="block wrap" id="python" aria-labelledby="py-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>04</i><span>Python API</span></div>
+          <h2 id="py-title">Sketches, <span class="serif">by hand</span></h2>
+        </div>
+        <p>Lines, arrows, curves and circles drawn in the same pen, for free-body diagrams and quick figures.</p>
+      </div>
+      <div class="py" data-reveal>
+        <div class="terminal code">
+          <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span class="mono">incline.py</span></div>
+          <pre>{pySample}</pre>
+        </div>
+        <div class="sheet small">
+          <img src="/penpad/img/sketch.jpg" width="1100" height="825" loading="lazy" alt="Hand-drawn free-body diagram of a block on an incline with a boxed handwritten equation, made with the penpad Python API" />
+        </div>
+      </div>
+    </section>
+
+    <!-- faq -->
+    <section class="block wrap" id="faq" aria-labelledby="faq-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>05</i><span>FAQ</span></div>
+          <h2 id="faq-title">Questions</h2>
+        </div>
+      </div>
+      <div class="log faq" data-reveal>
+        {
+          faqs.map((f) => (
+            <details>
+              <summary>
+                <span class="co">{f.q}</span>
+                <span class="toggle" aria-hidden="true" />
+              </summary>
+              <div class="detail">
+                <div>
+                  <p>{f.a}</p>
+                </div>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+      <p class="intended" data-reveal>
+        <span class="mono">Intended use</span>
+        penpad is for your own study notes, tablet notebooks, flashcards, mockups and design work. Please don’t use it to pass
+        generated text off as handwriting where handwriting is required, such as exams, signatures or handwritten assignments.
+      </p>
+    </section>
+
+    <section class="contact wrap" aria-labelledby="pp-cta">
+      <h2 id="pp-cta" data-reveal>
+        Your notes,<br /><span class="fade">in <span class="serif">your</span> hand.</span>
+      </h2>
+      <div class="contact-row" data-reveal>
+        <a class="btn btn-primary" href={repo} target="_blank" rel="noopener">Get penpad on GitHub <Fragment set:html={arrow} /></a>
+        <a class="btn btn-ghost" href={`${repo}/blob/main/examples/physics-notes.md`} target="_blank" rel="noopener">Example notes</a>
+        <a class="btn btn-ghost" href="/">More from Felipe</a>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Base>

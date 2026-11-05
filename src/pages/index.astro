@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import { person, featured, more, jobs, honors, education, toolbox, flightPath } from '../data/site';
 
 // Trajectory plot: one cubic Bézier in a 1200×340 box, waypoints sampled along it.
@@ -34,21 +36,15 @@ const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
 <Base>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="nav" id="nav">
-    <nav class="nav-pill" aria-label="Main">
-      <a class="brand" href="/" aria-label="Felipe Ribeiro, home">
-        <img src="/favicon.svg" alt="" width="26" height="26" />
-        <span>{person.name}</span>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#log">Experience</a></li>
-        <li><a href="#honors">Honors</a></li>
-        <li><a href="#how">How I work</a></li>
-      </ul>
-      <a class="btn btn-primary btn-sm" href="#contact">Contact</a>
-    </nav>
-  </header>
+  <Nav
+    links={[
+      { href: '#work', label: 'Work' },
+      { href: '#log', label: 'Experience' },
+      { href: '#honors', label: 'Honors' },
+      { href: '#how', label: 'How I work' },
+    ]}
+    cta={{ href: '#contact', label: 'Contact' }}
+  />
 
   <main id="main">
     <!-- hero -->
@@ -151,7 +147,11 @@ const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
               </ul>
               <div class="links">
                 {p.links.map((l, i) => (
-                  <a class:list={['btn btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost']} href={l.href} target="_blank" rel="noopener">
+                  <a
+                    class:list={['btn btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost']}
+                    href={l.href}
+                    {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}
+                  >
                     {l.label} <Fragment set:html={arrow} />
                   </a>
                 ))}
@@ -315,47 +315,13 @@ const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
       </h2>
       <div class="contact-row" data-reveal>
         <a class="btn btn-primary" href={`mailto:${person.email}`}>{person.email} <Fragment set:html={arrow} /></a>
-        <button class="btn btn-ghost copy" type="button" data-email={person.email}><span class="label">Copy email</span></button>
+        <button class="btn btn-ghost copy" type="button" data-copy={person.email}><span class="label">Copy email</span></button>
         <a class="btn btn-ghost" href={person.linkedin} target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn btn-ghost" href={person.github} target="_blank" rel="noopener">GitHub</a>
       </div>
     </section>
 
-    <footer class="foot wrap mono">
-      <span>© {new Date().getFullYear()} {person.name} · {person.location}</span>
-      <span><a href="/llms.txt">llms.txt</a> · <a href="https://github.com/felipefrf/felipefrf.com" target="_blank" rel="noopener">Source</a></span>
-    </footer>
+    <Footer />
   </main>
 
-  <script>
-    const nav = document.getElementById('nav');
-    const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 8);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            io.unobserve(e.target);
-          }
-        }
-      },
-      { rootMargin: '0px 0px -40px 0px', threshold: 0 },
-    );
-    document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
-
-    document.querySelectorAll<HTMLButtonElement>('.copy').forEach((btn) => {
-      btn.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(btn.dataset.email ?? '');
-          btn.dataset.copied = 'true';
-          setTimeout(() => (btn.dataset.copied = 'false'), 1800);
-        } catch {
-          window.location.href = `mailto:${btn.dataset.email}`;
-        }
-      });
-    });
-  </script>
 </Base>
