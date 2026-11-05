@@ -1,0 +1,127 @@
+---
+// Tabbed, animated architecture diagrams. Paths are computed here; the
+// build-up, the travelling packets and the log are driven by site.ts.
+import { systems, type SysNode, type SysEdge } from '../data/systems';
+
+const VB_W = 1000;
+const VB_H = 460;
+
+function edgePath(e: SysEdge, nodes: SysNode[]) {
+  const a = nodes.find((n) => n.id === e.from)!;
+  const b = nodes.find((n) => n.id === e.to)!;
+  const acx = a.x + a.w / 2, acy = a.y + a.h / 2;
+  const bcx = b.x + b.w / 2, bcy = b.y + b.h / 2;
+  if (e.route === 'below') {
+    const sx = acx, sy = a.y + a.h, ex = bcx, ey = b.y + b.h;
+    return `M${sx} ${sy} C${sx} 470 ${ex} 470 ${ex} ${ey}`;
+  }
+  const dx = bcx - acx, dy = bcy - acy;
+  if (Math.abs(dx) > Math.abs(dy) * 1.2) {
+    const sx = dx > 0 ? a.x + a.w : a.x;
+    const ex = dx > 0 ? b.x : b.x + b.w;
+    const mx = (sx + ex) / 2;
+    return `M${sx} ${acy} C${mx} ${acy} ${mx} ${bcy} ${ex} ${bcy}`;
+  }
+  const sy = dy > 0 ? a.y + a.h : a.y;
+  const ey = dy > 0 ? b.y : b.y + b.h;
+  const my = (sy + ey) / 2;
+  return `M${acx} ${sy} C${acx} ${my} ${bcx} ${my} ${bcx} ${ey}`;
+}
+
+const data = systems.map((s) => ({
+  ...s,
+  paths: s.edges.map((e) => ({ ...e, d: edgePath(e, s.nodes) })),
+  // ordering for the build-up: nodes left to right, top to bottom
+  order: [...s.nodes].sort((p, q) => p.x - q.x || p.y - q.y).map((n) => n.id),
+}));
+const kindLabel: Record<string, string> = {
+  model: 'model',
+  code: 'code',
+  store: 'data',
+  channel: 'channel',
+  person: 'person',
+  meta: 'quality',
+};
+---
+
+<div class="sys" data-systems>
+  <div class="sys-tabs" role="tablist" aria-label="Systems">
+    {
+      data.map((s, i) => (
+        <button type="button" role="tab" class="sys-tab" data-sys-tab={s.id} aria-selected={i === 0 ? 'true' : 'false'}>
+          <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+          {s.tab}
+          <i class="sys-progress" aria-hidden="true" />
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    data.map((s, i) => (
+      <div class:list={['sys-panel', { active: i === 0 }]} data-sys={s.id} role="tabpanel" data-steps={JSON.stringify(s.steps)} data-edges={JSON.stringify(s.edges.map((e) => ({ id: e.id, from: e.from, to: e.to })))}>
+        <div class="sys-graph">
+          <svg viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-label={`${s.title}: architecture diagram`}>
+            <defs>
+              <pattern id={`grid-${s.id}`} width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="1" class="dotgrid" />
+              </pattern>
+            </defs>
+            <rect width={VB_W} height={VB_H} fill={`url(#grid-${s.id})`} />
+            {s.paths.map((e) => (
+              <path id={`e-${s.id}-${e.id}`} class:list={['edge', { dashed: e.dashed }]} d={e.d} data-edge={e.id} pathLength="1" />
+            ))}
+            {s.nodes.map((n) => (
+              <g class:list={['node', n.kind]} data-node={n.id} style={`--o:${s.order.indexOf(n.id)}`} transform={`translate(${n.x} ${n.y})`}>
+                <rect width={n.w} height={n.h} rx={n.kind === 'channel' ? n.h / 2 : 12} />
+                {n.kind !== 'channel' && n.kind && (
+                  <text x="14" y="18" class="kind">
+                    {kindLabel[n.kind]}
+                  </text>
+                )}
+                <text x={n.kind === 'channel' ? n.w / 2 : 14} y={n.kind === 'channel' ? n.h / 2 + 5 : n.sub ? n.h - 26 : n.h / 2 + 8} class:list={['label', { center: n.kind === 'channel' }]}>
+                  {n.label}
+                </text>
+                {n.sub && (
+                  <text x="14" y={n.h - 10} class="sub">
+                    {n.sub}
+                  </text>
+                )}
+              </g>
+            ))}
+            <circle class="halo" r="14" cx="-50" cy="-50" />
+            <circle class="packet" r="6" cx="-50" cy="-50" />
+          </svg>
+          <span class="sys-hint mono" aria-hidden="true">Swipe to explore →</span>
+        </div>
+
+        <aside class="sys-side">
+          <span class="mono where">{s.where}</span>
+          <h3>{s.title}</h3>
+          <p>{s.blurb}</p>
+          <div class="sys-facts">
+            {s.facts.map((f) => (
+              <div>
+                <b>{f.value}</b>
+                <span>{f.label}</span>
+              </div>
+            ))}
+          </div>
+          <div class="sys-log-wrap">
+            <div class="sys-log-head mono">
+              <span>
+                <i class="rec" aria-hidden="true" /> trace
+              </span>
+              <span>illustrative run</span>
+            </div>
+            <ol class="sys-log" aria-live="off">
+              {s.steps.map((st) => (
+                <li class="static">{st.log}</li>
+              ))}
+            </ol>
+          </div>
+        </aside>
+      </div>
+    ))
+  }
+</div>

@@ -12,9 +12,9 @@
 
 ## Projects
 
-- [Curo](https://felipefrf.com/curo/): WhatsApp-first patient-care layer for Brazilian specialists and clinics (Google ADK, Gemini, Postgres). Co-founded with his brother; interviewed with Y Combinator.
-- Flight Price Finder (in progress): finds the cheapest routes including hidden-city fares; being connected to live Google Flights data.
-- [Ápice](https://software-house-six.vercel.app): software house run with his brother (ITA + MIT); clients include Império Eventos (logistics control tower and field app).
+- [Curo](https://felipefrf.com/curo/): WhatsApp-first patient-care layer for Brazilian specialists and clinics (Google ADK, Gemini, Postgres). A part-time project with his brother that went as far as a Y Combinator interview.
+- Flight Price Finder (side project): finds the cheapest routes including hidden-city fares, with live Google Flights data through treg.
+- [Ápice](https://software-house-six.vercel.app): software house he runs on the side with his brother (ITA + MIT); clients include Império Eventos (logistics control tower and field app).
 - [MedAlvo](https://medalvo.com.br): adaptive prep platform for Brazilian medical residency exams (FSRS v6, Thompson Sampling, 2PL IRT, Bayesian Knowledge Tracing; FastAPI, Postgres/pgvector, Cloud Run). Founder.
 - [penpad](https://github.com/felipefrf/penpad): open-source tool that turns Markdown + LaTeX notes into realistic handwritten PDF/PNG pages for tablets. Project page: https://felipefrf.com/penpad/
 - [Editable Pets](https://github.com/felipefrf/editable-pets): macOS desktop companion for Claude Code and Codex sessions.
@@ -32,8 +32,11 @@
 
 - Iberoamerican Physics Olympiad: 1st place overall (top gold)
 - Nordic-Baltic Physics Olympiad: silver medal
-- 50+ national olympiad medals (2017–2020), including 3× gold in physics (OBF), 2× gold in robotics (OBR) and gold in math (OBMEP)
-- 2nd place, Nameless Hackathon (2025)
+- Iberoamerican Physics Olympiad 2020: also the special prize for the best solution to Problem 2
+- Nordic-Baltic Physics Olympiad 2020: also the special prize for the best solution to Problem 1
+- 50+ olympiad medals (2017–2020), including 4× gold in physics (OBF 2017–2020), 2× gold in astronomy (OBA), 2× gold and a silver in robotics (OBR), and gold in math (OBMEP)
+- 2nd place, Nameless Hackathon (2025) with SkyLens: CBERS-4A satellite imagery to find urban growth in rural-taxed land
+- ITA entrance exam: 28th of 4,033 open-track applicants for 144 seats
 
 ## Contact
 

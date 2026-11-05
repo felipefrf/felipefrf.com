@@ -4,6 +4,8 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Handwriting from '../components/Handwriting.astro';
 import Medal from '../components/Medal.astro';
+import Systems from '../components/Systems.astro';
+import CuroChat from '../components/CuroChat.astro';
 import '../styles/home.css';
 import {
   person,
@@ -16,6 +18,7 @@ import {
   building,
   medals,
   receipts,
+  medalList,
   national,
   otherHonors,
   education,
@@ -56,6 +59,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
   <a class="skip" href="#main">Skip to content</a>
   <Nav
     links={[
+      { href: '#systems', label: 'Systems' },
       { href: '#work', label: 'Work' },
       { href: '#log', label: 'Journey' },
       { href: '#honors', label: 'Medals' },
@@ -79,12 +83,13 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           </h1>
           <p class="lead rise" style="--i:3">
             I’m <strong>Felipe</strong>. I build production AI end to end: the LLM orchestration, the product around it and
-            the guardrails that keep it safe. Aerospace engineering at <strong>ITA</strong>, 1st place overall at the
-            <strong>Iberoamerican Physics Olympiad</strong>, founder of <strong>MedAlvo</strong>. I like systems where a wrong
-            answer costs real money, so I build them to <span class="mark">fail loud, not silent.</span>
+            the guardrails that keep it safe. Right now I’m a founding engineer on <strong>Milo</strong>, where every employee
+            gets an agent in its own microVM. Before that, agents that renegotiate debt at <strong>NG.CASH</strong>, and on the
+            side <strong>MedAlvo</strong>, a prep company that runs itself. I like systems where a wrong answer costs real
+            money, so I build them to <span class="mark">fail loud, not silent.</span>
           </p>
           <div class="ctas rise" style="--i:4">
-            <a class="btn btn-primary" href="#work">See the work <Fragment set:html={arrow} /></a>
+            <a class="btn btn-primary" href="#systems">See how they work <Fragment set:html={arrow} /></a>
             <a class="btn btn-ghost" href={`mailto:${person.email}`}>Get in touch</a>
           </div>
         </div>
@@ -97,8 +102,6 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
             <span class="mono">Felipe Ribeiro</span>
             <span>AI engineer · ITA ’27</span>
           </figcaption>
-          <span class="sticker s1"><i class="dot gold" aria-hidden="true"></i>Top gold · OIbF 2020</span>
-          <span class="sticker s2"><i class="dot" aria-hidden="true"></i>Aerospace · ITA</span>
         </figure>
       </div>
 
@@ -138,7 +141,8 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="wrap impact" aria-label="Highlights" data-reveal>
       {
         impact.map((n) => (
-          <div class:list={['impact-cell', { accent: n.accent }]}>
+          <div class:list={['impact-cell', { accent: n.accent, 'has-logo': n.logo }]}>
+            {n.logo && <img class="impact-logo" src={n.logo} alt="ITA" width="124" height="47" loading="lazy" />}
             <b {...(n.count ? { 'data-count': n.count, 'data-suffix': n.suffix } : {})}>{n.value}</b>
             <span class="what">{n.label}</span>
             <span class="detail">{n.detail}</span>
@@ -147,11 +151,25 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
       }
     </section>
 
+    <!-- systems -->
+    <section class="block wrap" id="systems" aria-labelledby="systems-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>01</i><span>Inside the systems</span></div>
+          <h2 id="systems-title">How the things I build <span class="serif">actually work</span></h2>
+        </div>
+        <p>Results are the output. This is everything in between: how messages, models and deterministic code move through what I build. Real architecture, illustrative runs.</p>
+      </div>
+      <div data-reveal>
+        <Systems />
+      </div>
+    </section>
+
     <!-- selected work -->
     <section class="block wrap" id="work" aria-labelledby="work-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>01</i><span>Selected work</span></div>
+          <div class="mono"><i>02</i><span>Selected work</span></div>
           <h2 id="work-title">Things I’ve <span class="serif">built</span></h2>
         </div>
         <p>A company that makes money, a startup that got as far as a YC interview, open-source tools people install, and what I’m hacking on now.</p>
@@ -226,17 +244,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                   <Handwriting alt="A page of damped-oscillator physics notes rendered in handwriting by penpad" />
                 </div>
               )}
-              {p.slug === 'curo' && (
-                <div class="browser">
-                  <div class="browser-bar" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                    <span>felipefrf.com/curo</span>
-                  </div>
-                  <img src="/img/curo.jpg" width="1440" height="900" loading="lazy" decoding="async" alt="Curo landing page: “Você opera. A gente cuida do resto.”" />
-                </div>
-              )}
+              {p.slug === 'curo' && <CuroChat />}
               {p.slug === 'flights' && (
                 <div class="route" aria-label="Hidden-city example: SSA to CGH direct costs R$381, while a SSA to FLN ticket via CGH costs R$248; you get off at CGH and save R$133.">
                   <svg viewBox="0 0 560 360" role="img">
@@ -325,7 +333,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="log" aria-labelledby="log-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>02</i><span>Journey</span></div>
+          <div class="mono"><i>03</i><span>Journey</span></div>
           <h2 id="log-title">Flight <span class="serif">log</span></h2>
         </div>
         <p>Remote roles across San Francisco, São Paulo, Belgium and New York, a few banks before that, and the things I built and led along the way.</p>
@@ -394,7 +402,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="honors" aria-labelledby="honors-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>03</i><span>Olympiads & honors</span></div>
+          <div class="mono"><i>04</i><span>Olympiads & honors</span></div>
           <h2 id="honors-title">Before all <span class="serif">this</span></h2>
         </div>
         <p>From 2017 to 2020 I trained for physics, math and robotics olympiads. It’s where I learned to like problems that don’t have a known answer yet.</p>
@@ -419,7 +427,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
             </figure>
           ))
         }
-        <div class="medal-card bulk" data-reveal>
+        <div class="medal-card bulk" data-reveal data-medals>
           <span class="mono scope">National · 2017–2020</span>
           <b class="big" data-count="50" data-suffix="+">50+</b>
           <span class="bulk-label">national olympiad medals</span>
@@ -431,8 +439,28 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                 </li>
               ))
             }
-            <li class="more">and many more</li>
           </ul>
+          <button class="btn btn-sm btn-primary see-all" type="button" data-medals-open aria-expanded="false" aria-controls="medal-list">
+            See the full list <Fragment set:html={arrow} />
+          </button>
+          <div class="medal-list" id="medal-list" hidden>
+            <div class="medal-list-head">
+              <span class="mono">Main medals · {medalList.length} of 50+</span>
+              <button class="close" type="button" data-medals-close aria-label="Close the list">×</button>
+            </div>
+            <ul>
+              {
+                medalList.map((m) => (
+                  <li>
+                    <i class:list={['m-dot', m.medal]} aria-label={`${m.medal} medal`} />
+                    <span class="mono y">{m.year}</span>
+                    <span class="n">{m.name}</span>
+                    <span class="mono sc">{m.scope}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -443,7 +471,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           </div>
           <figcaption>
             <span>{receipts.certificate.caption}</span>
-            <a class="textlink mono" href={receipts.certificate.verify} target="_blank" rel="noopener">Verify ↗</a>
+            <a class="textlink mono" href={receipts.certificate.announcement} target="_blank" rel="noopener">SBF announcement ↗</a>
           </figcaption>
         </figure>
 
@@ -470,6 +498,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           </div>
           <figcaption>
             <span>{receipts.oibfRow.caption}</span>
+            <a class="textlink mono" href={receipts.certificate.medalTable} target="_blank" rel="noopener">Official medal table ↗</a>
           </figcaption>
         </figure>
 
@@ -503,20 +532,37 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
       <div class="honor-row">
         {
           otherHonors.map((h) => (
-            <div class="honor-mini" data-reveal>
-              <b>{h.title}</b>
-              <span>{h.event}</span>
-              <small>{h.note}</small>
-            </div>
+            <figure class="honor-mini" data-reveal>
+              {h.photo && (
+                <div class="honor-photo">
+                  <img src={h.photo} width="1600" height="1200" loading="lazy" decoding="async" alt="The SkyLens team on stage at the Nameless Hackathon, under a screen that reads “2º lugar · SkyLens”" />
+                </div>
+              )}
+              <figcaption>
+                <b>{h.title}</b>
+                <span>{h.event}</span>
+                <small>{h.note}</small>
+              </figcaption>
+            </figure>
           ))
         }
         <div class="school" data-reveal>
-          <div>
-            <span class="mono">Education</span>
+          <img class="school-logo" src={education.logo} alt="ITA emblem" width="496" height="188" loading="lazy" />
+          <div class="school-copy">
+            <span class="mono">Education · {education.dates}</span>
             <h3>{education.school}</h3>
             <p>{education.degree}. {education.note}</p>
           </div>
-          <span class="when mono">{education.dates}</span>
+          <div class="school-entry">
+            {
+              education.entry.map((e) => (
+                <div>
+                  <b>{e.value}</b>
+                  <span>{e.label}</span>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </section>
@@ -525,7 +571,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="how" aria-labelledby="how-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>04</i><span>How I work</span></div>
+          <div class="mono"><i>05</i><span>How I work</span></div>
           <h2 id="how-title">AI-native, <span class="serif">by default</span></h2>
         </div>
       </div>

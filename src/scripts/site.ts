@@ -180,3 +180,185 @@ function initHandwriting(el: HTMLElement) {
   else src.addEventListener('load', start, { once: true });
 }
 document.querySelectorAll<HTMLElement>('[data-hw]').forEach(initHandwriting);
+
+// ---------- animated system diagrams ----------
+type Step = { edge: string; reverse?: boolean; log: string };
+type EdgeRef = { id: string; from: string; to: string };
+const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+function initSystems(root: HTMLElement) {
+  const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-sys-tab]')];
+  const panels = [...root.querySelectorAll<HTMLElement>('[data-sys]')];
+  let active = 0;
+  let run = 0; // bumps on every tab change to cancel the previous loop
+  let visible = false;
+  let started = false;
+
+  const untilVisible = async (token: number) => {
+    while (!visible && token === run) await wait(250);
+  };
+
+  const animatePacket = (panel: HTMLElement, path: SVGPathElement, reverse: boolean, ms: number, token: number) =>
+    new Promise<void>((resolve) => {
+      const packet = panel.querySelector<SVGCircleElement>('.packet')!;
+      const halo = panel.querySelector<SVGCircleElement>('.halo')!;
+      const len = path.getTotalLength();
+      const t0 = performance.now();
+      const frame = (t: number) => {
+        if (token !== run) return resolve();
+        const p = Math.min(1, (t - t0) / ms);
+        const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        const pt = path.getPointAtLength(len * (reverse ? 1 - e : e));
+        packet.setAttribute('cx', String(pt.x));
+        packet.setAttribute('cy', String(pt.y));
+        halo.setAttribute('cx', String(pt.x));
+        halo.setAttribute('cy', String(pt.y));
+        if (p < 1) requestAnimationFrame(frame);
+        else resolve();
+      };
+      requestAnimationFrame(frame);
+    });
+
+  const play = async (i: number) => {
+    const token = ++run;
+    active = i;
+    tabs.forEach((t, j) => {
+      t.setAttribute('aria-selected', j === i ? 'true' : 'false');
+      t.classList.remove('running');
+    });
+    panels.forEach((p, j) => p.classList.toggle('active', j === i));
+    const panel = panels[i];
+    const steps: Step[] = JSON.parse(panel.dataset.steps ?? '[]');
+    const edges: EdgeRef[] = JSON.parse(panel.dataset.edges ?? '[]');
+    const log = panel.querySelector<HTMLOListElement>('.sys-log')!;
+    const sysId = panel.dataset.sys;
+
+    // reset, then build the graph
+    panel.classList.remove('built');
+    panel.querySelectorAll('.hot').forEach((el) => el.classList.remove('hot'));
+    log.innerHTML = '';
+    if (reduced) {
+      panel.classList.add('built');
+      steps.forEach((s) => {
+        const li = document.createElement('li');
+        li.textContent = s.log;
+        log.append(li);
+      });
+      return;
+    }
+    await untilVisible(token);
+    await wait(60);
+    panel.classList.add('built');
+    await wait(1300);
+    const tab = tabs[i];
+    tab.style.setProperty('--dur', `${steps.length * 1.55 + 2.2}s`);
+    tab.classList.add('running');
+
+    const t0 = performance.now();
+    for (const s of steps) {
+      if (token !== run) return;
+      await untilVisible(token);
+      const ref = edges.find((e) => e.id === s.edge);
+      const path = panel.querySelector<SVGPathElement>(`#e-${sysId}-${s.edge}`);
+      if (!ref || !path) continue;
+      const fromId = s.reverse ? ref.to : ref.from;
+      const toId = s.reverse ? ref.from : ref.to;
+      panel.querySelectorAll('.node.hot, .edge.hot').forEach((el) => el.classList.remove('hot'));
+      const fromEl = panel.querySelector<SVGGElement>(`[data-node="${fromId}"]`);
+      fromEl?.classList.add('hot');
+      path.classList.add('hot');
+      panel.classList.add('moving');
+      // On narrow screens the diagram scrolls inside its frame: follow the action.
+      const graph = panel.querySelector<HTMLElement>('.sys-graph');
+      const toEl = panel.querySelector<SVGGElement>(`[data-node="${toId}"]`);
+      if (graph && toEl && graph.scrollWidth > graph.clientWidth + 4) {
+        const node = toEl.getBoundingClientRect();
+        const frame = graph.getBoundingClientRect();
+        const target = graph.scrollLeft + node.left + node.width / 2 - (frame.left + graph.clientWidth / 2);
+        graph.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+      }
+
+      const li = document.createElement('li');
+      const ts = ((performance.now() - t0) / 1000).toFixed(1).padStart(4, '0');
+      li.innerHTML = `<span class="t">+${ts}s</span><span></span>`;
+      (li.lastElementChild as HTMLElement).textContent = s.log;
+      log.prepend(li);
+      while (log.children.length > 5) log.lastElementChild?.remove();
+
+      await animatePacket(panel, path, !!s.reverse, 950, token);
+      if (token !== run) return;
+      panel.querySelector(`[data-node="${toId}"]`)?.classList.add('hot');
+      await wait(550);
+    }
+    panel.classList.remove('moving');
+    await wait(2200);
+    if (token === run) play((active + 1) % panels.length);
+  };
+
+  tabs.forEach((t, i) => t.addEventListener('click', () => play(i)));
+  new IntersectionObserver(
+    (entries) => {
+      visible = entries[0].isIntersecting;
+      if (visible && !started) {
+        started = true;
+        play(0);
+      }
+    },
+    { threshold: 0.3 },
+  ).observe(root);
+}
+document.querySelectorAll<HTMLElement>('[data-systems]').forEach(initSystems);
+
+// ---------- Curo conversation ----------
+function initChat(root: HTMLElement) {
+  if (reduced) return;
+  const items = [...root.querySelectorAll<HTMLElement>('[data-at]')];
+  const times = [400, 1300, 2300, 3100, 3900, 5000];
+  let visible = false;
+  let running = false;
+  root.classList.add('chat-js');
+  const loop = async () => {
+    if (running) return;
+    running = true;
+    while (visible) {
+      items.forEach((el) => el.classList.remove('show'));
+      let last = 0;
+      for (let i = 0; i < times.length; i++) {
+        await wait(times[i] - last);
+        last = times[i];
+        if (!visible) break;
+        root.querySelectorAll<HTMLElement>(`[data-at="${i}"]`).forEach((el) => el.classList.add('show'));
+        if (i === 5) root.querySelector('.typing')?.classList.remove('show');
+      }
+      await wait(4200);
+    }
+    running = false;
+  };
+  new IntersectionObserver(
+    (entries) => {
+      visible = entries[0].isIntersecting;
+      if (visible) loop();
+    },
+    { threshold: 0.3 },
+  ).observe(root);
+}
+document.querySelectorAll<HTMLElement>('[data-chat]').forEach(initChat);
+
+// ---------- full medal list ----------
+document.querySelectorAll<HTMLElement>('[data-medals]').forEach((card) => {
+  const open = card.querySelector<HTMLButtonElement>('[data-medals-open]');
+  const close = card.querySelector<HTMLButtonElement>('[data-medals-close]');
+  const list = card.querySelector<HTMLElement>('.medal-list');
+  if (!open || !close || !list) return;
+  const set = (on: boolean) => {
+    list.hidden = !on;
+    open.setAttribute('aria-expanded', String(on));
+    card.classList.toggle('listing', on);
+    (on ? close : open).focus();
+  };
+  open.addEventListener('click', () => set(true));
+  close.addEventListener('click', () => set(false));
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !list.hidden) set(false);
+  });
+});

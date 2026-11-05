@@ -13,11 +13,11 @@ export const person = {
 
 // Big numbers under the hero. `count` animates from 0 when it scrolls into view.
 export const impact = [
+  { value: '28th', label: 'of 4,033 in ITA’s entrance exam', detail: '144 seats · Brazil’s most respected engineering school', logo: '/img/ita.png' },
   { value: '1st', label: 'overall, top gold', detail: 'Iberoamerican Physics Olympiad 2020', accent: true },
-  { value: '50+', count: 50, suffix: '+', label: 'national olympiad medals', detail: 'Physics, math and robotics, 2017–2020' },
-  { value: '1,800+', count: 1800, suffix: '+', label: 'attendees', detail: 'At the ITA career fair I ran as president' },
-  { value: '350+', count: 350, suffix: '+', label: 'public-school students', detail: 'Taught for free by Iniciativa Feynman' },
-  { value: '163k+', count: 163, suffix: 'k+', label: 'exam questions', detail: 'In MedAlvo’s adaptive question bank' },
+  { value: '50+', count: 50, suffix: '+', label: 'olympiad medals', detail: 'Two international, 2017–2020' },
+  { value: '0/34', label: 'prompt-injection leaks', detail: 'On the debt-negotiation agent at NG.CASH' },
+  { value: '~95%', label: 'of manual review removed', detail: 'Legal’s judicial-notification triage' },
 ];
 
 export type Link = { label: string; href: string };
@@ -75,7 +75,7 @@ export const featured: Project[] = [
   {
     slug: 'curo',
     name: 'Curo',
-    kind: 'Co-founder',
+    kind: 'Side project',
     year: '2026',
     blurb:
       'A WhatsApp-first patient-care layer for Brazilian specialists and clinics: one conversation for the patient, while Curo talks to the doctor, the hospital and the insurer. Built with my brother Rafael (MIT). We took it seriously for a while, far enough to interview with Y Combinator.',
@@ -90,27 +90,27 @@ export const featured: Project[] = [
   {
     slug: 'flights',
     name: 'Flight Price Finder',
-    kind: 'In progress',
+    kind: 'Side project',
     year: '2026',
-    status: 'Now wiring it to live Google Flights data through treg',
+    status: 'Live Google Flights data through treg',
     blurb:
       'Finds the cheapest way between two cities, including hidden-city fares: a ticket to somewhere further that connects where you actually want to land. Every search proves it searched, because most of them find nothing, and that’s fine.',
     points: [
       'Real find: SSA→CGH direct was R$381; SSA→CGH→FLN was R$248',
       'Groups nearby airports (GRU/CGH/VCP) and multi-leg through-fares',
-      'Runs on my machine, reachable through a Cloudflare Tunnel + Access',
+      'Fares come from Google Flights through treg; runs on my machine behind a Cloudflare Tunnel + Access',
     ],
-    stack: ['Python', 'SerpApi', 'Cloudflare Tunnel'],
+    stack: ['Python', 'treg', 'Google Flights', 'Cloudflare Tunnel'],
     links: [],
   },
 ];
 
 export const apice = {
   name: 'Ápice',
-  kind: 'Software house',
+  kind: 'Side business',
   year: '2026',
   blurb:
-    'A software house I run with my brother. Two engineers, ITA and MIT: we design the system and write the code ourselves, for companies that need software that holds up.',
+    'A software house my brother and I run on the side. Two engineers, ITA and MIT: we design the system and write the code ourselves, for companies that need software that holds up.',
   href: 'https://software-house-six.vercel.app',
   work: [
     {
@@ -229,9 +229,6 @@ export const earlier = [
 ];
 
 export const building = [
-  { name: 'MedAlvo', role: 'Founder', dates: '2026 —', note: 'Adaptive prep for medical residency exams' },
-  { name: 'Curo', role: 'Co-founder', dates: '2026', note: 'Patient-care layer for specialists; interviewed with YC' },
-  { name: 'Ápice', role: 'Co-founder', dates: '2026', note: 'Software house with my brother (ITA + MIT)' },
   { name: 'ITA Jobs Commission', role: 'President', dates: '2023 — 2024', note: 'Ran Brazil’s largest countryside career fair, 1,800+ attendees' },
   { name: 'Fundação Estudar', role: 'Multiplicador', dates: 'Mar — Oct 2024', note: 'Workshops and mentoring for students from underrepresented backgrounds' },
   { name: 'Iniciativa Feynman', role: 'Co-founder & Coordinator', dates: 'Sep 2019 — Apr 2021', note: '0 → 81 volunteers in under 6 months, 350+ public-school students during COVID' },
@@ -247,7 +244,7 @@ export const medals = [
     year: '2020',
     ring: 'OLIMPÍADA IBEROAMERICANA DE FÍSICA · 2020 · ',
     logo: '/img/olympiads/oibf.png',
-    note: 'First in the official medal table, plus the special prize for the best solution to Problem 2.',
+    note: '1st overall, plus the special prize for the best solution to Problem 2.',
   },
   {
     kind: 'silver' as const,
@@ -258,7 +255,7 @@ export const medals = [
     year: '2020',
     ring: 'NORDIC-BALTIC PHYSICS OLYMPIAD · 2020 · ',
     logo: '/img/olympiads/nbpho.png',
-    note: '16th overall with 21.4 of 36.5 points, full marks on problems 1 and 3. Brazil’s first year as a guest.',
+    note: 'Special prize for the best solution to Problem 1. 21.4 of 36.5 points, 16th overall, in Brazil’s first year as a guest.',
   },
 ];
 
@@ -266,8 +263,9 @@ export const medals = [
 export const receipts = {
   certificate: {
     src: '/img/olympiads/oibf-2020-certificate.jpg',
-    verify: 'http://bit.ly/37qHpai',
     caption: 'OIbF virtual 2020 certificate, 5–13 December 2020',
+    medalTable: 'https://drive.google.com/file/d/1Z2PJxCC9j0_KWcFwX-5_0-Jzsm5zoqWz/view',
+    announcement: 'https://www.sbfisica.org.br/v1/sbf/olimpiada-iberoamericana-de-fisica-oibf-2020/',
   },
   oibfRow: {
     cols: ['Nombre', 'Apellido', 'País', 'Medalla', 'Premio especial'],
@@ -290,20 +288,47 @@ export const receipts = {
 };
 
 export const national = [
-  { name: 'OBF', full: 'Brazilian Physics Olympiad', result: '3× gold' },
-  { name: 'OBR', full: 'Brazilian Robotics Olympiad', result: '2× gold' },
-  { name: 'OBMEP', full: 'Brazilian Math Olympiad', result: 'Gold' },
+  { name: 'OBF', full: 'Brazilian Physics Olympiad', result: '4× gold' },
+  { name: 'OBA', full: 'Brazilian Astronomy & Astronautics Olympiad', result: '2× gold' },
+  { name: 'OBR', full: 'Brazilian Robotics Olympiad', result: '2× gold, silver' },
+  { name: 'OBMEP', full: 'Brazilian Public Schools Math Olympiad', result: 'Gold' },
+];
+
+// "See the full list": the main medals, newest first. Placements and special
+// prizes that aren't medals live on the medal cards instead.
+export const medalList = [
+  { year: 2020, medal: 'gold', name: 'Iberoamerican Physics Olympiad (OIbF)', scope: 'International' },
+  { year: 2020, medal: 'silver', name: 'Nordic-Baltic Physics Olympiad (NBPhO), Tallinn Tech', scope: 'International' },
+  { year: 2020, medal: 'gold', name: 'Brazilian Physics Olympiad (OBF)', scope: 'National' },
+  { year: 2020, medal: 'gold', name: 'Brazilian Astronomy & Astronautics Olympiad (OBA)', scope: 'National' },
+  { year: 2019, medal: 'gold', name: 'Brazilian Physics Olympiad (OBF)', scope: 'National' },
+  { year: 2019, medal: 'gold', name: 'Brazilian Robotics Olympiad (OBR)', scope: 'National' },
+  { year: 2019, medal: 'gold', name: 'National Science Olympiad (ONC)', scope: 'National' },
+  { year: 2019, medal: 'gold', name: 'Brazilian Astronomy & Astronautics Olympiad (OBA)', scope: 'National' },
+  { year: 2018, medal: 'gold', name: 'Brazilian Physics Olympiad (OBF)', scope: 'National' },
+  { year: 2018, medal: 'silver', name: 'Brazilian Robotics Olympiad (OBR)', scope: 'National' },
+  { year: 2018, medal: 'gold', name: 'Bahia Chemistry Olympiad (OBaQ)', scope: 'State' },
+  { year: 2017, medal: 'gold', name: 'Brazilian Physics Olympiad (OBF)', scope: 'National' },
+  { year: 2017, medal: 'gold', name: 'Brazilian Public Schools Math Olympiad (OBMEP)', scope: 'National' },
+  { year: 2017, medal: 'gold', name: 'Brazilian Robotics Olympiad (OBR)', scope: 'National' },
+  { year: 2017, medal: 'gold', name: 'Brazilian Public Schools Physics Olympiad (OBFEP)', scope: 'National' },
 ];
 
 export const otherHonors = [
-  { title: '2nd place', event: 'Nameless Hackathon (VC-backed), 2025', note: 'Satellite imagery + ML to find urban growth in rural-taxed zones' },
+  { title: '2nd place', event: 'SkyLens · Nameless Hackathon (VC-backed), 2025', note: 'CBERS-4A satellite imagery from INPE, pansharpened to 2 m mosaics, to find urban growth in rural-taxed land', photo: '/img/skylens-award.jpg' },
 ];
 
 export const education = {
   school: 'Instituto Tecnológico de Aeronáutica (ITA)',
   degree: 'Aerospace Engineering, Data Science minor',
   dates: 'Feb 2023 — Dec 2027',
-  note: 'Run by the Brazilian Air Force; one of the most selective engineering schools in Latin America.',
+  note: 'Run by the Brazilian Air Force since 1950 and widely regarded as the best engineering school in Brazil.',
+  entry: [
+    { value: '28th', label: 'place in the entrance exam' },
+    { value: '4,033', label: 'open-track applicants' },
+    { value: '144', label: 'seats' },
+  ],
+  logo: '/img/ita.png',
 };
 
 export const toolbox = [
