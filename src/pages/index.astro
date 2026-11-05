@@ -1,0 +1,361 @@
+---
+import Base from '../layouts/Base.astro';
+import { person, featured, more, jobs, honors, education, toolbox, flightPath } from '../data/site';
+
+// Trajectory plot: one cubic Bézier in a 1200×340 box, waypoints sampled along it.
+const W = 1200;
+const H = 340;
+const P = [
+  [30, 312],
+  [520, 312],
+  [840, 230],
+  [1080, 66],
+];
+const at = (t: number) => {
+  const u = 1 - t;
+  const a = u * u * u, b = 3 * u * u * t, c = 3 * u * t * t, d = t * t * t;
+  return [a * P[0][0] + b * P[1][0] + c * P[2][0] + d * P[3][0], a * P[0][1] + b * P[1][1] + c * P[2][1] + d * P[3][1]];
+};
+const ts = [0.05, 0.27, 0.48, 0.64, 0.82, 1];
+const waypoints = flightPath.map((w, i) => {
+  const [x, y] = at(ts[i]);
+  return { ...w, x, y, t: ts[i], last: i === flightPath.length - 1, first: i === 0 };
+});
+const pathD = `M${P[0].join(' ')} C${P[1].join(' ')} ${P[2].join(' ')} ${P[3].join(' ')}`;
+// Dashed "what's next" segment continues along the end tangent.
+const [ex, ey] = P[3];
+const nextD = `M${ex} ${ey} L${ex + 92} ${ey - 64}`;
+
+const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const arrowUp = `<svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
+---
+
+<Base>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <nav class="nav-pill" aria-label="Main">
+      <a class="brand" href="/" aria-label="Felipe Ribeiro, home">
+        <img src="/favicon.svg" alt="" width="26" height="26" />
+        <span>{person.name}</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#log">Experience</a></li>
+        <li><a href="#honors">Honors</a></li>
+        <li><a href="#how">How I work</a></li>
+      </ul>
+      <a class="btn btn-primary btn-sm" href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- hero -->
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="now rise" style="--i:0">
+        <span class="pulse" aria-hidden="true"></span>
+        <span><b>Now</b> · {person.now}</span>
+      </div>
+
+      <h1 id="hero-title">
+        <span class="line rise" style="--i:1">I build AI agents</span>
+        <span class="line rise fade" style="--i:2">that do <span class="serif">real</span> work.</span>
+      </h1>
+
+      <div class="hero-row">
+        <p class="lead rise" style="--i:3">
+          I’m <strong>Felipe Ribeiro</strong>: founding engineer at a stealth AI startup, founder of MedAlvo, and an
+          aerospace engineering student at ITA. I like systems where a wrong answer costs real money, so I build them to
+          <span class="mark">fail loud, not silent.</span>
+        </p>
+        <div class="ctas rise" style="--i:4">
+          <a class="btn btn-primary" href="#work">See the work <Fragment set:html={arrow} /></a>
+          <a class="btn btn-ghost" href={`mailto:${person.email}`}>Get in touch</a>
+        </div>
+      </div>
+
+      <figure class="figure rise" style="--i:5" aria-label="Career trajectory from olympiads to today">
+        <div class="plot">
+          <div class="plot-inner">
+          <svg viewBox={`0 0 ${W} ${H}`} role="presentation">
+            <path class="path" d={pathD} pathLength="1" />
+            <path class="path-next" d={nextD} style="--d:1" />
+            {
+              waypoints.map((w) => (
+                <circle class:list={['dot', { 'now-dot': w.last }]} cx={w.x} cy={w.y} r={w.last ? 6 : 5} style={`--d:${w.t}`} />
+              ))
+            }
+          </svg>
+          {
+            waypoints.map((w) => (
+              <div
+                class:list={['wp', { right: w.last, 'now-wp': w.last, keep: w.first || w.last }]}
+                style={`left:${pct(w.x, W)};top:${pct(w.y, H)};--d:${w.t}`}
+              >
+                <span class="mono">{w.year}</span>
+                <span>{w.label}</span>
+              </div>
+            ))
+          }
+          </div>
+        </div>
+        <figcaption class="fig-caption mono">
+          <span>Fig. 1: Trajectory, not to scale</span>
+          <span>Still climbing ↗</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- selected work -->
+    <section class="block wrap" id="work" aria-labelledby="work-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>01</i><span>Selected work</span></div>
+          <h2 id="work-title">Things I’ve <span class="serif">shipped</span></h2>
+        </div>
+        <p>Products with paying users, open-source tools people install, and the experiments in between.</p>
+      </div>
+
+      {
+        featured.map((p) => (
+          <article class:list={['feature', p.slug]} data-reveal>
+            <div class="feature-body">
+              <div class="feature-meta mono">
+                <span>{p.kind}</span>
+                <span>{p.year}</span>
+              </div>
+              <h3>{p.name}</h3>
+              <p>{p.blurb}</p>
+              {p.points && (
+                <ul class="points">
+                  {p.points.map((pt) => (
+                    <li>{pt}</li>
+                  ))}
+                </ul>
+              )}
+              {p.stats && (
+                <div class="stats">
+                  {p.stats.map((s) => (
+                    <div>
+                      <b>{s.value}</b>
+                      <span>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <ul class="tags" aria-label="Stack">
+                {p.stack.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+              <div class="links">
+                {p.links.map((l, i) => (
+                  <a class:list={['btn btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost']} href={l.href} target="_blank" rel="noopener">
+                    {l.label} <Fragment set:html={arrow} />
+                  </a>
+                ))}
+              </div>
+            </div>
+            {p.image && (
+              <div class="feature-media">
+                <img src={p.image.src} alt={p.image.alt} loading="lazy" decoding="async" />
+              </div>
+            )}
+          </article>
+        ))
+      }
+
+      <ul class="index" data-reveal>
+        {
+          more.map((p) => (
+            <li>
+              <a href={p.links[0].href} target="_blank" rel="noopener">
+                <span class="name">{p.name}</span>
+                <span class="kind mono">{p.kind}</span>
+                <span class="blurb">{p.blurb}</span>
+                <Fragment set:html={arrowUp} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="index-foot">
+        <a class="textlink" href={person.github} target="_blank" rel="noopener">Everything else on GitHub ↗</a>
+      </div>
+    </section>
+
+    <!-- experience -->
+    <section class="block wrap" id="log" aria-labelledby="log-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>02</i><span>Experience</span></div>
+          <h2 id="log-title">Flight <span class="serif">log</span></h2>
+        </div>
+        <p>Remote roles across San Francisco, São Paulo, Belgium and New York, mostly putting LLMs into production.</p>
+      </div>
+
+      <div class="log" data-reveal>
+        {
+          jobs.map((j, i) => (
+            <details open={i === 0}>
+              <summary>
+                <span class="dates mono">{j.dates}</span>
+                <span class="co">
+                  {j.company}
+                  <small>{j.role}</small>
+                </span>
+                <span class="place">{j.place}</span>
+                <span class="toggle" aria-hidden="true" />
+              </summary>
+              <div class="detail">
+                <div>
+                  <p>{j.summary}</p>
+                  {j.bullets.length > 0 && (
+                    <ul>
+                      {j.bullets.map((b) => (
+                        <li>{b}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- honors -->
+    <section class="block wrap" id="honors" aria-labelledby="honors-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>03</i><span>Honors & education</span></div>
+          <h2 id="honors-title">Before all <span class="serif">this</span></h2>
+        </div>
+        <p>Years of physics, math and robotics olympiads, 2017 to 2020. That’s where I learned to like hard problems.</p>
+      </div>
+
+      <div class="honors" data-reveal>
+        {
+          honors.map((h, i) => (
+            <div class:list={['honor', { top: i === 0 }]}>
+              <span class="scope mono">{h.scope}</span>
+              <b>{h.value}</b>
+              <span class="what">
+                <strong>{h.label}</strong>
+                {h.event}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="school" data-reveal>
+        <div>
+          <span class="mono">Education</span>
+          <h3>{education.school}</h3>
+          <p>{education.degree}</p>
+        </div>
+        <span class="when mono">{education.dates}</span>
+      </div>
+    </section>
+
+    <!-- how I work -->
+    <section class="block wrap" id="how" aria-labelledby="how-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>04</i><span>How I work</span></div>
+          <h2 id="how-title">AI-native, <span class="serif">by default</span></h2>
+        </div>
+      </div>
+
+      <div class="work-grid">
+        <div class="prose" data-reveal>
+          <p>
+            Most of my code is written <strong>with a fleet of agents</strong>: Claude Code and Codex running in parallel git
+            worktrees, on a remote box, inside tmux. I spend my time on specs, review and evals.
+          </p>
+          <p>
+            I ship <strong>eval-first</strong>. If a change touches a model, it doesn’t merge until it passes suites built from
+            real production cases. Anything that has to be exact, like prices, money and credentials, stays in deterministic
+            code and out of the model’s hands.
+          </p>
+          <div class="terminal">
+            <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
+            <pre><span class="p">~</span> tmux attach -t fleet
+  agent-1  feat/streaming     <span class="ok">✓ evals passing</span>
+  agent-2  fix/retry-backoff  <span class="ok">✓ evals passing</span>
+  agent-3  chore/qa-batch     running…</pre>
+          </div>
+          <p class="term-note mono">Illustrative. The agent box sits behind a Cloudflare tunnel on this same domain.</p>
+        </div>
+
+        <div class="toolbox" data-reveal>
+          {
+            toolbox.map((g) => (
+              <div>
+                <span class="mono">{g.area}</span>
+                <ul class="tags">
+                  {g.items.map((t) => (
+                    <li>{t}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section class="contact wrap" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title" data-reveal>
+        Let’s build something<br /><span class="fade">that <span class="serif">holds up.</span></span>
+      </h2>
+      <div class="contact-row" data-reveal>
+        <a class="btn btn-primary" href={`mailto:${person.email}`}>{person.email} <Fragment set:html={arrow} /></a>
+        <button class="btn btn-ghost copy" type="button" data-email={person.email}><span class="label">Copy email</span></button>
+        <a class="btn btn-ghost" href={person.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href={person.github} target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+
+    <footer class="foot wrap mono">
+      <span>© {new Date().getFullYear()} {person.name} · {person.location}</span>
+      <span><a href="/llms.txt">llms.txt</a> · <a href="https://github.com/felipefrf/felipefrf.com" target="_blank" rel="noopener">Source</a></span>
+    </footer>
+  </main>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { rootMargin: '0px 0px -40px 0px', threshold: 0 },
+    );
+    document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+
+    document.querySelectorAll<HTMLButtonElement>('.copy').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(btn.dataset.email ?? '');
+          btn.dataset.copied = 'true';
+          setTimeout(() => (btn.dataset.copied = 'false'), 1800);
+        } catch {
+          window.location.href = `mailto:${btn.dataset.email}`;
+        }
+      });
+    });
+  </script>
+</Base>

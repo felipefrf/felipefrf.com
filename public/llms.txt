@@ -1,0 +1,32 @@
+# Felipe Ribeiro
+
+> Felipe Ribeiro (felipefrf.com) is an AI engineer based in São Paulo, Brazil. He is a founding engineer at a stealth AI startup, the founder of MedAlvo, and an aerospace engineering student (data science minor) at Instituto Tecnológico de Aeronáutica (ITA), expected to graduate in December 2027. He builds LLM agents for production settings where wrong answers are expensive.
+
+## Work
+
+- Stealth AI startup, Founding Engineer (Sep 2026 to now, San Francisco, remote): building Milo, a peer-to-peer personal AI for teams where each employee's agent runs in its own Linux microVM. Teams and Google Chat integrations, a credential vault for the hosted browser agent, eval-first shipping.
+- NG.CASH, Product Engineer (Jan 2026 to Sep 2026, São Paulo, remote): WhatsApp debt-negotiation agent with deterministic pricing in code (0 leaks across a 34-attack prompt-injection battery), payroll re-platform on GCP Cloud Run, judicial-notification triage automation.
+- Credix, ML Engineer, Credit & Risk (Jul 2025 to Jan 2026, remote): XGBoost and logistic-regression credit models in production.
+- LinkedIn, Sales Strategy Intern, Data & AI (Feb 2025 to Jul 2025, remote): LLM chatbot over Salesforce CRM data for US & Canada sales forecasting.
+
+## Projects
+
+- [MedAlvo](https://medalvo.com.br): adaptive prep platform for Brazilian medical residency exams (FSRS v6, Thompson Sampling, 2PL IRT, Bayesian Knowledge Tracing; FastAPI, Postgres/pgvector, Cloud Run). Founder.
+- [penpad](https://github.com/felipefrf/penpad): open-source tool that turns Markdown + LaTeX notes into realistic handwritten PDF/PNG pages for tablets. Project page: https://felipefrf.github.io/penpad/
+- [Editable Pets](https://github.com/felipefrf/editable-pets): macOS desktop companion for Claude Code and Codex sessions.
+- [yt-to-md](https://github.com/felipefrf/yt-to-md): YouTube video to structured Markdown for AI agents, no API key.
+- [dual-subtitles-extension](https://github.com/felipefrf/dual-subtitles-extension): Chrome extension with two synced subtitle languages on YouTube.
+- [hair-visagism](https://github.com/felipefrf/hair-visagism): face-shape analysis and haircut recommendation with generative try-on.
+- [x-reset](https://github.com/felipefrf/x-reset): bulk-delete old tweets from an official X archive.
+
+## Honors
+
+- Iberoamerican Physics Olympiad: 1st place overall (top gold)
+- Nordic-Baltic Physics Olympiad: silver medal
+- Brazilian olympiads: 3× gold in physics (OBF), 2× gold in robotics (OBR), gold in math (OBMEP)
+
+## Contact
+
+- Email: felipe.frf27@gmail.com
+- GitHub: https://github.com/felipefrf
+- LinkedIn: https://www.linkedin.com/in/felipe-farias-ribeiro
