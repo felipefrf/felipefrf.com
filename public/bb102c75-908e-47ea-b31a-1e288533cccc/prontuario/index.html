@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedAlvo Prontuário</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F7FA; --side:#EFF2F6; --surface:#FFFFFF; --surface-2:#F8FAFC; --sunken:#EDF0F4; --hover:#F1F4F8;
+  --line:#E2E7EE; --line-2:#D1D8E2;
+  --text:#0E1726; --text-2:#435066; --text-3:#5F6B80;
+  --action:#3A4CCB; --action-h:#3142B5; --action-soft:#ECEEFC; --action-text:#3343C2; --on-action:#FFFFFF;
+  --prog:#0C7F75; --prog-soft:#E1F2EF; --prog-track:#E4E9EF;
+  --ok:#1C7F52; --ok-soft:#E5F4EC; --bad:#BC3A33; --bad-soft:#FBEBEA;
+  --up:#1C7F52; --down:#BC3A33;
+  --clin:#2B78B6; --cir:#7B52C2; --ped:#A86E12; --go:#BF3C74; --prev:#4E8526;
+  --online:#22A061;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.04);
+  --shadow-2:0 8px 24px -8px rgba(16,24,40,.14),0 2px 6px rgba(16,24,40,.05);
+  --heat0:#E9EDF2;
+  --mono:'Geist Mono',ui-monospace,monospace; --sans:'Geist',system-ui,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#11161D; --side:#0D1218; --surface:#171D26; --surface-2:#1B222C; --sunken:#0F141A; --hover:#1E2631;
+  --line:#252E3A; --line-2:#323C4A;
+  --text:#E4E8EE; --text-2:#AAB3C0; --text-3:#8A95A6;
+  --action:#5363E6; --action-h:#6372EE; --action-soft:#1F2547; --action-text:#9AA5FA; --on-action:#FFFFFF;
+  --prog:#3BB3A3; --prog-soft:#14302D; --prog-track:#252E3A;
+  --ok:#45B67F; --ok-soft:#14291F; --bad:#E5716A; --bad-soft:#331B1C;
+  --up:#45B67F; --down:#E5716A;
+  --clin:#5BA6DE; --cir:#A887E4; --ped:#D7A447; --go:#E2739F; --prev:#8DBA5C;
+  --online:#38C07A;
+  --shadow:0 1px 2px rgba(0,0,0,.25);
+  --shadow-2:0 10px 30px -10px rgba(0,0,0,.6),0 2px 6px rgba(0,0,0,.3);
+  --heat0:#1F2731;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#E7EBF0}
+[data-theme="dark"] body,[data-theme="dark"]{background:#0A0E13}
+body{font-family:var(--sans);color:var(--text);-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11"}
+.num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tab{font-variant-numeric:tabular-nums}
+svg{display:block}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+/* ---------- prancha ---------- */
+.board-head{max-width:1950px;margin:0 auto;padding:36px 40px 8px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;color:var(--text)}
+.board-head h1{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.board-head p{font-size:13px;color:var(--text-2);margin-top:4px;max-width:900px;line-height:1.5}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:3px;gap:2px}
+.seg button{height:30px;padding:0 14px;border-radius:6px;font-size:13px;font-weight:500;color:var(--text-2)}
+.seg button[aria-pressed="true"]{background:var(--sunken);color:var(--text)}
+.screen{max-width:1950px;margin:0 auto;padding:28px 40px 12px}
+.screen h2{font-size:13px;font-weight:600;color:var(--text);display:flex;gap:10px;align-items:baseline;margin-bottom:12px}
+.screen h2 span{color:var(--text-3);font-weight:500}
+.pair{display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap}
+.cap{font-size:11.5px;color:var(--text-3);margin-bottom:8px;font-family:var(--mono)}
+
+/* ---------- quadros ---------- */
+.desk{width:1440px;height:900px;display:grid;grid-template-columns:236px 1fr;grid-template-rows:100%;background:var(--bg);overflow:hidden;border-radius:12px;border:1px solid var(--line-2);box-shadow:var(--shadow-2);font-size:13.5px;position:relative}
+.mob{width:390px;height:844px;background:var(--bg);overflow:hidden;border-radius:36px;border:1px solid var(--line-2);box-shadow:var(--shadow-2);position:relative;font-size:15px;display:flex;flex-direction:column}
+
+/* sidebar */
+.side{background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:14px 12px}
+.brand{display:flex;align-items:center;gap:9px;padding:4px 8px 14px;font-weight:600;font-size:15.5px;letter-spacing:-.02em}
+.target-sel{display:flex;align-items:center;gap:10px;padding:9px 10px;border:1px solid var(--line);background:var(--surface);border-radius:9px;margin-bottom:14px}
+.target-sel b{font-size:13px;font-weight:600;display:block}
+.target-sel small{font-size:11.5px;color:var(--text-3)}
+.nav a{display:flex;align-items:center;gap:10px;height:34px;padding:0 10px;border-radius:7px;color:var(--text-2);font-weight:500;text-decoration:none;font-size:13.5px}
+.nav a svg{width:18px;height:18px;color:var(--text-3)}
+.nav a.on{background:var(--surface);color:var(--text);box-shadow:var(--shadow);border:1px solid var(--line)}
+.nav a.on svg{color:var(--action)}
+.nav .cnt{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--text-3)}
+.nav .cnt.hot{color:var(--action-text);background:var(--action-soft);padding:1px 6px;border-radius:5px}
+.nav-sep{height:1px;background:var(--line);margin:10px 6px}
+.nav-lbl{font-size:11px;color:var(--text-3);padding:6px 10px;font-weight:500;letter-spacing:.02em}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:10px}
+.lvl{padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
+.lvl-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);margin-bottom:7px}
+.lvl-row b{color:var(--text);font-weight:600}
+.me-row{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:8px}
+.me-row b{font-size:13px;font-weight:600;display:block}
+.me-row small{font-size:11.5px;color:var(--text-3)}
+
+.main{display:flex;flex-direction:column;min-width:0;min-height:0;height:100%}
+.topbar{height:52px;flex:none;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 28px;gap:14px;background:var(--bg)}
+.crumb{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.crumb span{color:var(--text-3);font-weight:500}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;height:32px;width:280px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text-3);font-size:13px}
+.search svg{width:16px;height:16px}
+.kbd{font-family:var(--mono);font-size:11px;color:var(--text-3);border:1px solid var(--line);border-radius:4px;padding:0 5px;line-height:17px;background:var(--surface-2)}
+.search .kbd{margin-left:auto}
+.icon-btn{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;color:var(--text-2);border:1px solid var(--line);background:var(--surface);position:relative}
+.icon-btn svg{width:17px;height:17px}
+.icon-btn .pip{position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--action);box-shadow:0 0 0 2px var(--surface)}
+.content{padding:20px 28px 24px;flex:1;min-height:0;overflow:hidden}
+.content>.pn{min-height:0}
+
+/* painéis */
+.pn{background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.pn-h{display:flex;align-items:center;gap:10px;height:44px;padding:0 16px;border-bottom:1px solid var(--line);flex:none}
+.pn-h h3{font-size:13.5px;font-weight:600;letter-spacing:-.005em}
+.pn-h .meta{margin-left:auto;font-size:12px;color:var(--text-3);display:flex;align-items:center;gap:6px}
+.pn-h .meta svg{width:14px;height:14px}
+.pn-b{padding:14px 16px}
+.link{color:var(--action-text);font-weight:500;font-size:12.5px;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.link svg{width:14px;height:14px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:8px;font-weight:600;font-size:13.5px;white-space:nowrap}
+.btn svg{width:16px;height:16px}
+.btn-p{background:var(--action);color:var(--on-action);box-shadow:0 1px 0 rgba(255,255,255,.15) inset,0 1px 2px rgba(20,30,90,.25)}
+.btn-s{background:var(--surface);border:1px solid var(--line-2);color:var(--text)}
+.btn-g{color:var(--text-2)}
+.btn .kbd{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.85)}
+
+.bar{height:4px;border-radius:3px;background:var(--prog-track);overflow:hidden;position:relative}
+.bar>i{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--prog)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface);font-size:12px;color:var(--text-2);white-space:nowrap}
+.chip b{color:var(--text);font-weight:600}
+.chip svg{width:14px;height:14px}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;flex:none}
+.th{font-size:11px;color:var(--text-3);font-weight:500;letter-spacing:.02em}
+.pos{color:var(--up)} .neg{color:var(--down)}
+
+/* avatar */
+.av{position:relative;display:inline-block;flex:none;line-height:0}
+.av .on{position:absolute;right:-1px;bottom:-1px;width:28%;height:28%;min-width:8px;min-height:8px;border-radius:50%;background:var(--online);box-shadow:0 0 0 2px var(--surface)}
+.av .bd{position:absolute;right:-5px;top:-4px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:var(--surface);box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(0,0,0,.12)}
+.av .bd svg{width:11px;height:11px}
+
+/* liga */
+.lg-row{display:grid;align-items:center;border-bottom:1px solid var(--line);position:relative}
+.lg-row:last-child{border-bottom:0}
+.lg-row.me{background:var(--action-soft)}
+.lg-row.me::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--action)}
+.rk{font-family:var(--mono);font-size:12.5px;color:var(--text-3);text-align:right}
+.rk.top{color:var(--text);font-weight:600}
+.zone{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.03em;padding:0 16px;height:26px;border-bottom:1px solid var(--line)}
+.zone.up{color:var(--up);background:color-mix(in srgb,var(--up) 7%,var(--surface))}
+.zone.dn{color:var(--down);background:color-mix(in srgb,var(--down) 7%,var(--surface))}
+.zone svg{width:13px;height:13px}
+.zone .ln{flex:1;height:1px;background:currentColor;opacity:.25}
+.nm{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sub{font-size:12px;color:var(--text-3)}
+.gap-row{display:flex;align-items:center;justify-content:center;gap:8px;height:30px;font-size:12px;color:var(--text-3);border-bottom:1px solid var(--line);background:var(--surface-2)}
+
+/* mobile */
+.sbar{height:47px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 30px 0 34px;font-weight:600;font-size:15px}
+.sbar .ic{display:flex;gap:6px;align-items:center}
+.m-head{display:flex;align-items:center;gap:10px;padding:4px 16px 10px;flex:none}
+.m-scroll{flex:1;overflow:hidden;padding:0 16px;display:flex;flex-direction:column;gap:12px}
+.tabbar{flex:none;height:86px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(12px);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 6px 0}
+.tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;height:50px;justify-content:center;font-size:11px;font-weight:500;color:var(--text-3);text-decoration:none;position:relative}
+.tabbar a svg{width:23px;height:23px}
+.tabbar a.on{color:var(--action-text)}
+.tabbar a .cnt{position:absolute;top:2px;left:calc(50% + 6px);font-family:var(--mono);font-size:10px;background:var(--action);color:#fff;border-radius:8px;padding:0 5px;line-height:15px}
+.home-ind{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;border-radius:3px;background:var(--text);opacity:.85}
+.m-pn{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.m-pn-h{display:flex;align-items:center;padding:12px 14px 0;gap:8px}
+.m-pn-h h3{font-size:14.5px;font-weight:600}
+.m-pn-h .meta{margin-left:auto;font-size:13px;color:var(--text-3)}
+.btn-lg{height:48px;border-radius:10px;font-size:15px;width:100%}
+.tap{min-height:44px}
+
+/* questão */
+.alt{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:start;padding:11px 14px;border:1px solid var(--line);border-radius:9px;background:var(--surface);position:relative}
+.alt .lt{width:26px;height:26px;border-radius:7px;border:1px solid var(--line-2);display:grid;place-items:center;font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--text-2);background:var(--surface-2)}
+.alt .tx{line-height:1.5;color:var(--text-2);padding-top:2px}
+.alt .pc{font-family:var(--mono);font-size:12px;color:var(--text-3);padding-top:5px;display:flex;align-items:center;gap:8px}
+.alt .pc .mini{width:44px;height:4px;border-radius:2px;background:var(--prog-track);position:relative;overflow:hidden}
+.alt .pc .mini i{position:absolute;inset:0 auto 0 0;background:var(--text-3);opacity:.55}
+.alt.ok{border-color:color-mix(in srgb,var(--ok) 55%,var(--line));background:var(--ok-soft)}
+.alt.ok .lt{background:var(--ok);border-color:var(--ok);color:#fff}
+.alt.ok .tx{color:var(--text)}
+.alt.ok .mini i{background:var(--ok);opacity:1}
+.alt.bad{border-color:color-mix(in srgb,var(--bad) 50%,var(--line));background:var(--bad-soft)}
+.alt.bad .lt{background:var(--bad);border-color:var(--bad);color:#fff}
+.alt.bad .tx{color:var(--text)}
+.alt.bad .mini i{background:var(--bad);opacity:1}
+.alt .tag{position:absolute;top:-9px;right:12px;font-size:10.5px;font-weight:600;letter-spacing:.03em;padding:0 7px;line-height:17px;border-radius:5px}
+.alt.ok .tag{background:var(--ok);color:#fff}
+.alt.bad .tag{background:var(--bad);color:#fff}
+.dim{opacity:.72}
+.seg-prog{display:flex;gap:3px}
+.seg-prog i{flex:1;height:5px;border-radius:2px;background:var(--prog-track)}
+.seg-prog i.c{background:var(--ok)} .seg-prog i.w{background:var(--bad)} .seg-prog i.k{background:var(--text-3);opacity:.5} .seg-prog i.n{background:var(--action)}
+.area-lbl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--text-2)}
+.kv{display:flex;flex-direction:column;gap:2px}
+.kv b{font-size:20px;font-weight:600;letter-spacing:-.02em}
+.kv small{font-size:11.5px;color:var(--text-3)}
+</style>
+</head>
+<body>
+
+<!-- ícones duotônicos -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" opacity=".32" d="M3.5 10.2 12 3.5l8.5 6.7V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19z"/><path fill="currentColor" d="M9.5 14.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v6h-5zM12 2.6l9.4 7.4-.9 1.2L12 4.5 3.5 11.2l-.9-1.2z"/></symbol>
+  <symbol id="i-study" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="15" rx="2.5" fill="currentColor" opacity=".32"/><rect x="7.5" y="2.8" width="13.5" height="15" rx="2.5" fill="currentColor"/><path d="M10.6 10.4l1.9 1.9 4-4" stroke="var(--side,#fff)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--surface)"/></symbol>
+  <symbol id="i-sim" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="17.5" rx="2.5" fill="currentColor" opacity=".32"/><rect x="8" y="2.5" width="8" height="4" rx="1.5" fill="currentColor"/><path d="M8 11h8M8 14.5h8M8 18h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-rev" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="currentColor" opacity=".32"/><path d="M12 3.5a8.5 8.5 0 1 1-8.1 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path fill="currentColor" d="M2.6 6.2 4 11.1l4.6-2.2z"/><path d="M12 7.5V12l3 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="2.8" y="7" width="13" height="14" rx="2.2" transform="rotate(-8 9 14)" fill="currentColor" opacity=".32"/><rect x="8" y="3" width="13" height="16" rx="2.2" fill="currentColor"/><path d="M11.5 9h6M11.5 12.5h4" stroke="var(--surface)" stroke-width="1.7" stroke-linecap="round" style="stroke:var(--surface)"/></symbol>
+  <symbol id="i-liga" viewBox="0 0 24 24"><path fill="currentColor" opacity=".32" d="M12 2.5 20 5.4v6.4c0 5-3.4 8.4-8 9.7-4.6-1.3-8-4.7-8-9.7V5.4z"/><path fill="currentColor" d="M12 2.5 20 5.4v6.4c0 5-3.4 8.4-8 9.7z"/><path d="m8.3 11.6 3.7-2.4 3.7 2.4M8.3 15l3.7-2.4 3.7 2.4" stroke="var(--surface)" style="stroke:var(--surface)" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="currentColor" opacity=".32"/><circle cx="12" cy="9.5" r="3.6" fill="currentColor"/><path fill="currentColor" d="M5.6 18.6c1.3-2.7 3.7-4 6.4-4s5.1 1.3 6.4 4a9.4 9.4 0 0 1-12.8 0z"/></symbol>
+  <symbol id="i-curo" viewBox="0 0 24 24"><path fill="currentColor" opacity=".32" d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v9a2.5 2.5 0 0 1-2.5 2.5H11l-4.5 4v-4A2.5 2.5 0 0 1 4 14.5z"/><path fill="currentColor" d="M12 5.6c.4 2.3 1.5 3.4 3.8 3.8-2.3.4-3.4 1.5-3.8 3.8-.4-2.3-1.5-3.4-3.8-3.8 2.3-.4 3.4-1.5 3.8-3.8z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="currentColor" opacity=".25"/><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path fill="currentColor" opacity=".32" d="M6 10a6 6 0 1 1 12 0v4.5l1.8 2.5H4.2L6 14.5z"/><path fill="currentColor" d="M9.5 18.5h5a2.5 2.5 0 0 1-5 0zM12 2.5a1.4 1.4 0 0 1 1.4 1.4v.8h-2.8v-.8A1.4 1.4 0 0 1 12 2.5z"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path fill="currentColor" opacity=".38" d="M12 2.5c.6 3.2 2.3 4.7 3.9 6.4 1.5 1.6 2.6 3.5 2.6 6A6.5 6.5 0 0 1 12 21.5 6.5 6.5 0 0 1 5.5 15c0-2.6 1.2-4.3 2.5-5.6.3 1.6 1 2.6 2 3.2-.5-3.9.3-7.3 2-10.1z"/><path fill="currentColor" d="M12 11.5c1.6 1.7 3 3 3 5a3 3 0 0 1-6 0c0-1.2.5-2.1 1.2-2.8.2.8.6 1.3 1.2 1.6-.2-1.4.1-2.7.6-3.8z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 2 5 13.5h6L10 22l9-12h-6.2z"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path fill="currentColor" opacity=".32" d="M6 3.5h12a1 1 0 0 1 1 1v16.2l-7-4.4-7 4.4V4.5a1 1 0 0 1 1-1z"/><path d="M6 3.5h12a1 1 0 0 1 1 1v16.2l-7-4.4-7 4.4V4.5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="2.5" fill="currentColor" opacity=".32"/><path d="M8 9h8M8 12.5h8M8 16h4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path fill="currentColor" opacity=".32" d="M6 4h12l-2.5 4.5L18 13H6z"/><path d="M6 3v18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5" stroke="currentColor" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5.5 8.5 12l6.5 6.5" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 14.5 12 8.5l6 6" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9.5 12 15.5l6-6" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="currentColor" opacity=".3"/><path d="M12 7v5l3.2 2" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.8" fill="currentColor"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><circle cx="18.5" cy="12" r="1.8" fill="currentColor"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-cmp" viewBox="0 0 24 24"><rect x="3.5" y="10" width="4" height="10" rx="1.2" fill="currentColor" opacity=".38"/><rect x="10" y="4" width="4" height="16" rx="1.2" fill="currentColor"/><rect x="16.5" y="13" width="4" height="7" rx="1.2" fill="currentColor" opacity=".38"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="currentColor" opacity=".25"/><circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path fill="currentColor" d="M12 18.5a1.8 1.8 0 1 0 0 .01zM5.2 11.6a9.7 9.7 0 0 1 13.6 0l-1.6 1.6a7.4 7.4 0 0 0-10.4 0zM8.4 14.8a5.2 5.2 0 0 1 7.2 0L14 16.4a2.9 2.9 0 0 0-4 0zM2 8.4a14.2 14.2 0 0 1 20 0l-1.6 1.6a12 12 0 0 0-16.8 0z"/></symbol>
+</svg>
+
+<header class="board-head">
+  <div>
+    <h1>Prontuário</h1>
+    <p>Neutros frios, índigo para ação, verde-petróleo para progresso. Geist e Geist Mono. Avatares geométricos gerados do nome, escudos metálicos por divisão. Claro e escuro com o mesmo peso.</p>
+  </div>
+  <div class="seg" role="group" aria-label="Tema">
+    <button data-t="light" aria-pressed="true">Claro</button>
+    <button data-t="dark" aria-pressed="false">Escuro</button>
+  </div>
+</header>
+
+<!-- ================= 1. INÍCIO ================= -->
+<section class="screen">
+  <h2>1 · Início</h2>
+  <div class="pair">
+  <div><div class="cap">desktop 1440×900</div>
+  <div class="desk" id="d-inicio">
+    <aside class="side" data-side="inicio"></aside>
+    <div class="main">
+      <div class="topbar">
+        <div class="crumb">Início</div>
+        <div class="search"><svg><use href="#i-search"/></svg>Buscar<span class="kbd">⌘K</span></div>
+        <div class="icon-btn"><svg><use href="#i-bell"/></svg><span class="pip"></span></div>
+      </div>
+      <div class="content" style="display:grid;grid-template-columns:1.12fr 1.12fr 316px;grid-template-rows:auto 1.1fr 1fr;gap:16px">
+        <div style="grid-column:1/3;display:flex;align-items:center;gap:10px">
+          <div style="font-size:20px;font-weight:600;letter-spacing:-.02em">Segunda, 9 de novembro</div>
+          <div style="margin-left:auto;display:flex;gap:8px">
+            <span class="chip"><svg style="color:var(--action)"><use href="#i-target"/></svg><b>ENARE 2027</b><span class="num">92 d</span></span>
+            <span class="chip"><svg style="color:#D9822B"><use href="#i-flame"/></svg><b class="num">26</b> dias</span>
+            <span class="chip">Nível <b class="num">14</b></span>
+          </div>
+        </div>
+
+        <!-- Plano de hoje -->
+        <div class="pn" style="grid-row:2">
+          <div class="pn-h"><h3>Plano de hoje</h3><div class="meta"><span class="num" style="color:var(--text);font-weight:600">26</span><span class="num">/ 40 questões</span></div></div>
+          <div class="pn-b" style="display:flex;flex-direction:column;gap:14px;flex:1">
+            <div style="display:flex;gap:3px" id="meta-seg"></div>
+            <div id="plan-list" style="display:flex;flex-direction:column;border:1px solid var(--line);border-radius:9px;overflow:hidden"></div>
+            <div style="display:flex;gap:8px;margin-top:auto">
+              <button class="btn btn-p">Continuar · Revisões <span class="num" style="opacity:.8">18 q</span><svg><use href="#i-arrow"/></svg></button>
+              <button class="btn btn-s">Montar bloco</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acerto esperado -->
+        <div class="pn" style="grid-row:2">
+          <div class="pn-h"><h3>Acerto esperado</h3><div class="meta">ENARE 2027</div></div>
+          <div class="pn-b" style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:flex-end;gap:14px">
+              <div>
+                <div style="display:flex;align-items:baseline;gap:6px"><span class="num" style="font-size:34px;font-weight:600;letter-spacing:-.04em;line-height:1">62%</span><span class="num sub">±4</span></div>
+                <div class="sub" style="margin-top:4px"><span class="pos num">+3,1 pp</span> em 30 dias · corte <span class="num">71%</span></div>
+              </div>
+              <div style="margin-left:auto" data-spark="51,53,52,55,56,55,58,59,61,62" data-w="150" data-h="40"></div>
+            </div>
+            <div id="areas-d" style="display:flex;flex-direction:column"></div>
+          </div>
+        </div>
+
+        <!-- Liga -->
+        <div class="pn" style="grid-row:1/4;grid-column:3">
+          <div class="pn-h"><h3>Liga</h3><div class="meta"><svg><use href="#i-clock"/></svg><span class="num">2d 14h</span></div></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)">
+            <div data-shield="ouro" data-s="46"></div>
+            <div><div style="font-weight:600;font-size:15px">Ouro</div><div class="sub"><span class="num" style="color:var(--text);font-weight:600">8º</span> de 25 · <span class="num">1.488 XP</span></div></div>
+            <div style="margin-left:auto;text-align:right"><div class="num pos" style="font-size:12.5px;font-weight:600">+388</div><div class="sub" style="font-size:11px">para subir</div></div>
+          </div>
+          <div id="liga-mini" style="flex:1;overflow:hidden"></div>
+          <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--line)">
+            <div class="stack" data-stack="Beatriz Nogueira,Thiago Okamoto,Caio Brandão,Yasmin Haddad,Larissa Menezes"></div>
+            <span class="sub"><span class="num" style="color:var(--text)">12</span> online</span>
+            <a class="link" style="margin-left:auto">Abrir liga<svg><use href="#i-arrow"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Missões -->
+        <div class="pn" style="grid-row:3">
+          <div class="pn-h"><h3>Missões</h3><div class="meta"><svg><use href="#i-clock"/></svg>renova em <span class="num">10h 52m</span></div></div>
+          <div id="missoes-d" style="display:flex;flex-direction:column;flex:1"></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--line);background:var(--surface-2)"><span data-medal="ouro" style="line-height:0"></span><span style="font-weight:500">Baú do dia</span><span class="sub">1 de 3 missões</span><span class="num" style="margin-left:auto;font-size:12.5px;font-weight:600;color:var(--text-2)">+75 XP</span></div>
+        </div>
+
+        <!-- Constância -->
+        <div class="pn" style="grid-row:3">
+          <div class="pn-h"><h3>Constância</h3><div class="meta"><span class="num">1.416</span> questões em 18 semanas</div></div>
+          <div class="pn-b" style="display:flex;flex-direction:column;gap:14px;flex:1;justify-content:center">
+            <div data-heat="21" data-cell="14" data-gap="3" data-seed="7" data-m="jul,ago,set,out,nov"></div>
+            <div style="display:flex;gap:0;border-top:1px solid var(--line);padding-top:12px">
+              <div class="kv" style="flex:1"><b class="num"><svg width="18" height="18" style="display:inline;color:#D9822B;vertical-align:-2px"><use href="#i-flame"/></svg> 26</b><small>sequência</small></div>
+              <div class="kv" style="flex:1"><b class="num">41</b><small>recorde</small></div>
+              <div class="kv" style="flex:1"><b class="num">2</b><small>proteções</small></div>
+              <div class="kv" style="flex:1"><b class="num">94%</b><small>dias com estudo</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div><div class="cap">celular 390×844</div>
+  <div class="mob" id="m-inicio">
+    <div class="sbar" data-sbar></div>
+    <div class="m-head">
+      <span data-logo="26"></span>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+        <span class="chip" style="height:30px;font-size:13px"><svg style="color:#D9822B;width:16px;height:16px"><use href="#i-flame"/></svg><b class="num">26</b></span>
+        <span data-av="Marina Albuquerque" data-s="34"></span>
+      </div>
+    </div>
+    <div class="m-scroll">
+      <div style="display:flex;align-items:baseline;justify-content:space-between">
+        <div style="font-size:21px;font-weight:600;letter-spacing:-.02em">Segunda, 9 nov</div>
+        <div class="sub" style="font-size:13px"><b style="color:var(--text);font-weight:600">ENARE</b> · <span class="num">92 d</span></div>
+      </div>
+      <div class="m-pn" style="padding:14px">
+        <div style="display:flex;align-items:baseline;margin-bottom:10px"><h3 style="font-size:14.5px;font-weight:600">Plano de hoje</h3><span style="margin-left:auto" class="num sub"><b style="color:var(--text)">26</b> / 40</span></div>
+        <div style="display:flex;gap:3px;margin-bottom:12px" id="meta-seg-m"></div>
+        <div id="plan-list-m" style="display:flex;flex-direction:column;margin-bottom:12px"></div>
+        <button class="btn btn-p btn-lg">Continuar · Revisões <span class="num" style="opacity:.8">18 q</span><svg><use href="#i-arrow"/></svg></button>
+      </div>
+      <div class="m-pn">
+        <div class="m-pn-h"><h3>Acerto esperado</h3><span class="meta"><b class="num" style="color:var(--text);font-size:15px">62%</b> <span class="num pos" style="font-size:12px">+3,1</span></span></div>
+        <div id="areas-m" style="padding:6px 14px 10px"></div>
+      </div>
+      <div class="m-pn">
+        <div class="m-pn-h"><div data-shield="ouro" data-s="26"></div><h3>Ouro · <span class="num">8º</span></h3><span class="meta num">2d 14h</span></div>
+        <div id="liga-mini-m" style="padding:4px 0 4px"></div>
+      </div>
+    </div>
+    <nav class="tabbar" data-tab="inicio"></nav>
+    <div class="home-ind"></div>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= 2. LIGA ================= -->
+<section class="screen">
+  <h2>2 · Liga</h2>
+  <div class="pair">
+  <div><div class="cap">desktop 1440×900</div>
+  <div class="desk" id="d-liga">
+    <aside class="side" data-side="liga"></aside>
+    <div class="main">
+      <div class="topbar">
+        <div class="crumb">Liga</div>
+        <div style="display:flex;gap:2px;margin-left:18px" class="seg"><button aria-pressed="true">Divisão</button><button>Turma</button><button>Mesma prova</button></div>
+        <div class="search"><svg><use href="#i-search"/></svg>Buscar aluno<span class="kbd">⌘K</span></div>
+        <div class="icon-btn"><svg><use href="#i-bell"/></svg></div>
+      </div>
+      <div class="content" style="display:grid;grid-template-columns:1fr 320px;gap:16px;padding-top:16px">
+        <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+          <div class="pn" style="flex-direction:row;align-items:stretch">
+            <div id="div-strip" style="display:flex;align-items:flex-end;gap:6px;padding:12px 16px 10px;flex:1"></div>
+            <div style="border-left:1px solid var(--line);padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:8px;width:250px">
+              <div class="th">TERMINA EM</div>
+              <div class="num" style="font-size:22px;font-weight:600;letter-spacing:-.03em">2d 14h 08m</div>
+              <div class="sub" style="display:flex;gap:12px"><span><svg style="width:12px;height:12px;display:inline;color:var(--up);vertical-align:-1px"><use href="#i-up"/></svg> 5 sobem</span><span><svg style="width:12px;height:12px;display:inline;color:var(--down);vertical-align:-1px"><use href="#i-down"/></svg> 5 descem</span></div>
+            </div>
+          </div>
+          <div class="pn" style="flex:1">
+            <div class="lg-row" style="grid-template-columns:44px 1fr 120px 92px 92px 110px 96px;height:34px;padding-right:16px;background:var(--surface-2)">
+              <span class="th" style="text-align:right">#</span><span class="th" style="padding-left:52px">ALUNO</span><span class="th">PROVA-ALVO</span><span class="th" style="text-align:right">SEQUÊNCIA</span><span class="th" style="text-align:right">QUESTÕES</span><span class="th" style="text-align:right">ACERTO 7D</span><span class="th" style="text-align:right">XP</span>
+            </div>
+            <div id="liga-d"></div>
+          </div>
+        </div>
+        <aside style="display:flex;flex-direction:column;gap:14px">
+          <div class="pn">
+            <div style="padding:18px 16px 14px;display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--line)">
+              <span data-av="Marina Albuquerque" data-s="52" data-on="1"></span>
+              <div style="min-width:0"><div style="font-weight:600;font-size:15px">Marina Albuquerque</div><div class="sub">@marina.alb · ENARE 2027</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--line)">
+              <div style="padding:12px 16px;border-right:1px solid var(--line)" class="kv"><b class="num" style="font-size:18px">8º</b><small>posição</small></div>
+              <div style="padding:12px 16px;border-right:1px solid var(--line)" class="kv"><b class="num" style="font-size:18px">1.488</b><small>XP</small></div>
+              <div style="padding:12px 16px" class="kv"><b class="num" style="font-size:18px">26</b><small>dias</small></div>
+            </div>
+            <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;justify-content:space-between;font-size:12.5px"><span style="color:var(--text-2)">Zona de subida</span><span class="num"><span style="color:var(--text);font-weight:600">1.488</span><span class="sub"> / 1.876</span></span></div>
+              <div class="bar" style="height:6px"><i style="width:79%"></i></div>
+              <div class="sub">Faltam <span class="num pos" style="font-weight:600">388 XP</span> · ~ 26 questões</div>
+            </div>
+          </div>
+          <div class="pn">
+            <div class="pn-h"><h3>Últimas ligas</h3></div>
+            <div id="hist-ligas" style="display:flex;justify-content:space-between;padding:14px 16px 12px"></div>
+          </div>
+          <div class="pn">
+            <div class="pn-h"><h3>XP da semana</h3><div class="meta">seg–dom</div></div>
+            <div style="padding:12px 16px" id="xp-week"></div>
+          </div>
+          <div class="pn" style="flex:1">
+            <div class="pn-h"><h3>Online agora</h3><div class="meta"><span class="dot" style="background:var(--online)"></span><span class="num">12</span></div></div>
+            <div id="online" style="display:flex;flex-direction:column;padding:4px 0"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div></div>
+
+  <div><div class="cap">celular 390×844</div>
+  <div class="mob" id="m-liga">
+    <div class="sbar" data-sbar></div>
+    <div class="m-head" style="padding-bottom:6px">
+      <div style="font-size:21px;font-weight:600;letter-spacing:-.02em">Liga</div>
+      <span class="chip" style="margin-left:auto;height:30px;font-size:13px"><svg><use href="#i-clock"/></svg><span class="num">2d 14h</span></span>
+    </div>
+    <div id="div-strip-m" style="display:flex;justify-content:space-between;align-items:flex-end;padding:4px 22px 10px;flex:none"></div>
+    <div style="padding:0 16px 10px;flex:none"><div class="seg" style="width:100%;display:grid;grid-template-columns:1fr 1fr 1fr"><button aria-pressed="true" style="height:36px">Divisão</button><button style="height:36px">Turma</button><button style="height:36px">Mesma prova</button></div></div>
+    <div style="flex:1;overflow:hidden;border-top:1px solid var(--line);background:var(--surface)" id="liga-m"></div>
+    <div id="liga-me-m" style="flex:none;border-top:1px solid var(--line-2);background:var(--action-soft)"></div>
+    <nav class="tabbar" data-tab="liga"></nav>
+    <div class="home-ind"></div>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= 3. PERFIL DE OUTRO ALUNO ================= -->
+<section class="screen">
+  <h2>3 · Perfil de outro aluno <span>aberto pela liga</span></h2>
+  <div class="pair">
+  <div><div class="cap">desktop 1440×900</div>
+  <div class="desk" id="d-perfil">
+    <aside class="side" data-side="liga"></aside>
+    <div class="main">
+      <div class="topbar">
+        <div class="crumb"><span>Liga</span><span>/</span>Rafael Tavares</div>
+        <div class="search"><svg><use href="#i-search"/></svg>Buscar aluno<span class="kbd">⌘K</span></div>
+        <div class="icon-btn"><svg><use href="#i-bell"/></svg></div>
+      </div>
+      <div class="content" style="display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:auto auto 1fr;gap:16px">
+        <div class="pn" style="grid-column:1/4;flex-direction:row;align-items:center;gap:20px;padding:20px 22px;position:relative">
+          <div data-cover style="position:absolute;inset:0;pointer-events:none;opacity:.55"></div>
+          <span data-av="Rafael Tavares" data-s="88" data-on="1" style="position:relative"></span>
+          <div style="position:relative;min-width:0">
+            <div style="display:flex;align-items:center;gap:10px"><div style="font-size:24px;font-weight:600;letter-spacing:-.025em">Rafael Tavares</div><span class="chip" style="color:var(--online);border-color:color-mix(in srgb,var(--online) 35%,var(--line))"><span class="dot" style="background:var(--online)"></span>online</span></div>
+            <div class="sub" style="font-size:13px;margin-top:3px">@rafa.tavares · R1 · Recife, PE · desde mar/2026</div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <span class="chip"><svg style="color:var(--action)"><use href="#i-target"/></svg><b>ENARE 2027</b></span>
+              <span class="chip">USP-SP 2027</span>
+              <span class="chip"><span data-shield="ouro" data-s="16"></span><b>Ouro</b> · <span class="num">1º</span></span>
+              <span class="chip"><svg style="color:#D9822B"><use href="#i-flame"/></svg><b class="num">41</b> dias</span>
+              <span class="chip">Nível <b class="num">18</b></span>
+            </div>
+          </div>
+          <div style="margin-left:auto;display:flex;gap:8px;position:relative">
+            <button class="btn btn-s">Seguir</button>
+            <button class="btn btn-p"><svg><use href="#i-cmp"/></svg>Comparar</button>
+            <button class="icon-btn" style="width:36px;height:36px"><svg><use href="#i-more"/></svg></button>
+          </div>
+        </div>
+        <div style="grid-column:1/4;display:grid;grid-template-columns:repeat(5,1fr);gap:0" class="pn" id="kpis-p"></div>
+        <div class="pn">
+          <div class="pn-h"><h3>Acerto por área</h3><div class="meta"><span class="dot" style="background:var(--text)"></span>Rafael <span class="dot" style="background:var(--line-2);margin-left:8px"></span>Você</div></div>
+          <div id="cmp-areas" style="padding:8px 16px 6px;display:flex;flex-direction:column"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);flex:1">
+            <div style="padding:12px 16px;border-right:1px solid var(--line)"><div class="th" style="margin-bottom:8px">MAIS FORTES</div><div id="fortes"></div></div>
+            <div style="padding:12px 16px"><div class="th" style="margin-bottom:8px">MAIS FRACAS</div><div id="fracas"></div></div>
+          </div>
+        </div>
+        <div class="pn">
+          <div class="pn-h"><h3>Conquistas</h3><div class="meta"><span class="num">14</span> de 32</div></div>
+          <div id="badges" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:12px;flex:1;align-content:space-evenly"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;min-height:0">
+          <div class="pn">
+            <div class="pn-h"><h3>Atividade</h3><div class="meta"><span class="num">6.842</span> questões</div></div>
+            <div style="padding:14px 16px" data-heat="22" data-cell="12" data-gap="3" data-seed="3" data-hi="1" data-m="jun,jul,ago,set,out,nov"></div>
+          </div>
+          <div class="pn" style="flex:1">
+            <div class="pn-h"><h3>Ligas</h3><div class="meta">8 semanas</div></div>
+            <div id="hist-rafa" style="display:flex;justify-content:space-between;gap:6px;padding:14px 16px;flex:1;align-items:flex-end"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <div><div class="cap">celular 390×844</div>
+  <div class="mob" id="m-perfil">
+    <div class="sbar" data-sbar></div>
+    <div class="m-head" style="padding:0 8px 4px">
+      <button class="tap" style="width:44px;display:grid;place-items:center;color:var(--action-text)"><svg width="24" height="24"><use href="#i-back"/></svg></button>
+      <span style="font-size:15px;font-weight:600">Liga</span>
+      <button class="tap" style="width:44px;margin-left:auto;display:grid;place-items:center;color:var(--text-2)"><svg width="22" height="22"><use href="#i-more"/></svg></button>
+    </div>
+    <div class="m-scroll" style="gap:14px">
+      <div style="display:flex;gap:14px;align-items:center">
+        <span data-av="Rafael Tavares" data-s="72" data-on="1"></span>
+        <div style="min-width:0">
+          <div style="font-size:21px;font-weight:600;letter-spacing:-.02em">Rafael Tavares</div>
+          <div class="sub" style="font-size:13px">@rafa.tavares · Recife, PE</div>
+          <div style="display:flex;gap:6px;margin-top:8px"><span class="chip"><svg style="color:var(--action)"><use href="#i-target"/></svg><b>ENARE 2027</b></span><span class="chip">USP-SP</span></div>
+        </div>
+      </div>
+      <div class="m-pn" style="display:grid;grid-template-columns:repeat(3,1fr)">
+        <div style="padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;border-right:1px solid var(--line)"><span data-shield="ouro" data-s="28"></span><span style="font-size:13px;font-weight:600">Ouro · <span class="num">1º</span></span></div>
+        <div style="padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;border-right:1px solid var(--line)"><svg width="28" height="28" style="color:#D9822B"><use href="#i-flame"/></svg><span style="font-size:13px;font-weight:600"><span class="num">41</span> dias</span></div>
+        <div style="padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px"><span class="num" style="font-size:20px;font-weight:600;line-height:28px">71%</span><span style="font-size:13px;font-weight:600">acerto</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <button class="btn btn-s btn-lg">Seguir</button>
+        <button class="btn btn-p btn-lg"><svg><use href="#i-cmp"/></svg>Comparar</button>
+      </div>
+      <div class="m-pn">
+        <div class="m-pn-h"><h3>Acerto por área</h3><span class="meta" style="font-size:12px"><span class="dot" style="background:var(--text)"></span> Rafael <span class="dot" style="background:var(--line-2);margin-left:6px"></span> Você</span></div>
+        <div id="cmp-areas-m" style="padding:4px 14px 12px"></div>
+      </div>
+      <div class="m-pn">
+        <div class="m-pn-h"><h3>Conquistas</h3><span class="meta num">14 / 32</span></div>
+        <div id="badges-m" style="display:flex;justify-content:space-between;padding:10px 12px 12px"></div>
+      </div>
+    </div>
+    <nav class="tabbar" data-tab="liga"></nav>
+    <div class="home-ind"></div>
+  </div></div>
+  </div>
+</section>
+
+<!-- ================= 4. QUESTÃO RESPONDIDA ================= -->
+<section class="screen" style="padding-bottom:60px">
+  <h2>4 · Questão respondida <span>bloco tutor</span></h2>
+  <div class="pair">
+  <div><div class="cap">desktop 1440×900</div>
+  <div class="desk" id="d-questao">
+    <aside class="side" data-side="estudar"></aside>
+    <div class="main">
+      <div class="topbar">
+        <div class="crumb"><span>Bloco tutor</span><span>/</span>Cirurgia Geral</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-left:24px;width:360px">
+          <div class="seg-prog" id="sp-d" style="flex:1"></div><span class="num sub" style="color:var(--text)">7<span class="sub">/20</span></span>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+          <span class="chip" style="height:32px"><svg><use href="#i-clock"/></svg><span class="num" style="color:var(--text)">18:42</span></span>
+          <button class="btn btn-s" style="height:32px">Encerrar</button>
+        </div>
+      </div>
+      <div style="flex:1;display:grid;grid-template-columns:1fr 440px;min-height:0">
+        <div style="padding:22px 36px 0 40px;overflow:hidden;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text-3)">
+            <span class="area-lbl"><span class="dot" style="background:var(--cir)"></span>Cirurgia Geral</span><span>›</span><span>Vias biliares</span>
+            <span style="margin-left:auto" class="chip">ENARE 2024 · Q37</span><span class="chip">Gabarito definitivo</span>
+          </div>
+          <div class="q-text" style="font-size:15.5px;line-height:1.65;color:var(--text);max-width:760px"></div>
+          <div class="alts" style="display:flex;flex-direction:column;gap:8px;max-width:760px"></div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);max-width:760px;border:1px solid var(--line);border-radius:9px;background:var(--surface);margin-top:6px">
+            <div class="kv" style="padding:12px 14px"><small>Seu tempo</small><b class="num" style="font-size:16px">1:48</b></div>
+            <div class="kv" style="padding:12px 14px;border-left:1px solid var(--line)"><small>Média</small><b class="num" style="font-size:16px">1:31</b></div>
+            <div class="kv" style="padding:12px 14px;border-left:1px solid var(--line)"><small>Vias biliares</small><b class="num" style="font-size:16px">52% <span class="sub" style="font-size:12px;font-weight:400">· 31 resp.</span></b></div>
+            <div class="kv" style="padding:12px 14px;border-left:1px solid var(--line)"><small>Volta em</small><b class="num" style="font-size:16px">2 dias</b></div>
+          </div>
+        </div>
+        <aside style="border-left:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;min-height:0">
+          <div style="padding:18px 22px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px">
+            <div style="width:36px;height:36px;border-radius:9px;background:var(--ok);color:#fff;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:16px">C</div>
+            <div><div style="font-weight:600">Gabarito C</div><div class="sub">Você marcou <b style="color:var(--bad);font-weight:600">B</b> · <span class="num">61%</span> acertam</div></div>
+            <div style="margin-left:auto" class="chip"><span class="dot" style="background:var(--ped)"></span>dificuldade média</div>
+          </div>
+          <div style="padding:16px 22px;display:flex;flex-direction:column;gap:14px;overflow:hidden;flex:1">
+            <div><div class="th" style="margin-bottom:6px">POR QUE A C</div>
+            <p style="line-height:1.6;color:var(--text)">Colecistite aguda litiásica grau I (Tóquio 2018) em paciente hígida: colecistectomia videolaparoscópica precoce, na mesma internação, idealmente até 72 h do início dos sintomas. Menos recorrência e menor tempo total de internação do que a cirurgia tardia, sem aumento de complicações.</p></div>
+            <div><div class="th" style="margin-bottom:6px">POR QUE NÃO AS OUTRAS</div>
+              <div class="why" style="display:flex;flex-direction:column;gap:7px;font-size:13px;line-height:1.5;color:var(--text-2)"></div>
+            </div>
+            <div class="sub">Tokyo Guidelines 2018 (TG18) · Okamoto K et al., J Hepatobiliary Pancreat Sci</div>
+            <div style="margin-top:auto;border-top:1px solid var(--line);padding-top:12px"><div class="th" style="margin-bottom:4px">PARECIDAS</div>
+              <div style="display:flex;flex-direction:column">
+                <a style="display:flex;align-items:center;gap:10px;height:34px;font-size:13px;color:var(--text)"><span class="num sub" style="width:150px;white-space:nowrap;font-size:11.5px">UNIFESP 2023 · Q12</span>Colecistite alitiásica<svg width="14" height="14" style="margin-left:auto;color:var(--text-3)"><use href="#i-arrow"/></svg></a>
+                <a style="display:flex;align-items:center;gap:10px;height:34px;font-size:13px;color:var(--text);border-top:1px solid var(--line)"><span class="num sub" style="width:150px;white-space:nowrap;font-size:11.5px">USP-SP 2024 · Q58</span>Coledocolitíase<svg width="14" height="14" style="margin-left:auto;color:var(--text-3)"><use href="#i-arrow"/></svg></a>
+                <a style="display:flex;align-items:center;gap:10px;height:34px;font-size:13px;color:var(--text);border-top:1px solid var(--line)"><span class="num sub" style="width:150px;white-space:nowrap;font-size:11.5px">SES-DF 2022 · Q41</span>Síndrome de Mirizzi<svg width="14" height="14" style="margin-left:auto;color:var(--text-3)"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </div>
+          <div style="padding:12px 16px;border-top:1px solid var(--line)">
+            <div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 6px 0 12px;border:1px solid var(--line-2);border-radius:9px;background:var(--surface-2);color:var(--text-3)">
+              <svg width="18" height="18" style="color:var(--action)"><use href="#i-curo"/></svg>Perguntar ao Curo
+              <span class="btn" style="margin-left:auto;height:28px;padding:0 10px;font-size:12.5px;background:var(--action-soft);color:var(--action-text)">Me guie</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <div style="height:60px;flex:none;border-top:1px solid var(--line);background:var(--surface);display:flex;align-items:center;gap:6px;padding:0 20px 0 32px">
+        <button class="btn btn-g"><svg><use href="#i-bookmark"/></svg>Salvar</button>
+        <button class="btn btn-g"><svg><use href="#i-note"/></svg>Por que errei</button>
+        <button class="btn btn-g"><svg><use href="#i-cards"/></svg>Virar flashcard</button>
+        <button class="btn btn-g"><svg><use href="#i-flag"/></svg>Reportar</button>
+        <button class="btn btn-s" style="margin-left:auto">Anterior</button>
+        <button class="btn btn-p">Próxima<span class="kbd">→</span></button>
+      </div>
+    </div>
+  </div></div>
+
+  <div><div class="cap">celular 390×844</div>
+  <div class="mob" id="m-questao">
+    <div class="sbar" data-sbar></div>
+    <div style="display:flex;align-items:center;gap:8px;padding:0 8px 8px 4px;flex:none">
+      <button class="tap" style="width:44px;display:grid;place-items:center;color:var(--text-2)"><svg width="22" height="22"><use href="#i-x"/></svg></button>
+      <div class="seg-prog" id="sp-m" style="flex:1"></div>
+      <span class="num" style="font-size:13px;font-weight:600;padding:0 6px">7/20</span>
+      <span class="chip num" style="height:30px;font-size:13px;color:var(--text)">18:42</span>
+    </div>
+    <div style="flex:1;overflow:hidden;padding:4px 16px 0;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-3)"><span class="area-lbl"><span class="dot" style="background:var(--cir)"></span>Cirurgia Geral</span><span style="margin-left:auto">ENARE 2024 · Q37</span></div>
+      <div class="q-text" style="font-size:15px;line-height:1.6"></div>
+      <div class="alts alts-m" style="display:flex;flex-direction:column;gap:7px"></div>
+      <div class="m-pn" style="padding:12px 14px;border-color:color-mix(in srgb,var(--ok) 40%,var(--line))">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="th" style="color:var(--ok)">POR QUE A C</span></div>
+        <p style="font-size:14px;line-height:1.55">Colecistite grau I (Tóquio 2018) em paciente hígida: colecistectomia laparoscópica precoce, na mesma internação, idealmente até 72 h.</p>
+      </div>
+    </div>
+    <div style="flex:none;border-top:1px solid var(--line);background:var(--surface);padding:8px 12px 30px;display:flex;align-items:center;gap:4px">
+      <button class="tap" style="width:44px;display:grid;place-items:center;color:var(--text-2)"><svg width="22" height="22"><use href="#i-bookmark"/></svg></button>
+      <button class="tap" style="width:44px;display:grid;place-items:center;color:var(--text-2)"><svg width="22" height="22"><use href="#i-note"/></svg></button>
+      <button class="tap" style="width:44px;display:grid;place-items:center;color:var(--action-text)"><svg width="22" height="22"><use href="#i-curo"/></svg></button>
+      <button class="btn btn-p" style="margin-left:auto;height:48px;padding:0 22px;font-size:15px;border-radius:10px">Próxima<svg><use href="#i-arrow"/></svg></button>
+    </div>
+    <div class="home-ind"></div>
+  </div></div>
+  </div>
+</section>
+
+<script>
+/* ---------- tema ---------- */
+document.querySelectorAll('.board-head .seg button').forEach(b=>b.onclick=()=>{
+  document.documentElement.dataset.theme=b.dataset.t;
+  document.querySelectorAll('.board-head .seg button').forEach(x=>x.setAttribute('aria-pressed',x===b));
+});
+if(new URLSearchParams(location.search).get('tema')==='escuro'){document.querySelector('[data-t="dark"]').click()}
+
+let uid=0;
+const H=s=>{let h=2166136261;for(const c of s)h=Math.imul(h^c.charCodeAt(0),16777619);h^=h>>>13;h=Math.imul(h,1540483477);h^=h>>>15;return h>>>0};
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const fmt=n=>n.toLocaleString('pt-BR');
+
+/* ---------- avatares geométricos ---------- */
+const PAL=[
+ ['#264E86','#6E9FD8','#D6E5F6'],['#4C3486','#9C82D6','#E9E2F8'],['#165E5A','#5DB5A9','#D8F0EC'],
+ ['#7A4024','#D4936A','#F6E2D3'],['#6E2846','#D47CA2','#F7DEE9'],['#355423','#8CB86A','#E4F0D8'],
+ ['#1F3C5E','#D9AE52','#F4E8CC'],['#343E4D','#8FA3BE','#E2E8F0'],['#5E3270','#E59572','#FAE3D7'],['#18506E','#E58373','#FADFD9']];
+function av(name,s){
+  const h=H(name),h2=H(name+'#'),p=PAL[h%PAL.length],t=h2%4,r=((h2>>>8)%4)*90,id='a'+(uid++);
+  const g=[
+    `<rect width="40" height="40" fill="url(#${id}g)"/><circle cx="27" cy="29" r="15" fill="${p[2]}" opacity=".95"/><circle cx="11" cy="12" r="5.5" fill="${p[0]}"/>`,
+    `<rect width="40" height="40" fill="${p[0]}"/><path d="M0 40 40 0v40z" fill="${p[1]}"/><path d="M16 40 40 16v24z" fill="${p[2]}" opacity=".9"/><circle cx="12" cy="12" r="4.5" fill="${p[2]}" opacity=".85"/>`,
+    `<rect width="40" height="40" fill="url(#${id}g)"/><circle cx="2" cy="38" r="34" fill="${p[2]}" opacity=".35"/><circle cx="2" cy="38" r="24" fill="${p[2]}" opacity=".85"/><circle cx="2" cy="38" r="13" fill="${p[0]}"/>`,
+    `<rect width="40" height="40" fill="${p[1]}"/><circle cx="30" cy="10" r="20" fill="${p[2]}" opacity=".55"/><circle cx="30" cy="10" r="11" fill="${p[0]}"/>`][t];
+  return `<svg viewBox="0 0 40 40" width="${s}" height="${s}"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${p[1]}"/><stop offset="1" stop-color="${p[0]}"/></linearGradient><radialGradient id="${id}h" cx=".28" cy=".18" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".26"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></radialGradient><clipPath id="${id}c"><circle cx="20" cy="20" r="20"/></clipPath></defs><g clip-path="url(#${id}c)"><g transform="rotate(${r} 20 20)">${g}</g><rect width="40" height="40" fill="url(#${id}h)"/></g><circle cx="20" cy="20" r="19.6" fill="none" stroke="#0B1220" stroke-opacity=".1" stroke-width=".8"/></svg>`;
+}
+const BADGE={flame:['#D9822B','i-flame'],check:['var(--ok)','i-check'],bolt:['#C99A2E','i-bolt']};
+function avHTML(name,s,on,bd){
+  return `<span class="av">${av(name,s)}${on?'<span class="on"></span>':''}${bd?`<span class="bd"><svg style="color:${BADGE[bd][0]}"><use href="#${BADGE[bd][1]}"/></svg></span>`:''}</span>`;
+}
+$$('[data-av]').forEach(e=>{e.outerHTML=avHTML(e.dataset.av,+e.dataset.s,e.dataset.on)});
+$$('[data-stack]').forEach(e=>{e.style.display='flex';e.innerHTML=e.dataset.stack.split(',').map((n,i)=>`<span style="margin-left:${i?-7:0}px;border-radius:50%;box-shadow:0 0 0 2px var(--surface);line-height:0">${av(n,22)}</span>`).join('')});
+
+/* ---------- escudos metálicos ---------- */
+const MET={bronze:['#F2CFAE','#C2814F','#8A5130','#5E3519'],prata:['#F7F9FB','#C8D0DA','#8C98A8','#5B6676'],ouro:['#FCEDB8','#E3B84F','#AE8020','#735310'],diamante:['#E0F8FF','#86D0F0','#3F8CC8','#22578A']};
+const TIER={bronze:1,prata:2,ouro:3,diamante:4};
+function shield(t,s,dim){
+  const m=MET[t],id='s'+(uid++),n=TIER[t];
+  const outer="M32 3 58 12v22c0 18-12 30-26 35C18 64 6 52 6 34V12z", inner="M32 9.5 52.5 16.6V34c0 14.4-9.3 24-20.5 28.4C20.8 58 11.5 48.4 11.5 34V16.6z";
+  let em='';
+  if(n<4){for(let i=0;i<n;i++){const y=26+i*8.5-(n-1)*4.25;em+=`<path d="M21.5 ${y+6} 32 ${y} 42.5 ${y+6}" fill="none" stroke="${m[3]}" stroke-opacity=".55" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 1.2)"/><path d="M21.5 ${y+6} 32 ${y} 42.5 ${y+6}" fill="none" stroke="url(#${id}e)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>`}}
+  else em=`<path d="M32 21 43 32 32 47 21 32z" fill="${m[3]}" opacity=".5" transform="translate(0 1.2)"/><path d="M32 21 43 32 32 47 21 32z" fill="url(#${id}e)"/><path d="M21 32h22M32 21l-4 11 4 15 4-15z" fill="none" stroke="${m[2]}" stroke-width=".9" opacity=".7"/>`;
+  return `<svg viewBox="0 0 64 72" width="${s}" height="${s*72/64}" style="${dim?'filter:grayscale(1);opacity:.42':''}"><defs>
+  <linearGradient id="${id}o" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="${m[0]}"/><stop offset=".45" stop-color="${m[1]}"/><stop offset="1" stop-color="${m[2]}"/></linearGradient>
+  <linearGradient id="${id}i" x1="0" y1="0" x2=".2" y2="1"><stop offset="0" stop-color="${m[2]}"/><stop offset=".55" stop-color="${m[1]}"/><stop offset="1" stop-color="${m[0]}"/></linearGradient>
+  <linearGradient id="${id}e" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="${m[0]}"/></linearGradient>
+  <linearGradient id="${id}h" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+  <path d="${outer}" fill="url(#${id}o)" stroke="${m[3]}" stroke-width="1.2" stroke-opacity=".7"/>
+  <path d="${inner}" fill="url(#${id}i)"/><path d="${inner}" fill="none" stroke="${m[3]}" stroke-opacity=".35" stroke-width="1"/>
+  <path d="M32 9.5 52.5 16.6V30C42 33 22 33 11.5 30V16.6z" fill="url(#${id}h)"/>${em}</svg>`;
+}
+$$('[data-shield]').forEach(e=>{e.innerHTML=shield(e.dataset.shield,+e.dataset.s);e.style.lineHeight=0});
+
+/* ---------- logo ---------- */
+const logo=s=>`<span style="display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:${s>24?17:15.5}px;letter-spacing:-.02em"><svg width="${s}" height="${s}" viewBox="0 0 28 28"><rect width="28" height="28" rx="7" style="fill:var(--action)"/><circle cx="14" cy="14" r="8" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2"/><circle cx="14" cy="14" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="14" cy="14" r="1.4" fill="#fff"/><path d="M14 3.5v4M14 20.5v4M3.5 14h4M20.5 14h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-opacity=".8"/></svg>MedAlvo</span>`;
+$$('[data-logo]').forEach(e=>e.outerHTML=logo(+e.dataset.logo));
+
+/* ---------- sidebar ---------- */
+const NAV=[['inicio','Início','i-home'],['estudar','Estudar','i-study'],['simulados','Simulados','i-sim'],['revisoes','Revisões','i-rev','18'],['flashcards','Flashcards','i-cards','12'],['liga','Liga','i-liga'],['curo','Curo','i-curo']];
+$$('[data-side]').forEach(e=>{const on=e.dataset.side;e.innerHTML=`<div class="brand">${logo(26)}</div>
+ <div class="target-sel"><svg width="20" height="20" style="color:var(--action)"><use href="#i-target"/></svg><div><b>ENARE 2027</b><small><span class="num">92</span> dias · R1</small></div></div>
+ <nav class="nav">${NAV.map(([k,l,i,c])=>`<a class="${k===on?'on':''}"><svg><use href="#${i}"/></svg>${l}${c?`<span class="cnt ${k==='revisoes'?'hot':''}">${c}</span>`:''}</a>`).join('')}</nav>
+ <div class="side-foot"><div class="lvl"><div class="lvl-row"><span>Nível <b class="num">14</b></span><span class="num">9.507 / 10.000</span></div><div class="bar"><i style="width:95%"></i></div></div>
+ <div class="me-row">${avHTML('Marina Albuquerque',30,1)}<div><b>Marina Albuquerque</b><small>Pro</small></div></div></div>`});
+
+/* ---------- tabbar e status ---------- */
+const TABS=[['inicio','Início','i-home'],['estudar','Estudar','i-study'],['revisoes','Revisões','i-rev','18'],['liga','Liga','i-liga'],['perfil','Perfil','i-user']];
+$$('[data-tab]').forEach(e=>{e.innerHTML=TABS.map(([k,l,i,c])=>`<a class="${k===e.dataset.tab?'on':''}"><svg><use href="#${i}"/></svg>${l}${c?`<span class="cnt">${c}</span>`:''}</a>`).join('')});
+$$('[data-sbar]').forEach(e=>e.innerHTML=`<span class="num" style="font-family:var(--sans)">9:41</span><span class="ic"><svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg><svg width="17" height="17"><use href="#i-wifi"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="17" height="9" rx="2" fill="currentColor"/><rect x="25" y="4.5" width="1.5" height="4" rx=".7" fill="currentColor" opacity=".5"/></svg></span>`);
+
+/* ---------- micrográficos ---------- */
+function spark(v,w,h,col='var(--prog)'){
+  const mn=Math.min(...v),mx=Math.max(...v),id='g'+(uid++);
+  const pts=v.map((y,i)=>[i*(w-4)/(v.length-1)+2,h-3-(y-mn)/(mx-mn||1)*(h-8)]);
+  const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+  const l=pts.at(-1);
+  return `<svg width="${w}" height="${h}" style="color:${col};overflow:visible"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".18"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs><path d="${d} L${l[0]} ${h} L2 ${h}Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${l[0]}" cy="${l[1]}" r="2.6" fill="currentColor" style="stroke:var(--surface)" stroke-width="1.5"/></svg>`;
+}
+$$('[data-spark]').forEach(e=>e.innerHTML=spark(e.dataset.spark.split(',').map(Number),+e.dataset.w,+e.dataset.h));
+function rnd(seed){let s=seed;return()=>((s=Math.imul(s^s>>>15,2246822507)^Math.imul(s^s>>>13,3266489909)+1013904223)>>>0)/4294967296}
+function heat(weeks,cell,gap,seed,hi,ms){
+  const r=rnd(seed*7919+11),W=weeks*(cell+gap),Hh=7*(cell+gap);let out='';
+  const op=[0,.28,.5,.75,1];
+  for(let w=0;w<weeks;w++)for(let d=0;d<7;d++){
+    let lv; const rec=w/weeks; const x=r();
+    if(w===weeks-1&&d>0){continue}
+    lv=x<(hi?.08:(.55-rec*.5))?0:Math.min(4,1+Math.floor(r()*(hi?4.2:2.4+rec*2)));
+    if(!hi&&w>=weeks-4)lv=Math.max(lv,1);
+    out+=`<rect x="${w*(cell+gap)}" y="${d*(cell+gap)}" width="${cell}" height="${cell}" rx="2.5" style="fill:${lv?'var(--prog)':'var(--heat0)'};fill-opacity:${lv?op[lv]:1}"/>`;
+  }
+  const lx=W-5*(cell+gap)+gap;
+  return `<svg width="${W}" height="${Hh+22}"><g>${out}</g><g transform="translate(0 ${Hh+8})" style="font:11px var(--sans);fill:var(--text-3)">${ms.map((t,i)=>`<text x="${i*W/ms.length}" y="10">${t}</text>`).join('')}</g></svg>`;
+}
+$$('[data-heat]').forEach(e=>e.innerHTML=heat(+e.dataset.heat,+e.dataset.cell,+e.dataset.gap,+e.dataset.seed,e.dataset.hi,e.dataset.m.split(",")));
+
+/* ---------- meta segmentada ---------- */
+function metaSeg(el,n){el.innerHTML=Array.from({length:8},(_,i)=>`<i style="flex:1;height:6px;border-radius:2px;background:${i<Math.floor(n)?'var(--prog)':'var(--prog-track)'};${i===Math.floor(n)?`background:linear-gradient(90deg,var(--prog) ${(n%1)*100}%,var(--prog-track) 0)`:''}"></i>`).join('')}
+metaSeg($('#meta-seg'),26/5); metaSeg($('#meta-seg-m'),26/5);
+
+/* ---------- plano ---------- */
+const PLAN=[
+ ['done','i-check','Questões da manhã','Mista · 69% acerto','26 q'],
+ ['next','i-rev','Revisões vencidas','18 tópicos · FSRS','18 q'],
+ ['','i-study','Bloco adaptativo','Cirurgia Geral, Ginecologia','20 q'],
+ ['','i-cards','Flashcards','dos erros da semana','12'],
+];
+$('#plan-list').innerHTML=PLAN.map(([st,i,t,s,c],k)=>`<div style="display:flex;align-items:center;gap:12px;height:52px;padding:0 14px;${k?'border-top:1px solid var(--line);':''}${st==='next'?'background:var(--action-soft);':''}">
+ <span style="width:28px;height:28px;border-radius:7px;display:grid;place-items:center;${st==='done'?'background:var(--prog);color:#fff':st==='next'?'background:var(--action);color:#fff':'background:var(--sunken);color:var(--text-2)'}"><svg width="16" height="16"><use href="#${i}"/></svg></span>
+ <div style="min-width:0"><div style="font-weight:600;${st==='done'?'color:var(--text-3);text-decoration:line-through;text-decoration-color:var(--line-2)':''}">${t}</div><div class="sub">${s}</div></div>
+ <span class="num" style="margin-left:auto;font-size:12.5px;color:${st==='next'?'var(--action-text)':'var(--text-3)'};font-weight:${st==='next'?600:400}">${c}</span></div>`).join('');
+$('#plan-list-m').innerHTML=PLAN.slice(0,3).map(([st,i,t,s,c],k)=>`<div style="display:flex;align-items:center;gap:12px;min-height:48px;${k?'border-top:1px solid var(--line);':''}">
+ <span style="width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none;${st==='done'?'background:var(--prog);color:#fff':st==='next'?'background:var(--action);color:#fff':'background:var(--sunken);color:var(--text-2)'}"><svg width="17" height="17"><use href="#${i}"/></svg></span>
+ <div style="min-width:0"><div style="font-weight:600;font-size:14.5px;${st==='done'?'color:var(--text-3)':''}">${t}</div><div class="sub" style="font-size:12.5px">${s}</div></div>
+ <span class="num" style="margin-left:auto;font-size:13px;color:${st==='next'?'var(--action-text)':'var(--text-3)'};font-weight:${st==='next'?600:400}">${c}</span></div>`).join('');
+
+/* ---------- áreas ---------- */
+const AREAS=[['Clínica Médica','clin',64,2.4,612,[58,59,61,60,62,63,64]],['Cirurgia','cir',55,4.8,318,[47,48,50,51,52,54,55]],['Pediatria','ped',66,1.2,201,[63,64,64,65,66,65,66]],['Ginecologia e Obstetrícia','go',58,-0.6,176,[59,60,58,59,58,57,58]],['Preventiva','prev',70,3.5,109,[63,65,66,68,67,69,70]]];
+const CORTE=71;
+$('#areas-d').innerHTML=`<div style="display:grid;grid-template-columns:1fr 104px 40px 44px 44px;gap:10px;padding:0 0 6px;border-bottom:1px solid var(--line)"><span class="th">ÁREA</span><span class="th">ACERTO</span><span></span><span class="th" style="text-align:right">30D</span><span class="th" style="text-align:right">RESP.</span></div>`+
+AREAS.map(([n,c,v,d,r])=>`<div style="display:grid;grid-template-columns:1fr 104px 40px 44px 44px;gap:10px;align-items:center;height:34px;border-bottom:1px solid var(--line)">
+ <span class="area-lbl" style="font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden"><span class="dot" style="background:var(--${c})"></span>${n.replace('Ginecologia e Obstetrícia','GO').replace('Clínica Médica','Clínica')}</span>
+ <span style="position:relative;height:6px;border-radius:3px;background:var(--prog-track)"><i style="position:absolute;left:0;top:0;bottom:0;width:${v}%;border-radius:3px;background:var(--${c})"></i><i style="position:absolute;left:${CORTE}%;top:-4px;bottom:-4px;width:1.5px;background:var(--text-2)"></i></span>
+ <span class="num" style="font-weight:600;text-align:right">${v}%</span>
+ <span class="num ${d>=0?'pos':'neg'}" style="text-align:right;font-size:12.5px">${d>=0?'+':'−'}${Math.abs(d).toFixed(1).replace('.',',')}</span>
+ <span class="num sub" style="text-align:right">${fmt(r)}</span></div>`).join('')+`<div class="sub" style="display:flex;align-items:center;gap:6px;margin-top:9px;font-size:11.5px"><i style="width:1.5px;height:10px;background:var(--text-2);display:inline-block"></i>corte estimado ENARE · <span class="num">71%</span></div>`;
+$('#areas-m').innerHTML=AREAS.map(([n,c,v,d],k)=>`<div style="display:grid;grid-template-columns:96px 1fr 40px;gap:10px;align-items:center;height:36px;${k?'border-top:1px solid var(--line)':''}">
+ <span class="area-lbl" style="font-size:13.5px;color:var(--text)"><span class="dot" style="background:var(--${c})"></span>${n.replace('Ginecologia e Obstetrícia','GO').replace('Clínica Médica','Clínica')}</span>
+ <span style="position:relative;height:6px;border-radius:3px;background:var(--prog-track)"><i style="position:absolute;left:0;top:0;bottom:0;width:${v}%;border-radius:3px;background:var(--${c})"></i><i style="position:absolute;left:${CORTE}%;top:-4px;bottom:-4px;width:1.5px;background:var(--text-2)"></i></span>
+ <span class="num" style="font-weight:600;text-align:right;font-size:14px">${v}%</span></div>`).join('');
+
+/* ---------- missões ---------- */
+const MIS=[['i-study','Responder 40 questões',26,40,30,'var(--action)'],['i-bolt','Acertar 5 seguidas em Cirurgia',3,5,40,'#C99A2E'],['i-cards','Revisar 10 flashcards',10,10,20,'var(--prog)']];
+$('#missoes-d').innerHTML=MIS.map(([i,t,a,b,x,c],k)=>{const done=a>=b;return `<div style="display:grid;grid-template-columns:32px 1fr 76px;gap:12px;align-items:center;padding:0 16px;flex:1;${k?'border-top:1px solid var(--line)':''}">
+ <span style="width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:color-mix(in srgb,${c} 14%,var(--surface));color:${c}"><svg width="17" height="17"><use href="#${done?'i-check':i}"/></svg></span>
+ <div style="min-width:0"><div style="font-weight:500;margin-bottom:6px;${done?'color:var(--text-3)':''}">${t}</div><div style="display:flex;align-items:center;gap:10px"><div class="bar" style="flex:1"><i style="width:${a/b*100}%;${done?'':'background:var(--text-2)'}"></i></div><span class="num sub">${a}/${b}</span></div></div>
+ <span class="num" style="text-align:right;font-size:12.5px;font-weight:600;color:${done?'var(--prog)':'var(--text-2)'}">${done?'✓ ':''}+${x} XP</span></div>`}).join('');
+
+/* ---------- liga ---------- */
+const L=[
+ [1,'Rafael Tavares','ENARE',41,286,71,2410,1,'flame'],[2,'Beatriz Nogueira','USP-SP',33,261,74,2265,1,''],[3,'Thiago Okamoto','UNIFESP',19,240,68,2130,0,'bolt'],
+ [4,'Larissa Menezes','ENARE',27,229,66,1980,1,''],[5,'Gustavo Lins','SES-DF',12,214,63,1876,0,''],[6,'Ana Clara Ribeiro','ENARE',8,188,69,1640,0,'check'],
+ [7,'João Pedro Saraiva','AMRIGS',22,171,61,1512,1,''],[8,'Marina Albuquerque','ENARE',26,168,64,1488,1,'flame'],[9,'Isabela Fontes','PSU-MG',5,160,58,1402,0,''],
+ [10,'Caio Brandão','UNICAMP',14,152,62,1370,1,''],[11,'Yasmin Haddad','USP-SP',9,143,67,1295,1,'check'],
+ 'gap',
+ [21,'Pedro Henrique Lacerda','ENARE',2,61,52,610,0,''],[22,'Letícia Moraes','SUS-SP',1,54,57,540,0,''],[23,'Diego Azevedo','ENARE',0,46,49,455,0,''],[24,'Camila Rocha','UERJ',3,32,55,320,0,''],[25,'Vinícius Prado','SES-DF',0,18,44,180,0,'']];
+const zoneUp=`<div class="zone up"><svg><use href="#i-up"/></svg>ZONA DE SUBIDA<span class="ln"></span></div>`;
+const zoneDn=`<div class="zone dn"><svg><use href="#i-down"/></svg>ZONA DE DESCIDA<span class="ln"></span></div>`;
+function lgRowD(r){const [p,n,pr,sq,q,ac,xp,on,bd]=r,me=n==='Marina Albuquerque';
+ return `<div class="lg-row ${me?'me':''}" style="grid-template-columns:44px 1fr 120px 92px 92px 110px 96px;height:32px;padding-right:16px">
+ <span class="rk ${p<=3?'top':''}">${p}</span>
+ <span style="display:flex;align-items:center;gap:10px;padding-left:16px;min-width:0">${avHTML(n,26,on,bd)}<span class="nm" style="${me?'font-weight:600':''}">${n}${me?' <span class="sub" style="font-weight:400">· você</span>':''}</span></span>
+ <span class="sub" style="color:var(--text-2)">${pr}</span>
+ <span class="num" style="text-align:right;color:var(--text-2);font-size:12.5px">${sq?sq+' d':'—'}</span>
+ <span class="num" style="text-align:right;color:var(--text-2);font-size:12.5px">${q}</span>
+ <span style="display:flex;align-items:center;justify-content:flex-end;gap:8px"><span style="width:44px;height:4px;border-radius:2px;background:var(--prog-track);position:relative;overflow:hidden"><i style="position:absolute;inset:0 auto 0 0;width:${ac}%;background:var(--text-3)"></i></span><span class="num" style="font-size:12.5px;width:30px;text-align:right">${ac}%</span></span>
+ <span class="num" style="text-align:right;font-weight:600">${fmt(xp)}</span></div>`}
+let html='';L.forEach(r=>{if(r==='gap'){html+=`<div class="gap-row"><span class="num">12–20</span> · 9 alunos</div>`+zoneDn;return}
+ if(r[0]===1)html+=zoneUp; html+=lgRowD(r); if(r[0]===5)html+=`<div style="height:6px;background:var(--surface-2);border-bottom:1px solid var(--line)"></div>`});
+$('#liga-d').innerHTML=html;
+
+/* mini (início desktop) */
+function miniRow(r,h=34,av=24){const [p,n,,,,,xp,on,bd]=r,me=n==='Marina Albuquerque';
+ return `<div class="lg-row ${me?'me':''}" style="grid-template-columns:28px 1fr auto;height:${h}px;padding:0 16px 0 6px;gap:8px"><span class="rk ${p<=3?'top':''}">${p}</span><span style="display:flex;align-items:center;gap:9px;min-width:0;padding-left:4px">${avHTML(n,av,on,bd)}<span class="nm" style="${me?'font-weight:600':''}">${me?'Você':n}</span></span><span class="num" style="font-size:12.5px;font-weight:${me?600:500};color:${me?'var(--text)':'var(--text-2)'}">${fmt(xp)}</span></div>`}
+$('#liga-mini').innerHTML=zoneUp+L.slice(0,5).map(r=>miniRow(r,34,26)).join('')+`<div style="height:6px;background:var(--surface-2);border-bottom:1px solid var(--line)"></div>`+L.slice(5,11).map(r=>miniRow(r,34,26)).join('')+`<div class="gap-row"><span class="num">12–20</span></div>`+zoneDn+L.slice(12,17).map(r=>miniRow(r,31,22)).join('');
+$('#liga-mini-m').innerHTML=[L[4],L[6],L[7],L[8]].map(r=>miniRow(r,44,28)).join('').replaceAll('padding:0 16px 0 6px','padding:0 14px 0 4px');
+
+/* mobile liga */
+function lgRowM(r){const [p,n,pr,sq,q,ac,xp,on,bd]=r,me=n==='Marina Albuquerque';
+ return `<div class="lg-row ${me?'me':''}" style="grid-template-columns:30px 1fr auto;height:57px;padding:0 16px 0 4px;gap:10px"><span class="rk ${p<=3?'top':''}" style="font-size:13.5px">${p}</span><span style="display:flex;align-items:center;gap:11px;min-width:0">${avHTML(n,34,on,bd)}<span style="min-width:0;display:flex;flex-direction:column"><span class="nm" style="font-size:15px;${me?'font-weight:600':''}">${n}</span><span class="sub" style="font-size:12.5px">${pr} · <span class="num">${sq}</span> d</span></span></span><span class="num" style="font-size:14px;font-weight:600">${fmt(xp)}</span></div>`}
+$('#liga-m').innerHTML=zoneUp+L.slice(0,5).map(lgRowM).join('')+`<div style="height:6px;background:var(--surface-2);border-bottom:1px solid var(--line)"></div>`+L.slice(5,7).map(lgRowM).join('');
+$('#liga-me-m').innerHTML=lgRowM(L[7]).replace('height:57px','height:60px;border-bottom:0');
+
+/* faixa de divisões */
+const DIVS=['bronze','prata','ouro','diamante'],DN={bronze:'Bronze',prata:'Prata',ouro:'Ouro',diamante:'Diamante'};
+$('#div-strip').innerHTML=DIVS.map(d=>{const cur=d==='ouro',lock=d==='diamante';return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 0 6px;border-radius:9px;${cur?'background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line-2)':''}">${shield(d,cur?58:40,lock)}<span style="font-size:12.5px;font-weight:${cur?600:500};color:${cur?'var(--text)':'var(--text-3)'}">${DN[d]}</span>${cur?'<span class="num sub" style="font-size:11.5px">25 alunos</span>':`<span class="sub" style="font-size:11.5px">${lock?'acima':'abaixo'}</span>`}</div>`}).join('');
+$('#div-strip-m').innerHTML=DIVS.map(d=>{const cur=d==='ouro';return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px">${shield(d,cur?56:34,d==='diamante')}<span style="font-size:12px;font-weight:${cur?600:500};color:${cur?'var(--text)':'var(--text-3)'}">${DN[d]}</span></div>`}).join('');
+
+/* histórico */
+const HIST=[['prata',3],['prata',1],['ouro',14],['ouro',9],['prata',2],['ouro',11],['ouro',6],['ouro',8]];
+$('#hist-ligas').innerHTML=HIST.map(([d,p],i)=>`<div style="display:flex;flex-direction:column;align-items:center;gap:4px">${shield(d,i===7?26:22)}<span class="num" style="font-size:11.5px;color:${i===7?'var(--text)':'var(--text-3)'};font-weight:${i===7?600:400}">${p}º</span></div>`).join('');
+const HR=[['ouro',4],['ouro',2],['ouro',3],['prata',1],['ouro',5],['ouro',2],['ouro',1],['ouro',1]];
+const HRX=[1720,2050,1890,2380,1610,2140,2290,2410];
+$('#hist-rafa').innerHTML=HR.map(([d,p],i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px"><span class="num" style="font-size:10.5px;color:var(--text-3)">${(HRX[i]/1000).toFixed(1).replace('.',',')}k</span><i style="width:100%;max-width:22px;height:${HRX[i]/2410*90}px;border-radius:3px;background:${i===7?'var(--action)':'var(--prog)'};opacity:${i===7?1:.75}"></i>${shield(d,26)}<span class="num" style="font-size:11.5px;color:${i===7?'var(--text)':'var(--text-3)'};font-weight:${i===7?600:400}">${p}º</span></div>`).join('');
+const SP2=(a)=>a.map(([n,c,v])=>`<div style="display:flex;align-items:center;gap:8px;height:28px;font-size:13px"><span class="dot" style="background:var(--${c})"></span><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${n}</span><span class="num" style="font-weight:600">${v}%</span></div>`).join('');
+$('#fortes').innerHTML=SP2([['Neonatologia','ped',84],['Cardiologia','clin',81],['Obstetrícia','go',79]]);
+$('#fracas').innerHTML=SP2([['Ortopedia','cir',52],['Urologia','cir',55],['Otorrino','cir',57]]);
+const ON=[['Beatriz Nogueira','Simulado USP-SP 2025','flame'],['Thiago Okamoto','Revisões · Nefrologia','bolt'],['Caio Brandão','Bloco · Pediatria',''],['Yasmin Haddad','Flashcards','check'],['Larissa Menezes','Bloco · Cardiologia','']];
+$('#online').innerHTML=ON.slice(0,4).map(([n,a,b])=>`<div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 16px">${avHTML(n,28,1,b)}<div style="min-width:0;line-height:1.25"><div class="nm" style="font-size:13px">${n}</div><div class="sub" style="font-size:11.5px">${a}</div></div></div>`).join('');
+
+/* XP da semana */
+const XPW=[[ 'seg',310],['ter',420],['qua',285],['qui',0],['sex',268],['sáb',205],['dom',null]];
+$('#xp-week').innerHTML=`<div style="display:flex;align-items:flex-end;gap:8px;height:92px">${XPW.map(([d,v],i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%"><span class="num" style="font-size:10.5px;color:var(--text-3)">${v?v:''}</span><i style="width:100%;border-radius:3px;height:${v==null?4:Math.max(4,v/420*62)}px;background:${v==null?'var(--prog-track)':v===0?'var(--prog-track)':i===5?'var(--action)':'var(--prog)'};${v==null?'outline:1px dashed var(--line-2);outline-offset:-1px;background:transparent':''}"></i></div>`).join('')}</div><div style="display:flex;gap:8px;margin-top:6px">${XPW.map(([d],i)=>`<span style="flex:1;text-align:center;font-size:11px;color:${i===5?'var(--text)':'var(--text-3)'};font-weight:${i===5?600:400}">${d}</span>`).join('')}</div>`;
+
+/* ---------- perfil ---------- */
+const KP=[['Questões','6.842','+286 esta semana'],['Acerto geral','71%','+2 pp em 30 d'],['Simulados','14','melhor 78%'],['Acerto esperado ENARE','74%','corte 71%'],['Recorde de sequência','63 d','atual 41 d']];
+$('#kpis-p').innerHTML=KP.map(([k,v,s],i)=>`<div style="padding:14px 18px;${i?'border-left:1px solid var(--line)':''}"><div class="th" style="margin-bottom:6px">${k.toUpperCase()}</div><div class="num" style="font-size:22px;font-weight:600;letter-spacing:-.03em">${v}</div><div class="sub" style="margin-top:2px">${s}</div></div>`).join('');
+const CMP=[['Clínica Médica','clin',72,64],['Cirurgia','cir',69,55],['Pediatria','ped',75,66],['GO','go',68,58],['Preventiva','prev',73,70]];
+const cmpRow=(n,c,a,b,m)=>`<div style="display:grid;grid-template-columns:${m?'84px':'122px'} 1fr 38px;gap:10px;align-items:center;padding:${m?'7px':'7px'} 0">
+ <span class="area-lbl" style="font-size:${m?13.5:13}px;color:var(--text)"><span class="dot" style="background:var(--${c})"></span>${m?n.replace('Clínica Médica','Clínica'):n}</span>
+ <span style="display:flex;flex-direction:column;gap:3px"><span style="height:6px;border-radius:3px;background:var(--prog-track);position:relative"><i style="position:absolute;inset:0 auto 0 0;width:${a}%;border-radius:3px;background:var(--${c})"></i></span><span style="height:4px;border-radius:2px;background:var(--prog-track);position:relative"><i style="position:absolute;inset:0 auto 0 0;width:${b}%;border-radius:2px;background:var(--line-2)"></i></span></span>
+ <span style="text-align:right;line-height:1.15"><span class="num" style="font-weight:600;font-size:13px;display:block">${a}%</span><span class="num sub" style="font-size:11px">${b}%</span></span></div>`;
+$('#cmp-areas').innerHTML=CMP.map(r=>cmpRow(...r)).join('');
+$('#cmp-areas-m').innerHTML=CMP.map(r=>cmpRow(...r,1)).join('');
+
+/* insígnias de conquista: medalhão metálico */
+function medal(kind,metal,s,lock){
+  const m=MET[metal],id='m'+(uid++);
+  const glyph={q:`<path d="M15 14h14v16H15z" fill="none" stroke="url(#${id}e)" stroke-width="2.4" stroke-linejoin="round"/><path d="M19 20h6M19 24h4" stroke="url(#${id}e)" stroke-width="2.2" stroke-linecap="round"/>`,
+   fire:`<path d="M22 11c.5 3 2.2 4.4 3.6 6 1.4 1.5 2.4 3.2 2.4 5.6a6 6 0 0 1-12 0c0-2.4 1.1-4 2.3-5.2.3 1.5.9 2.4 1.8 3-.4-3.6.3-6.8 1.9-9.4z" fill="url(#${id}e)"/>`,
+   top:`<path d="m14 27 3-11 5 6 5-6 3 11z" fill="url(#${id}e)"/><path d="M14 30h16" stroke="url(#${id}e)" stroke-width="2.4" stroke-linecap="round"/>`,
+   tgt:`<circle cx="22" cy="22" r="8" fill="none" stroke="url(#${id}e)" stroke-width="2.4"/><circle cx="22" cy="22" r="3" fill="url(#${id}e)"/>`,
+   rev:`<path d="M22 13.5a8.5 8.5 0 1 1-8 5.6" fill="none" stroke="url(#${id}e)" stroke-width="2.4" stroke-linecap="round"/><path d="m12 15 2 5.4 4.6-2.8z" fill="url(#${id}e)"/>`,
+   steth:`<path d="M16 12v7a5 5 0 0 0 10 0v-7" fill="none" stroke="url(#${id}e)" stroke-width="2.4" stroke-linecap="round"/><path d="M21 24v3a4 4 0 0 0 8 0v-2" fill="none" stroke="url(#${id}e)" stroke-width="2.4" stroke-linecap="round"/><circle cx="29" cy="23" r="2.6" fill="url(#${id}e)"/>`}[kind];
+  return `<svg viewBox="0 0 44 44" width="${s}" height="${s}" style="${lock?'filter:grayscale(1);opacity:.38':''}"><defs><linearGradient id="${id}o" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="${m[0]}"/><stop offset=".5" stop-color="${m[1]}"/><stop offset="1" stop-color="${m[2]}"/></linearGradient><linearGradient id="${id}i" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${m[2]}"/><stop offset="1" stop-color="${m[1]}"/></linearGradient><linearGradient id="${id}e" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="${m[0]}"/></linearGradient></defs>
+  <path d="M22 1.5 40 11.5v21L22 42.5 4 32.5v-21z" fill="url(#${id}o)" stroke="${m[3]}" stroke-opacity=".6"/><path d="M22 6 36 13.8v16.4L22 38 8 30.2V13.8z" fill="url(#${id}i)"/><path d="M22 6 36 13.8V20C28 22 16 22 8 20v-6.2z" fill="#fff" opacity=".18"/>${glyph}</svg>`;
+}
+const BD=[['q','ouro','5.000 questões'],['fire','ouro','30 dias seguidos'],['top','diamante','Top 3 · Ouro'],['tgt','prata','Simulado ≥ 75%'],['rev','prata','Revisões em dia'],['steth','bronze','Pediatria ≥ 75%'],['q','diamante','10.000 questões',1],['fire','diamante','100 dias seguidos',1],['top','diamante','1º no Diamante',1]];
+$$('[data-medal]').forEach(e=>e.innerHTML=medal('top',e.dataset.medal,30));
+$('#badges').innerHTML=BD.map(([k,m,t,l])=>`<div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px 4px;text-align:center">${medal(k,m,58,l)}<span style="font-size:12px;line-height:1.3;color:${l?'var(--text-3)':'var(--text-2)'}">${t}</span></div>`).join('');
+$('#badges-m').innerHTML=BD.slice(0,5).map(([k,m,t])=>`<div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:62px;text-align:center">${medal(k,m,46)}<span style="font-size:11px;line-height:1.25;color:var(--text-2)">${t}</span></div>`).join('');
+
+/* capa geométrica do perfil */
+$$('[data-cover]').forEach(e=>{e.innerHTML=`<svg width="100%" height="100%" preserveAspectRatio="none"><defs><linearGradient id="cv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6E9FD8" stop-opacity=".22"/><stop offset=".45" stop-color="#6E9FD8" stop-opacity="0"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#cv)"/></svg>`});
+
+/* ---------- questão ---------- */
+const Q=`Mulher, 38 anos, procura o pronto-socorro com dor em hipocôndrio direito há 36 horas, náuseas e febre de 38,2 °C. Sem comorbidades. Exame: sinal de Murphy positivo, sem massa palpável. Leucócitos 14.200/mm³, bilirrubina total 0,9 mg/dL, fosfatase alcalina e amilase normais. Ultrassonografia: vesícula distendida com parede de 5 mm, cálculo impactado no infundíbulo, líquido perivesicular e colédoco de 4 mm. Qual a conduta mais adequada?`;
+const QM=`Mulher, 38 anos, dor em hipocôndrio direito há 36 h, febre de 38,2 °C, Murphy positivo. Leucócitos 14.200/mm³, bilirrubina 0,9 mg/dL. US: parede vesicular de 5 mm, cálculo impactado no infundíbulo, colédoco de 4 mm. Conduta mais adequada:`;
+const ALTS=[['A','CPRE com papilotomia e colecistectomia eletiva em 6 semanas',4,''],['B','Antibioticoterapia e colecistectomia eletiva após 6 a 8 semanas',24,'bad'],['C','Colecistectomia videolaparoscópica precoce, na mesma internação',61,'ok'],['D','Colecistostomia percutânea guiada por ultrassonografia',9,''],['E','Ácido ursodesoxicólico e alta com retorno ambulatorial',2,'']];
+$$('.q-text').forEach((e,i)=>e.textContent=i?QM:Q);
+$$('.alts').forEach(e=>{const m=e.classList.contains('alts-m');e.innerHTML=ALTS.map(([l,t,p,s])=>`<div class="alt ${s} ${s?'':'dim'}" style="${m?'grid-template-columns:28px 1fr auto;gap:10px;padding:10px 12px;font-size:14px':''}">${s?`<span class="tag">${s==='ok'?'CORRETA':'SUA'}</span>`:''}<span class="lt">${l}</span><span class="tx">${t}</span><span class="pc">${m?'':`<span class="mini"><i style="width:${p}%"></i></span>`}${p}%</span></div>`).join('')});
+const WHY=[['A','sem sinal de coledocolitíase: bilirrubina e colédoco normais.'],['B','cirurgia tardia só quando a precoce é contraindicada; mais recorrência e reinternação.'],['D','reservada ao grau III ou a alto risco cirúrgico.'],['E','dissolução não trata colecistite aguda.']];
+$('.why').innerHTML=WHY.map(([l,t])=>`<div style="display:grid;grid-template-columns:22px 1fr;gap:8px"><span class="num" style="font-weight:600;color:${l==='B'?'var(--bad)':'var(--text-3)'}">${l}</span><span>${t}</span></div>`).join('');
+const SP='cccwccn'+'.'.repeat(13);
+const spHTML=SP.split('').map((c,i)=>`<i class="${c==='c'?'c':c==='w'?'w':c==='n'?'w':''}"></i>`).join('');
+$('#sp-d').innerHTML=spHTML; $('#sp-m').innerHTML=spHTML;
+</script>
+</body>
+</html>
