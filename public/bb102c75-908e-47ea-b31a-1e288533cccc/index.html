@@ -31,12 +31,29 @@
   .go { margin-top:auto; padding-top:10px; font-weight:600; font-size:15px; }
   .dots { display:flex; gap:6px; margin-top:4px; }
   .dots i { width:14px; height:14px; border-radius:50%; border:1px solid rgba(0,0,0,.12); }
+  a.card.final { margin-top:28px; display:grid; grid-template-columns:1.4fr 1fr; }
+  a.card.final .body { justify-content:center; padding:28px; }
+  @media (max-width:760px) { a.card.final { grid-template-columns:1fr; } }
   footer { margin-top:36px; color:var(--mute); font-size:14px; }
 </style>
 </head>
 <body>
 <main>
-  <h1>Qual destas você prefere?</h1>
+  <h1>Versão final</h1>
+  <p class="lead">A Residência com os ajustes pedidos: questão completa, avatares ilustrados, liga por prova, plano do dia configurável e a tela nova de montar bloco.</p>
+
+  <a class="card final" href="./final/">
+    <div class="thumb"><img src="./final.png" alt="Prévia da versão final" loading="lazy"></div>
+    <div class="body">
+      <span class="tag">Para aprovar</span>
+      <h2>Residência · final</h2>
+      <div class="dots"><i style="background:#0F1A17"></i><i style="background:#3FD3A0"></i><i style="background:#F2BC4E"></i><i style="background:#F5A07F"></i></div>
+      <p>Início, Estudar, Liga, perfil de outro aluno e Questão, no computador e no celular, claro e escuro.</p>
+      <span class="go">Abrir →</span>
+    </div>
+  </a>
+
+  <h1 style="margin-top:56px;font-size:24px">As três opções iniciais</h1>
   <p class="lead">Três propostas de visual para o MedAlvo, com as mesmas telas: início, liga, perfil de outro aluno e questão. Cada uma tem versão de computador e de celular, e um botão no topo troca entre o tema claro e o escuro.</p>
 
   <div class="grid">
