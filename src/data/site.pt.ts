@@ -39,8 +39,8 @@ export const featured: Project[] = [
     stack: ['FastAPI', 'Postgres', 'pgvector', 'Cloud Run', 'React', 'AI agents'],
     links: [{ label: 'medalvo.com.br', href: 'https://medalvo.com.br' }],
     stats: [
-      { value: '163k+', label: 'questões de provas oficiais' },
-      { value: '2.045', label: 'provas anteriores completas' },
+      { value: '189 mil', label: 'questões oficiais' },
+      { value: '300+', label: 'instituições' },
     ],
   },
   {

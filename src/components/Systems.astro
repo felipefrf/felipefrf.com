@@ -16,6 +16,7 @@ const VB_W = 1000;
 const VB_H = 460;
 
 function edgePath(e: SysEdge, nodes: SysNode[]) {
+  if (e.d) return e.d;
   const a = nodes.find((n) => n.id === e.from)!;
   const b = nodes.find((n) => n.id === e.to)!;
   const acx = a.x + a.w / 2, acy = a.y + a.h / 2;

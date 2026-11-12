@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import Handwriting from '../components/Handwriting.astro';
 import Medal from '../components/Medal.astro';
 import Systems from '../components/Systems.astro';
+import ChiefOfStaff from '../components/ChiefOfStaff.astro';
 import '../styles/home.css';
 import { getSite } from '../data';
 import { ui, type Lang } from '../i18n/ui';
@@ -67,6 +68,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
   <Nav
     lang={lang}
     links={[
+      { href: '#chief', label: t.nav.chief },
       { href: '#systems', label: t.nav.systems },
       { href: '#work', label: t.nav.work },
       { href: '#log', label: t.nav.journey },
@@ -153,11 +155,13 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
       }
     </section>
 
+    <ChiefOfStaff lang={lang} />
+
     <!-- systems -->
     <section class="block wrap" id="systems" aria-labelledby="systems-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>01</i><span>{t.sysKicker}</span></div>
+          <div class="mono"><i>02</i><span>{t.sysKicker}</span></div>
           <h2 id="systems-title" set:html={t.sysTitle} />
         </div>
         <p>{t.sysLead}</p>
@@ -171,7 +175,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="work" aria-labelledby="work-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>02</i><span>{t.workKicker}</span></div>
+          <div class="mono"><i>03</i><span>{t.workKicker}</span></div>
           <h2 id="work-title" set:html={t.workTitle} />
         </div>
         <p>{t.workLead}</p>
@@ -364,7 +368,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="log" aria-labelledby="log-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>03</i><span>{t.logKicker}</span></div>
+          <div class="mono"><i>04</i><span>{t.logKicker}</span></div>
           <h2 id="log-title" set:html={t.logTitle} />
         </div>
         <p>{t.logLead}</p>
@@ -433,7 +437,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="honors" aria-labelledby="honors-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>04</i><span>{t.honorsKicker}</span></div>
+          <div class="mono"><i>05</i><span>{t.honorsKicker}</span></div>
           <h2 id="honors-title" set:html={t.honorsTitle} />
         </div>
         <p>{t.honorsLead}</p>
@@ -604,7 +608,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="how" aria-labelledby="how-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>05</i><span>{t.howKicker}</span></div>
+          <div class="mono"><i>06</i><span>{t.howKicker}</span></div>
           <h2 id="how-title" set:html={t.howTitle} />
         </div>
       </div>

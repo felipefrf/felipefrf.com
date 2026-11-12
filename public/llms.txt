@@ -12,6 +12,8 @@
 
 ## Projects
 
+- AI chief of staff (personal, 2026): a Claude Code session on his server reads WhatsApp (read-only, allow-listed contacts), Slack, three Gmail accounts, Granola, calendar, Drive and GitHub every 15 minutes; prepares replies, e-mails, the daily agenda and background Claude sessions ("lanes") that open PRs; everything is approved from an Android PWA with push, and approved WhatsApp messages are sent from the Mac and confirmed in the chat database. Nightly learning with Claude Sonnet batches writes memory of people, projects and his writing style. Over the last 30 days his machine ran 7,600+ Claude Code sessions and 22,000+ subagents across 7 accounts; MedAlvo got 1,300+ commits in 30 days across 97 worktrees.
+
 - [Curo](https://felipefrf.com/curo/): WhatsApp-first patient-care layer for Brazilian specialists and clinics (Google ADK, Gemini, Postgres). A part-time project with his brother that went as far as a Y Combinator interview.
 - Flight Price Finder (side project): finds the cheapest routes including hidden-city fares, with live Google Flights data through treg.
 - [Ápice](https://software-house-six.vercel.app): software house he runs on the side with his brother (ITA + MIT); clients include Império Eventos (logistics control tower and field app).

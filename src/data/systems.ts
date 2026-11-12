@@ -19,6 +19,8 @@ export type SysEdge = {
   to: string;
   dashed?: boolean;
   route?: 'below' | 'above';
+  /** explicit SVG path when the automatic curve would cross other nodes */
+  d?: string;
 };
 
 export type SysStep = { edge: string; reverse?: boolean; log: string };
@@ -36,6 +38,63 @@ export type System = {
 };
 
 export const systems: System[] = [
+  {
+    id: 'cos',
+    tab: 'Chief of staff',
+    title: 'A chief of staff that never sleeps',
+    where: 'Personal · 2026',
+    blurb:
+      'A Claude session on my server reads every channel, decides what needs me, and prepares the action. I approve on my phone; nothing goes out on its own.',
+    facts: [
+      { value: '7,600+', label: 'Claude Code sessions in 30 days' },
+      { value: '0', label: 'messages sent without approval' },
+    ],
+    nodes: [
+      { id: 'wa', label: 'WhatsApp', x: 10, y: 24, w: 150, h: 44, kind: 'channel' },
+      { id: 'slack', label: 'Slack', x: 10, y: 84, w: 150, h: 44, kind: 'channel' },
+      { id: 'mail', label: 'E-mail', x: 10, y: 144, w: 150, h: 44, kind: 'channel' },
+      { id: 'granola', label: 'Granola', x: 10, y: 204, w: 150, h: 44, kind: 'channel' },
+      { id: 'cal', label: 'Calendar & Drive', x: 10, y: 264, w: 150, h: 44, kind: 'channel' },
+      { id: 'gh', label: 'GitHub', x: 10, y: 324, w: 150, h: 44, kind: 'channel' },
+      { id: 'coord', label: 'Coordinator', sub: 'Claude · 15-min loop', x: 215, y: 150, w: 215, h: 84, kind: 'model' },
+      { id: 'brain', label: 'Memory', sub: 'people · projects · style', x: 215, y: 340, w: 215, h: 70, kind: 'store' },
+      { id: 'lanes', label: 'Lanes', sub: 'Claude sessions, server', x: 480, y: 24, w: 205, h: 70, kind: 'model' },
+      { id: 'queue', label: 'Your turn', sub: 'approve in one tap', x: 480, y: 150, w: 205, h: 84, kind: 'person' },
+      { id: 'night', label: 'Nightly learning', sub: 'Sonnet batch → memory', x: 480, y: 340, w: 205, h: 70, kind: 'model' },
+      { id: 'out', label: 'Deliverables', sub: 'PRs · docs · PDFs', x: 740, y: 24, w: 250, h: 64, kind: 'store' },
+      { id: 'send', label: 'WhatsApp sender', sub: 'confirms it in the chat DB', x: 740, y: 130, w: 250, h: 64, kind: 'code' },
+      { id: 'email', label: 'E-mail sender', sub: 'port 587, after approval', x: 740, y: 236, w: 250, h: 64, kind: 'code' },
+      { id: 'doc', label: 'Daily doc', sub: 'agenda written for you', x: 740, y: 342, w: 250, h: 64, kind: 'store' },
+    ],
+    edges: [
+      { id: 'wa-coord', from: 'wa', to: 'coord' },
+      { id: 'slack-coord', from: 'slack', to: 'coord' },
+      { id: 'mail-coord', from: 'mail', to: 'coord' },
+      { id: 'granola-coord', from: 'granola', to: 'coord' },
+      { id: 'cal-coord', from: 'cal', to: 'coord' },
+      { id: 'gh-coord', from: 'gh', to: 'coord' },
+      { id: 'coord-brain', from: 'coord', to: 'brain' },
+      { id: 'coord-queue', from: 'coord', to: 'queue' },
+      { id: 'queue-lanes', from: 'queue', to: 'lanes' },
+      { id: 'lanes-out', from: 'lanes', to: 'out' },
+      { id: 'queue-send', from: 'queue', to: 'send' },
+      { id: 'queue-email', from: 'queue', to: 'email' },
+      { id: 'coord-doc', from: 'coord', to: 'doc', d: 'M405 234 C405 288 700 284 740 374' },
+      { id: 'night-brain', from: 'night', to: 'brain', dashed: true },
+    ],
+    steps: [
+      { edge: 'wa-coord', log: 'whatsapp · Marina: “revised proposal by Friday?”' },
+      { edge: 'cal-coord', log: 'calendar → Thursday afternoon is free' },
+      { edge: 'coord-brain', log: 'memory → client; Felipe writes short and warm' },
+      { edge: 'coord-queue', log: 'draft + why → your phone: “send by Thu night?”' },
+      { edge: 'queue-send', log: 'you tap Send → delivered, confirmed in the chat' },
+      { edge: 'queue-lanes', log: 'you approve the lane → a Claude session starts' },
+      { edge: 'lanes-out', log: 'lane → proposal PDF ready, link sent to you' },
+      { edge: 'granola-coord', log: 'granola · meeting ended → 3 action items' },
+      { edge: 'coord-doc', log: 'daily doc ← tomorrow’s agenda written' },
+      { edge: 'night-brain', log: '02:00 · nightly pass learns people and pending items' },
+    ],
+  },
   {
     id: 'milo',
     tab: 'Milo',
@@ -135,16 +194,16 @@ export const systems: System[] = [
     blurb:
       'Agents in cloud VMs turn official exams into a clean question bank. An adaptive engine then decides, for each student, what to ask next and when to review it.',
     facts: [
-      { value: '163k+', label: 'questions' },
+      { value: '189k', label: 'questions' },
       { value: '4', label: 'models in the loop' },
     ],
     nodes: [
-      { id: 'sources', label: 'Official exams', sub: '2,045 PDFs', x: 10, y: 40, w: 150, h: 64, kind: 'store' },
+      { id: 'sources', label: 'Official exams', sub: '300+ institutions', x: 10, y: 40, w: 150, h: 64, kind: 'store' },
       { id: 'scrapers', label: 'Scraper agents', sub: 'cloud VMs', x: 200, y: 40, w: 160, h: 64, kind: 'model' },
       { id: 'ocr', label: 'OCR + parsing', sub: 'text, images, keys', x: 400, y: 40, w: 160, h: 64, kind: 'code' },
       { id: 'dedupe', label: 'Dedup', sub: 'pgvector similarity', x: 600, y: 40, w: 160, h: 64, kind: 'code' },
       { id: 'qa', label: 'QA agent', sub: 'checks answer keys', x: 800, y: 40, w: 180, h: 64, kind: 'model' },
-      { id: 'bank', label: 'Question bank', sub: '163k+ questions', x: 800, y: 200, w: 180, h: 68, kind: 'store' },
+      { id: 'bank', label: 'Question bank', sub: '189k questions', x: 800, y: 200, w: 180, h: 68, kind: 'store' },
       { id: 'irt', label: 'IRT 2PL', sub: 'difficulty', x: 590, y: 170, w: 150, h: 58, kind: 'code' },
       { id: 'bkt', label: 'Knowledge tracing', sub: 'what you know', x: 590, y: 260, w: 150, h: 58, kind: 'code' },
       { id: 'fsrs', label: 'FSRS v6', sub: 'when to review', x: 590, y: 350, w: 150, h: 58, kind: 'code' },

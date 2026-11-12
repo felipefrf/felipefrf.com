@@ -33,7 +33,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
 });
 
 // Count-up numbers: <span data-count="1800" data-suffix="+">1,800+</span>
-const fmt = new Intl.NumberFormat('en-US');
+const fmt = new Intl.NumberFormat(document.documentElement.lang || 'en-US');
 const counterIO = new IntersectionObserver(
   (entries) => {
     for (const e of entries) {
@@ -371,5 +371,13 @@ document.querySelectorAll<HTMLAnchorElement>('[data-set-lang]').forEach((a) => {
     } catch {
       /* storage blocked: the link still works */
     }
+  });
+});
+
+// ---------- jump to a specific system tab ----------
+document.querySelectorAll<HTMLAnchorElement>('[data-open-sys]').forEach((a) => {
+  a.addEventListener('click', () => {
+    const tab = document.querySelector<HTMLButtonElement>(`[data-sys-tab="${a.dataset.openSys}"]`);
+    if (tab && tab.getAttribute('aria-selected') !== 'true') tab.click();
   });
 });

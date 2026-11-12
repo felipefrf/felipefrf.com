@@ -1,0 +1,71 @@
+---
+// The AI chief of staff: the real app (demo data) playing in a phone, the
+// numbers behind "one person, run like a team", and how the pieces fit.
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = ui[lang].chief;
+---
+
+<section class="block wrap" id="chief" aria-labelledby="chief-title">
+  <div class="sec-head" data-reveal>
+    <div>
+      <div class="mono"><i>01</i><span>{c.kicker}</span></div>
+      <h2 id="chief-title" set:html={c.title} />
+    </div>
+    <p>{c.lead}</p>
+  </div>
+
+  <div class="cos">
+    <figure class="cos-phone" data-reveal>
+      <div class="phone">
+        <span class="phone-notch" aria-hidden="true"></span>
+        <div class="phone-screen">
+        <video data-inview muted loop playsinline preload="metadata" poster="/media/cos-app-poster.jpg" aria-label={c.videoLabel}>
+          <source src="/media/cos-app.webm" type="video/webm" />
+          <source src="/media/cos-app.mp4" type="video/mp4" />
+        </video>
+        </div>
+      </div>
+      <figcaption class="mono">{c.videoNote}</figcaption>
+    </figure>
+
+    <div class="cos-side">
+      <div class="cos-stats" data-reveal>
+        {
+          c.stats.map((s) => (
+            <div>
+              <b {...(s.count ? { 'data-count': s.count, 'data-suffix': s.suffix } : {})}>{s.value}</b>
+              <span>{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+      <p class="cos-stats-note mono" data-reveal>{c.statsNote}</p>
+
+      <ol class="cos-steps" data-reveal>
+        {
+          c.steps.map((s, i) => (
+            <li>
+              <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="cos-foot" data-reveal>
+        <ul class="tags" aria-label="Stack">
+          {c.stack.map((t) => <li>{t}</li>)}
+        </ul>
+        <a class="btn btn-sm btn-primary" href="#systems" data-open-sys="cos">{c.cta} <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </div>
+</section>
