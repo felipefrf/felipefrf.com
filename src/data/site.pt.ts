@@ -72,7 +72,10 @@ export const featured: Project[] = [
       'Um portal onde a clínica vê o caso de cada paciente e tudo o que o agente fez',
     ],
     stack: ['Google ADK', 'Gemini', 'Postgres', 'React', 'WhatsApp'],
-    links: [{ label: 'felipefrf.com/curo', href: '/curo/' }],
+    links: [
+      { label: 'Abrir o painel da clínica', href: '/curo/painel/?lang=pt' },
+      { label: 'Página do Curo', href: '/curo/' },
+    ],
   },
   {
     slug: 'flights',

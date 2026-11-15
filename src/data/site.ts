@@ -84,7 +84,10 @@ export const featured: Project[] = [
       'A portal where the clinic sees every patient’s case and everything the agent did',
     ],
     stack: ['Google ADK', 'Gemini', 'Postgres', 'React', 'WhatsApp'],
-    links: [{ label: 'felipefrf.com/curo', href: '/curo/' }],
+    links: [
+      { label: 'Open the clinic portal', href: '/curo/painel/?lang=en' },
+      { label: 'Landing page', href: '/curo/' },
+    ],
   },
   {
     slug: 'flights',
