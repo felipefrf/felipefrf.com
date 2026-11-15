@@ -94,12 +94,12 @@ export const featured: Project[] = [
     blurb:
       'Finds the cheapest way between two cities, including hidden-city fares: a ticket to somewhere further that connects where you actually want to land. Every search proves it searched, because most of them find nothing, and that’s fine.',
     points: [
-      'Real find: SSA→CGH direct was R$381; SSA→CGH→FLN was R$248',
-      'Treats São Paulo’s three airports as one city, and checks dozens of onward cities per search',
-      'Real Google Flights fares, and it says plainly when there’s nothing to save',
+      'Real find: Salvador → São Paulo direct was R$381; a ticket to Florianópolis through São Paulo was R$248',
+      'The demo replays four real searches: watch it check city after city on the map',
+      'Treats São Paulo’s three airports as one city, and says plainly when there’s nothing to save',
     ],
     stack: ['Python', 'FastAPI', 'Google Flights'],
-    links: [],
+    links: [{ label: 'Try the demo', href: '/flights/' }],
   },
 ];
 

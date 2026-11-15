@@ -169,40 +169,15 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                 </div>
               )}
               {p.slug === 'flights' && (
-                <div class="route" aria-label={t.routeAria}>
-                  <svg viewBox="0 0 560 360" role="img">
-                    <title>{t.routeTitle}</title>
-                    <path id="leg-a" class="leg" d="M70 250 C 170 120, 260 110, 300 170" />
-                    <path class="leg-direct" d="M70 250 C 150 330, 250 300, 300 170" />
-                    <path class="leg-skip" d="M300 170 C 360 230, 430 250, 490 210" />
-                    <circle class="ap" cx="70" cy="250" r="9" />
-                    <circle class="ap hit" cx="300" cy="170" r="11" />
-                    <circle class="ap ghost" cx="490" cy="210" r="9" />
-                    <circle class="plane" r="6">
-                      <animateMotion dur="3.2s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;0.7;1" calcMode="linear">
-                        <mpath href="#leg-a" />
-                      </animateMotion>
-                    </circle>
-                    <text x="70" y="285" class="code">SSA</text>
-                    <text x="300" y="138" class="code">CGH</text>
-                    <text x="490" y="245" class="code ghost">FLN</text>
-                    <text x="70" y="304" class="city">Salvador</text>
-                    <text x="300" y="120" class="city">{t.routeGetOff}</text>
-                    <text x="490" y="264" class="city ghost">{t.routeNever}</text>
-                    <g class="tag direct" transform="translate(120 318)">
-                      <rect width="150" height="30" rx="15" />
-                      <text x="75" y="20">{t.routeDirect}</text>
-                    </g>
-                    <g class="tag best" transform="translate(130 62)">
-                      <rect width="190" height="30" rx="15" />
-                      <text x="95" y="20">SSA→CGH→FLN · R$248</text>
-                    </g>
-                    <g class="save" transform="translate(400 70)">
-                      <rect width="120" height="44" rx="12" />
-                      <text x="60" y="29">−R$133</text>
-                    </g>
-                  </svg>
-                </div>
+                <a class="browser flights-shot" href="/flights/" aria-label={t.routeAria}>
+                  <div class="browser-bar" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <span>felipefrf.com/flights</span>
+                  </div>
+                  <img src="/img/flights-demo.webp" width="1000" height="844" loading="lazy" decoding="async" alt={t.routeAria} />
+                </a>
               )}
             </div>
           </article>

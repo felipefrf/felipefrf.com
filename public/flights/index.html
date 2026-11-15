@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Flight Price Finder: hidden-city fares, replayed</title>
+  <meta name="description" content="A replay of real flight searches: watch the engine fan out over Brazil's airports and find tickets to a farther city that are cheaper than the direct flight.">
+  <meta property="og:title" content="Flight Price Finder">
+  <meta property="og:description" content="Watch a real search engine hunt for hidden-city fares, replayed from recorded Google Flights answers.">
+  <meta property="og:image" content="https://felipefrf.com/flights/og.png">
+  <meta name="theme-color" content="#F3EFE4">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/ibm-plex-sans-condensed-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Flight Price Finder">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13.5"/><path d="M16 3v6M16 23v6M3 16h6M23 16h6"/><path class="brand-needle" d="M16 7l3.2 9H12.8z"/><circle class="brand-pin" cx="16" cy="16" r="2"/></svg>
+      <span class="brand-name">Flight Price Finder</span>
+    </a>
+    <p class="topbar-note"><span class="rec-dot" aria-hidden="true"></span><span data-i18n="badge">Recorded searches, replayed. Not live prices.</span></p>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="stage" aria-labelledby="hero-title">
+      <div class="panel">
+        <div class="intro">
+          <p class="kicker" data-i18n="kicker">Hidden-city fares</p>
+          <h1 id="hero-title" data-i18n="title">The cheapest ticket to your city is sometimes a ticket to somewhere else.</h1>
+          <p class="lede" data-i18n="lede">Airlines price a ticket by where it ends, not by where it stops. A ticket to a city beyond yours that connects through yours can cost less than the direct flight. You get off at the connection. This engine hunts for those tickets.</p>
+        </div>
+
+        <form class="search" id="search" autocomplete="off">
+          <fieldset>
+            <legend data-i18n="pick">Pick a recorded search</legend>
+            <div class="presets" id="presets" role="radiogroup"></div>
+          </fieldset>
+          <div class="typed">
+            <label for="route-input" data-i18n="typeLabel">or type a route</label>
+            <div class="typed-row">
+              <input id="route-input" list="route-list" spellcheck="false" placeholder="VIX GRU">
+              <datalist id="route-list"></datalist>
+              <button type="submit" class="go" id="go"><span data-i18n="go">Search</span></button>
+            </div>
+            <p class="typed-msg" id="typed-msg" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+        <p class="panel-note" data-i18n="panelNote">Every fare on this page was recorded from Google Flights in August 2026 and has expired since. The searches are real; the replay re-runs the real engine over their answers, and nothing is typed in by hand.</p>
+      </div>
+
+      <div class="chart-wrap">
+        <figure class="chart" id="chart">
+          <svg id="map" role="img" aria-labelledby="map-title" preserveAspectRatio="xMidYMid meet">
+            <title id="map-title">Map of the airports this search checks</title>
+          </svg>
+          <div class="insets">
+          <figcaption class="chart-legend" id="legend" aria-hidden="true">
+            <p class="legend-title" data-i18n="legend">Legend</p>
+            <ul>
+              <li><svg viewBox="0 0 24 12"><circle cx="12" cy="6" r="4" class="lg-origin"/></svg><span data-i18n="lgOrigin">origin</span></li>
+              <li><svg viewBox="0 0 24 12"><rect x="8" y="2" width="8" height="8" class="lg-exit"/></svg><span data-i18n="lgExit">where you get off</span></li>
+              <li><svg viewBox="0 0 24 12"><circle cx="12" cy="6" r="4" class="lg-beyond"/></svg><span data-i18n="lgBeyond">city on the ticket</span></li>
+              <li><svg viewBox="0 0 24 12"><path d="M1 6h22" class="lg-flown"/></svg><span data-i18n="lgFlown">flown</span></li>
+              <li><svg viewBox="0 0 24 12"><path d="M1 6h22" class="lg-skipped"/></svg><span data-i18n="lgSkipped">bought, not flown</span></li>
+              <li><svg viewBox="0 0 24 12"><path d="M1 6h22" class="lg-probe"/></svg><span data-i18n="lgProbe">city checked</span></li>
+            </ul>
+          </figcaption>
+          <section class="verdict" id="verdict" aria-live="polite" hidden></section>
+          <div class="log" id="log" aria-live="off">
+            <div class="log-head">
+              <p class="log-title" data-i18n="logTitle">Search log</p>
+              <p class="log-count" id="log-count"></p>
+              <button type="button" class="skip" id="skip" data-i18n="skip">Skip</button>
+            </div>
+            <ol class="phases" id="phases">
+              <li data-phase="1"><span class="ph-n">1</span><span data-i18n="ph1">Direct fares</span></li>
+              <li data-phase="2"><span class="ph-n">2</span><span data-i18n="ph2">Cities beyond</span></li>
+              <li data-phase="3"><span class="ph-n">3</span><span data-i18n="ph3">Hidden-city check</span></li>
+            </ol>
+            <ol class="log-lines" id="log-lines"></ol>
+          </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="details" id="details" hidden aria-labelledby="details-title"></section>
+
+    <section class="how" aria-labelledby="how-title">
+      <div class="how-inner">
+        <h2 id="how-title" data-i18n="howTitle">How the engine works</h2>
+        <ol class="how-steps">
+          <li><h3 data-i18n="how1t">Price the direct flight</h3><p data-i18n="how1">One call to Google Flights (through SerpApi) for the route you asked, with the nearby airports in the same field: São Paulo is Guarulhos, Congonhas and Viracopos at once.</p></li>
+          <li><h3 data-i18n="how2t">Fan out to the cities beyond</h3><p data-i18n="how2">From OpenFlights route data it picks the busiest cities an airline flies to from your destination, then asks for a ticket from your origin to each of them, one call per city.</p></li>
+          <li><h3 data-i18n="how3t">Keep the tickets that stop at your city</h3><p data-i18n="how3">A ticket counts only if it is one through-fare that connects at your destination and costs less than flying directly to the airport where you would get off. Summing two tickets never finds this, so the engine never does it.</p></li>
+        </ol>
+        <div class="how-facts">
+          <p data-i18n="howReplay">This page runs nothing live. Each search was made with the real app, which keeps every answer it pays for. Those answers were saved as recordings, and the real engine was re-run over them through a replay provider that refuses any question the recording cannot answer. The numbers here are its output, unedited.</p>
+          <p class="how-pipe" aria-label="pipeline"><code>recording.json</code><span>→</span><code>ReplayProvider</code><span>→</span><code>run_search()</code><span>→</span><code>detect_hidden_city()</code><span>→</span><code>data.js</code></p>
+          <p data-i18n="howStack">Python, FastAPI and SQLite on the owner's machine, with server-sent events for progress. The provider sits behind a typed protocol. Over 500 offline tests, including one that rebuilds this page's data and fails if it differs from what is published.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p><span data-i18n="footBy">Built by</span> <a href="https://felipefrf.com">Felipe Farias</a></p>
+    <p class="foot-src" data-i18n="footSrc">Fares: Google Flights via SerpApi, recorded August 2026. Map: Natural Earth. Routes: OpenFlights. Type: IBM Plex.</p>
+  </footer>
+
+  <script src="basemap.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

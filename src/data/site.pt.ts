@@ -82,12 +82,12 @@ export const featured: Project[] = [
     blurb:
       'Acha o jeito mais barato de ir de uma cidade a outra, incluindo tarifas hidden-city: uma passagem para um destino mais distante, com conexão justamente onde você quer descer. Toda busca mostra que buscou, porque a maioria não acha nada, e tudo bem.',
     points: [
-      'Achado real: SSA→CGH direto saía R$ 381; SSA→CGH→FLN saía R$ 248',
-      'Trata os três aeroportos de São Paulo como uma cidade só e testa dezenas de destinos além a cada busca',
-      'Tarifas reais do Google Flights, e diz com clareza quando não há o que economizar',
+      'Achado real: Salvador → São Paulo direto saía R$ 381; uma passagem para Florianópolis com conexão em São Paulo saía R$ 248',
+      'A demo repete quatro buscas reais: veja ela testar cidade por cidade no mapa',
+      'Trata os três aeroportos de São Paulo como uma cidade só e diz com clareza quando não há o que economizar',
     ],
     stack: ['Python', 'FastAPI', 'Google Flights'],
-    links: [],
+    links: [{ label: 'Testar a demo', href: '/flights/' }],
   },
 ];
 

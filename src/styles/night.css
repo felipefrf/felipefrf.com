@@ -1923,3 +1923,20 @@ canvas.medal-3d {
     max-width: none;
   }
 }
+
+/* ---------- Flight Price Finder: the demo, framed ---------- */
+.flights-shot {
+  display: block;
+  margin: clamp(16px, 3vw, 34px);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.6s var(--ease);
+}
+.flights-shot:hover {
+  transform: translateY(-6px);
+}
+.flights-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
