@@ -22,6 +22,7 @@
       lede: "Airlines price a ticket by where it ends, not by where it stops. A ticket to a city beyond yours that connects through yours can cost less than the direct flight. You get off at the connection. This engine hunts for those tickets.",
       pick: "Pick a recorded search",
       typeLabel: "or type a route",
+      liveNote: "Want a route that isn't here? The real app searches any route with live fares; it runs on my own machine, because every search costs paid API calls.",
       go: "Search",
       legend: "Legend",
       lgOrigin: "origin",
@@ -114,6 +115,7 @@
       lede: "A companhia aérea cobra pelo destino final, não pelas escalas. Um bilhete para uma cidade além da sua, com conexão na sua, pode custar menos que o voo direto. Você desce na conexão. Este motor caça esses bilhetes.",
       pick: "Escolha uma busca gravada",
       typeLabel: "ou digite uma rota",
+      liveNote: "Quer uma rota que não está aqui? O app de verdade busca qualquer rota com preços ao vivo; ele roda na minha máquina, porque cada busca gasta chamadas pagas de API.",
       go: "Buscar",
       legend: "Legenda",
       lgOrigin: "origem",
@@ -493,13 +495,6 @@
         '<span class="preset-meta">' + esc(when) + " · " + esc(t("calls", { n: r.stats.calls })) + " · " + esc(t("recordedShort", { d: new Intl.DateTimeFormat(locale(), { day: "numeric", month: "short", timeZone: "America/Sao_Paulo" }).format(new Date(r.recordedAt)) })) + "</span>";
       b.addEventListener("click", function () { choose(r, true); showChart(); });
       presetsBox.appendChild(b);
-    });
-    var list = document.getElementById("route-list");
-    list.innerHTML = "";
-    ROUTES.forEach(function (r) {
-      var o = document.createElement("option");
-      o.value = r.query.origin + " → " + r.query.destination + " (" + routeName(r) + ")";
-      list.appendChild(o);
     });
   }
 
@@ -962,7 +957,6 @@
     document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
     [].forEach.call(document.querySelectorAll("[data-i18n]"), function (n) { n.textContent = t(n.dataset.i18n); });
     [].forEach.call(document.querySelectorAll(".lang button"), function (b) { b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false"); });
-    document.getElementById("route-input").placeholder = lang === "pt" ? "VIX GRU ou Fortaleza São Paulo" : "VIX GRU or Fortaleza São Paulo";
     renderPresets();
   }
   function setLang(l) {
@@ -998,26 +992,8 @@
   }
 
   // --- form -----------------------------------------------------------------------------------
-  var input = document.getElementById("route-input");
-  var msg = document.getElementById("typed-msg");
-  document.getElementById("search").addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    var raw = input.value;
-    if (!raw.trim()) {
-      if (current) { msg.textContent = ""; msg.className = "typed-msg"; run(current); return; }
-      msg.textContent = t("typedEmpty"); msg.className = "typed-msg is-miss"; return;
-    }
-    var m = matchTyped(raw);
-    if (m.route) {
-      msg.textContent = t("typedHit", { r: routeName(m.route) });
-      msg.className = "typed-msg";
-      choose(m.route, true);
-      showChart();
-    } else {
-      msg.textContent = t("typedMiss");
-      msg.className = "typed-msg is-miss";
-    }
-  });
+  // The presets are the only searches this replay holds; picking one runs it.
+  document.getElementById("search").addEventListener("submit", function (ev) { ev.preventDefault(); });
 
   window.addEventListener("resize", function () {
     setView(fitView(current), 0);

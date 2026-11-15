@@ -42,15 +42,7 @@
             <legend data-i18n="pick">Pick a recorded search</legend>
             <div class="presets" id="presets" role="radiogroup"></div>
           </fieldset>
-          <div class="typed">
-            <label for="route-input" data-i18n="typeLabel">or type a route</label>
-            <div class="typed-row">
-              <input id="route-input" list="route-list" spellcheck="false" placeholder="VIX GRU">
-              <datalist id="route-list"></datalist>
-              <button type="submit" class="go" id="go"><span data-i18n="go">Search</span></button>
-            </div>
-            <p class="typed-msg" id="typed-msg" role="status" aria-live="polite"></p>
-          </div>
+          <p class="live-note" data-i18n="liveNote">Want a route that isn't here? The real app searches any route with live fares; it runs on my own machine, because every search costs paid API calls.</p>
         </form>
         <p class="panel-note" data-i18n="panelNote">Every fare on this page was recorded from Google Flights in August 2026 and has expired since. The searches are real; the replay re-runs the real engine over their answers, and nothing is typed in by hand.</p>
       </div>
