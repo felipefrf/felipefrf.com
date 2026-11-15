@@ -1,0 +1,47 @@
+---
+// A scroll film: the section is tall, the stage sticks, and scrolling plays the
+// Blender render frame by frame while the steps beside it change.
+import { films } from '../data/films';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  id: string;
+}
+const { lang, id } = Astro.props;
+const f = films[lang][id];
+---
+
+<div class="film" data-film={f.src} data-film-lang={lang}>
+  <div class="film-stage">
+    <div class="film-copy">
+      <p class="film-kicker mono">{f.kicker}</p>
+      <ol class="film-steps">
+        {
+          f.steps.map((s, i) => (
+            <li data-film-step={i} class:list={{ on: i === 0 }}>
+              <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <b>{s.title}</b>
+                <p>{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <i class="film-bar" aria-hidden="true"><i data-film-bar /></i>
+    </div>
+    <div class="film-view">
+      <img class="film-poster" src={`${f.src}poster.webp`} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+      <canvas aria-hidden="true"></canvas>
+      {
+        Object.entries(f.labels).map(([k, v]) => (
+          <span class:list={['film-label mono', `l-${k}`]} data-film-label={k} aria-hidden="true">
+            {v && <small>{v}</small>}
+            <b />
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>

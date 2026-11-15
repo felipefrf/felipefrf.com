@@ -7,6 +7,7 @@ import ChiefOfStaff from '../components/ChiefOfStaff.astro';
 import Hero from '../components/Hero.astro';
 import MedAlvo from '../components/MedAlvo.astro';
 import Imperio from '../components/Imperio.astro';
+import Film from '../components/Film.astro';
 import '../styles/home.css';
 import '../styles/night.css';
 import { getSite } from '../data';
@@ -14,8 +15,10 @@ import { ui, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
+  /** 'day' renders the light identity (private preview for now) */
+  look?: 'night' | 'day';
 }
-const { lang } = Astro.props;
+const { lang, look = 'night' } = Astro.props;
 const t = ui[lang];
 const {
   person,
@@ -64,7 +67,7 @@ const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
 const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {});
 ---
 
-<Base lang={lang} title={t.title} description={t.description} theme="night">
+<Base lang={lang} title={t.title} description={t.description} theme={look} noindex={look === 'day'} translated={look !== 'day'}>
   <a class="skip" href="#main">{t.skip}</a>
   <Nav
     lang={lang}
@@ -112,6 +115,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
 
       {
         featured.filter((p) => p.slug !== 'medalvo').map((p) => (
+          <>
           <article class:list={['feature', p.slug]} data-reveal>
             <div class="feature-body">
               <div class="feature-meta mono">
@@ -181,6 +185,8 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
               )}
             </div>
           </article>
+          {look === 'day' && p.slug === 'flights' && <Film lang={lang} id="flights" />}
+          </>
         ))
       }
 
@@ -513,4 +519,32 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
   <script>
     import '../scripts/night.ts';
   </script>
+  {
+    look === 'day' && (
+      <div class="look-switch" data-look-switch>
+        <span class="mono">Fonte</span>
+        <a href="?t=franklin" data-t="franklin">Franklin</a>
+        <a href="?t=plex" data-t="plex">Plex</a>
+        <a href="?t=host" data-t="host">Host</a>
+        <span class="mono">Cor</span>
+        <a href="?a=orange" data-a="orange" aria-label="Laranja"><i style="background:#ff4f00" /></a>
+        <a href="?a=green" data-a="green" aria-label="Verde"><i style="background:#0b7a4b" /></a>
+        <a href="?a=blue" data-a="blue" aria-label="Azul"><i style="background:#1f45d6" /></a>
+        <a href="?a=ink" data-a="ink" aria-label="Sem cor"><i style="background:#0e0f11" /></a>
+        <span class="mono">Língua</span>
+        <a href={lang === 'pt' ? '../' : 'pt/'} data-keep>{lang === 'pt' ? 'EN' : 'PT'}</a>
+      </div>
+      <script is:inline>
+        (function () {
+          var q = new URLSearchParams(location.search), d = document.documentElement;
+          var get = function (k, def) { var v = q.get(k); try { if (v) localStorage.setItem('look-' + k, v); else v = localStorage.getItem('look-' + k); } catch (e) {} return v || def; };
+          d.dataset.type = get('t', 'franklin');
+          d.dataset.accent = get('a', 'orange');
+          document.querySelectorAll('[data-look-switch] a').forEach(function (a) {
+            if (a.dataset.t === d.dataset.type || a.dataset.a === d.dataset.accent) a.classList.add('on');
+          });
+        })();
+      </script>
+    )
+  }
 </Base>

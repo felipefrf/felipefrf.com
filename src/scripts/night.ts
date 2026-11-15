@@ -24,11 +24,37 @@ if (host) {
     return [h, m, x].map((n) => String(n).padStart(2, '0')).join(':');
   };
   const boot = () =>
-    import('./orbit').then(({ startOrbit }) => {
+    import('./orbit').then(({ startOrbit, NIGHT }) => {
       try {
+        // the light identity: a white clay globe in ink dots, the orbit in the accent
+        const day = document.documentElement.classList.contains('day');
+        const hex = (v: string) => parseInt(v.trim().replace('#', ''), 16);
+        const css = getComputedStyle(document.documentElement);
+        const palette = day
+          ? {
+              ...NIGHT,
+              light: true,
+              bg: hex(css.getPropertyValue('--paper')) || 0xfbfbf9,
+              core: 0xffffff,
+              dayDot: [0.055, 0.06, 0.07] as [number, number, number],
+              nightDot: [0.62, 0.63, 0.65] as [number, number, number],
+              dotAlpha: [0.55, 0.95] as [number, number],
+              ring: 0x0e0f11,
+              ringOpacity: 0.08,
+              atmoLo: [0.8, 0.82, 0.86] as [number, number, number],
+              atmoHi: [0.9, 0.91, 0.93] as [number, number, number],
+              atmoStrength: 0.35,
+              stars: 0x0e0f11,
+              starOpacity: 0,
+              accent: hex(css.getPropertyValue('--accent')) || 0xff4f00,
+              leo: 0x0e0f11,
+              heo: 0x8a8d93,
+            }
+          : undefined;
         startOrbit(canvas, {
           reduced,
           host,
+          palette,
           label: host.querySelector('[data-sat-label]'),
           onTelemetry: (d) => {
             if (T.t) T.t.textContent = hms(d.t);
@@ -421,3 +447,7 @@ document.querySelectorAll<HTMLElement>('[data-walk]').forEach((root) => {
 
 // ---------- medals turn toward the pointer a little, and play in view ----------
 ScrollTrigger.refresh();
+
+// ---------- Blender films scrubbed by scroll ----------
+const films = document.querySelectorAll<HTMLElement>('[data-film]');
+if (films.length) import('./film').then(({ startFilm }) => films.forEach((f) => startFilm(f, reduced)));

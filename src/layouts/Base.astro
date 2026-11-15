@@ -15,8 +15,10 @@ interface Props {
   description?: string;
   ogImage?: string;
   jsonLd?: object;
-  /** 'night' for the dark home page */
-  theme?: 'paper' | 'night';
+  /** 'night' for the dark home page, 'day' for its light identity */
+  theme?: 'paper' | 'night' | 'day';
+  /** private previews: keep them out of search */
+  noindex?: boolean;
 }
 
 const {
@@ -27,6 +29,7 @@ const {
   ogImage: ogPath = '/og.png',
   jsonLd: pageJsonLd,
   theme = 'paper',
+  noindex = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -67,7 +70,8 @@ const jsonLd = pageJsonLd ?? personLd;
     }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content={theme === 'night' ? '#08090B' : '#F7F5F0'} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content={theme === 'night' ? '#08090B' : theme === 'day' ? '#FBFBF9' : '#F7F5F0'} />
     <meta name="color-scheme" content={theme === 'night' ? 'dark' : 'light'} />
 
     <meta property="og:type" content="website" />
