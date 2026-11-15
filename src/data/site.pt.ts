@@ -16,10 +16,9 @@ export const person = {
 
 // Números grandes abaixo do hero. `count` anima a partir de 0 quando entra na tela.
 export const impact = [
-  { value: '24º', label: 'de 4.033 no vestibular do ITA', detail: '144 vagas na engenharia mais respeitada do país', logo: '/img/ita.png' },
-  { value: '1º', label: 'lugar geral, ouro', detail: 'Iberoamericana de Física 2020', accent: true },
-  { value: '50+', count: 50, suffix: '+', label: 'medalhas', detail: 'Em olimpíadas, 2 internacionais, 2017–2020' },
-  { value: '1 de 5', label: 'alunos do ITA escolhidos', detail: 'Future Lab da Telles Foundation, 1ª edição, 2026' },
+  { value: 'Top 10%', label: 'da turma no ITA', detail: 'A escola de engenharia mais prestigiada do Brasil', logo: '/img/ita.png' },
+  { value: '1º', label: 'lugar geral, ouro', detail: 'Olimpíada Iberoamericana de Física 2020', accent: true },
+  { value: '50+', count: 50, suffix: '+', label: 'medalhas em olimpíadas', detail: '2 internacionais, 2017–2020' },
   { value: 'Melhor', label: 'projeto conceitual de satélite', detail: 'Matsumoto-2, II SPOCS no ITA, 2026' },
 ];
 
@@ -52,7 +51,7 @@ export const featured: Project[] = [
       'Transforma anotações em Markdown + LaTeX em páginas manuscritas realistas para iPad, Goodnotes e reMarkable. Um modelo de escrita varia cada glifo, e uma trava de legibilidade garante que tudo continue legível. Veja ele escrevendo.',
     points: [
       'Frações, integrais, raízes e vetores diagramados à mão',
-      'Saída reproduzível por seed, offline, só pip install, CI em vários sistemas',
+      'Funciona offline e instala com pip; as mesmas notas sempre geram a mesma página',
     ],
     stack: ['Python', 'resvg', 'LaTeX'],
     links: [
@@ -68,9 +67,9 @@ export const featured: Project[] = [
     blurb:
       'Uma camada de atendimento ao paciente, nativa do WhatsApp, para especialistas e clínicas: o paciente tem uma conversa só, e o Curo fala com o médico, o hospital e o convênio. Feito com meu irmão Rafael (MIT). Levamos a sério por um tempo, a ponto de fazer entrevista na Y Combinator.',
     points: [
-      'Agente com 14 ferramentas para triagem, agendamento, FAQ, documentos e passagem para a equipe',
-      'Agendamento determinístico com reservas idempotentes; isolamento por clínica desde o primeiro tenant',
-      'Google ADK + Gemini na GCP, Postgres, portal da clínica em React',
+      'Um agente que faz triagem, agenda, tira dúvidas, cuida de documentos e passa para a equipe quando precisa',
+      'Agendamentos que nunca duplicam, e os dados de cada clínica separados desde o primeiro dia',
+      'Um portal onde a clínica vê o caso de cada paciente e tudo o que o agente fez',
     ],
     stack: ['Google ADK', 'Gemini', 'Postgres', 'React', 'WhatsApp'],
     links: [{ label: 'felipefrf.com/curo', href: '/curo/' }],
@@ -80,15 +79,14 @@ export const featured: Project[] = [
     name: 'Flight Price Finder',
     kind: 'Side project',
     year: '2026',
-    status: 'Dados ao vivo do Google Flights via treg',
     blurb:
       'Acha o jeito mais barato de ir de uma cidade a outra, incluindo tarifas hidden-city: uma passagem para um destino mais distante, com conexão justamente onde você quer descer. Toda busca mostra que buscou, porque a maioria não acha nada, e tudo bem.',
     points: [
       'Achado real: SSA→CGH direto saía R$ 381; SSA→CGH→FLN saía R$ 248',
-      'Agrupa aeroportos próximos (GRU/CGH/VCP) e tarifas com vários trechos num bilhete só',
-      'As tarifas vêm do Google Flights via treg; roda na minha máquina atrás de um Cloudflare Tunnel + Access',
+      'Trata os três aeroportos de São Paulo como uma cidade só e testa dezenas de destinos além a cada busca',
+      'Tarifas reais do Google Flights, e diz com clareza quando não há o que economizar',
     ],
-    stack: ['Python', 'treg', 'Google Flights', 'Cloudflare Tunnel'],
+    stack: ['Python', 'FastAPI', 'Google Flights'],
     links: [],
   },
 ];
@@ -104,7 +102,7 @@ export const apice = {
     {
       client: 'Império Eventos',
       name: 'Império Logística',
-      what: 'Uma torre de controle (Next.js) e um app de campo (Expo) sobre Supabase, lendo os pedidos do EstoqueNOW para que o escritório e as equipes de evento trabalhem com os mesmos dados. Mais na seção 03.',
+      what: 'O app que guia as equipes de evento pelo dia, e o painel ao vivo em que o escritório acompanha tudo. Mais na seção 03.',
     },
     {
       client: 'Clínicas e especialistas',
@@ -120,7 +118,7 @@ export const more: Project[] = [
     name: 'Editable Pets',
     kind: 'App macOS',
     year: '2026',
-    blurb: 'Um companheiro de desktop para o Claude Code e o Codex. Hooks nativos mostram todas as sessões de agente em paralelo num relance.',
+    blurb: 'Um companheiro de desktop para Mac que mostra, num relance, todos os agentes de IA programando ao mesmo tempo.',
     stack: ['Swift', 'Hooks'],
     links: [{ label: 'GitHub', href: 'https://github.com/felipefrf/editable-pets' }],
   },
@@ -138,7 +136,7 @@ export const more: Project[] = [
     name: 'Dual Subtitles',
     kind: 'Extensão Chrome',
     year: '2026',
-    blurb: 'Legendas em dois idiomas, sincronizadas, no YouTube: uma para entender e outra para aprender, num overlay em Shadow DOM.',
+    blurb: 'Legendas em dois idiomas, sincronizadas, no YouTube: uma para entender e outra para aprender.',
     stack: ['TypeScript', 'WXT', 'React'],
     links: [{ label: 'GitHub', href: 'https://github.com/felipefrf/dual-subtitles-extension' }],
   },
@@ -159,11 +157,11 @@ export const jobs: Job[] = [
     role: 'Founding Engineer',
     place: 'San Francisco · remoto',
     dates: 'set 2026 — hoje',
-    summary: 'Construindo o Milo, uma IA pessoal peer-to-peer para equipes. O agente de cada funcionário roda na própria microVM Linux, com as ferramentas dele.',
+    summary: 'Construindo o Milo, um agente de IA para cada pessoa de um time, cada um rodando na sua própria máquina na nuvem, com as ferramentas daquela pessoa.',
     bullets: [
-      'Entreguei as integrações com Microsoft Teams e Google Chat no mesmo nível de Slack e WhatsApp: OAuth agindo como o usuário, streaming, arquivos e transcrição de voz.',
-      'Construí a camada de credenciais do agente de navegador hospedado: um cofre criptografado em que OTPs e segredos são injetados por alias, sem nunca entrar no contexto do modelo.',
-      'Eval-first: suítes bilíngues de ship-gate que reproduzem casos de produção, revisões noturnas com LLM como juiz e uma ferramenta de “autópsia” que reconstrói qualquer conversa de ponta a ponta.',
+      'Entreguei as integrações com Microsoft Teams e Google Chat no mesmo nível de Slack e WhatsApp: o agente age como o usuário, responde em tempo real, lida com arquivos e transcreve áudio.',
+      'Construí o cofre por trás do navegador do agente: senhas e códigos de acesso são preenchidos pelo nome, e o modelo nunca vê nenhum deles.',
+      'Nada sai sem passar em testes que repetem casos reais de produção em dois idiomas, mais revisões noturnas corrigidas por IA e uma ferramenta que reconstrói qualquer conversa de ponta a ponta.',
     ],
   },
   {
@@ -173,9 +171,9 @@ export const jobs: Job[] = [
     dates: 'jan 2026 — set 2026',
     summary: 'Agentes de LLM em produção e sistemas full-stack para uma fintech brasileira, onde uma resposta errada custa dinheiro de verdade.',
     bullets: [
-      'Agente de negociação de dívidas no WhatsApp, com orquestração multimodelo e precificação determinística no código: 19% menos latência e 0 vazamentos numa bateria de 34 ataques de prompt injection.',
-      'Migrei a folha de pagamento legada para Fastify + React no Cloud Run com Terraform, mais um pipeline com Gemini que valida notas fiscais de prestadores.',
-      'Automatizei a triagem de intimações judiciais do Jurídico com OCR multimodal e extração de entidades, eliminando ~95% da revisão manual.',
+      'Um agente que negocia dívidas no WhatsApp, com todo preço calculado em código, nunca pelo modelo: 19% mais rápido, e nenhum vazamento em 34 tentativas de enganá-lo.',
+      'Refiz do zero o sistema legado de folha de pagamento, mais um pipeline de IA que confere as notas fiscais dos prestadores.',
+      'Automatizei a triagem de intimações do Jurídico: a IA lê cada documento e tira o que importa, eliminando ~95% da revisão manual.',
     ],
   },
   {
@@ -185,8 +183,8 @@ export const jobs: Job[] = [
     dates: 'jul 2025 — jan 2026',
     summary: 'Modelos de crédito para compradores B2B em mercados emergentes, que viraram o motor de decisão automatizado e passaram a definir o preço para os vendedores.',
     bullets: [
-      'Classificadores XGBoost e de regressão logística que separam compradores em faixas de DPD e perda previstos, em produção.',
-      'Pipelines em SQL + Python para decisão quase em tempo real, com detecção de anomalias sinalizando fraude.',
+      'Modelos em produção que classificam compradores pelo atraso e pela perda que devem gerar.',
+      'Decisões de crédito quase em tempo real, com detecção de anomalias sinalizando fraude.',
     ],
   },
   {
@@ -201,10 +199,9 @@ export const jobs: Job[] = [
 
 // Passagens mais curtas: aparecem compactas abaixo dos cargos principais.
 export const earlier = [
-  { company: 'Safra', role: 'US Equities Summer Intern', dates: 'jan — fev 2025', note: 'Pipeline de NLP sobre 10-Ks do SEC EDGAR' },
+  { company: 'Safra', role: 'US Equities Summer Intern', dates: 'jan — fev 2025', note: 'Leitura em escala dos relatórios anuais de empresas americanas com NLP' },
   { company: 'BTG Pactual', role: 'Automation Engineer Intern', dates: 'abr — ago 2024', note: 'Automações no Jurídico e no reflorestamento; também PM' },
   { company: 'XP Inc.', role: 'Product Control Summer Intern', dates: 'dez 2023 — fev 2024', note: 'Automação de planilhas para product control' },
-  { company: 'CNPq', role: 'Iniciação científica, ML', dates: 'ago 2023 — abr 2024', note: 'MLPs vs CNNs no MNIST, acurácia de 97,4% → 99,2%' },
 ];
 
 export const building = [
@@ -217,24 +214,24 @@ export const medals = [
   {
     kind: 'gold' as const,
     rank: '1º',
-    title: 'Ouro com a maior nota, 1º lugar geral',
+    title: 'Medalha de ouro, 1º no geral',
     event: 'Olimpíada Iberoamericana de Física',
     short: 'OIbF',
     year: '2020',
     ring: 'OLIMPÍADA IBEROAMERICANA DE FÍSICA · 2020 · ',
     logo: '/img/olympiads/oibf.png',
-    note: '1º lugar geral, mais o prêmio especial pela melhor solução do Problema 2.',
+    note: 'Mais o prêmio especial pela melhor solução do Problema 2.',
   },
   {
     kind: 'silver' as const,
-    rank: 'Ag',
-    title: 'Medalha de prata',
+    rank: '16º',
+    title: 'Medalha de prata, 16º no geral',
     event: 'Olimpíada Nórdico-Báltica de Física',
     short: 'NBPhO',
     year: '2020',
     ring: 'NORDIC-BALTIC PHYSICS OLYMPIAD · 2020 · ',
     logo: '/img/olympiads/nbpho.png',
-    note: 'Prêmio especial pela melhor solução do Problema 1. 21,4 de 36,5 pontos, 16º no geral, no primeiro ano do Brasil como convidado.',
+    note: 'Mais o prêmio especial pela melhor solução do Problema 1, no primeiro ano do Brasil como país convidado.',
   },
 ];
 
@@ -246,23 +243,18 @@ export const receipts = {
     medalTable: 'https://drive.google.com/file/d/1Z2PJxCC9j0_KWcFwX-5_0-Jzsm5zoqWz/view',
     announcement: 'https://www.sbfisica.org.br/v1/sbf/olimpiada-iberoamericana-de-fisica-oibf-2020/',
   },
-  oibfRow: {
-    cols: ['Nombre', 'Apellido', 'País', 'Medalla', 'Premio especial'],
-    row: ['Felipe', 'Farias Ribeiro Filho', 'Brasil', 'ORO', 'Mejor resolución del problema 2'],
-    caption: 'Linha 1 do quadro oficial de medalhas da OIbF 2020 (46 premiados)',
+  oibf: {
+    src: '/img/olympiads/oibf-2020-results.webp',
+    w: 1100,
+    h: 754,
+    caption: 'Resultado oficial da OIbF 2020: ouro, primeiro da lista',
+    href: 'https://drive.google.com/file/d/1Z2PJxCC9j0_KWcFwX-5_0-Jzsm5zoqWz/view',
   },
   nbpho: {
+    src: '/img/olympiads/nbpho-2020-results.webp',
+    w: 1600,
+    h: 401,
     href: 'https://nbpho.ee/wp-content/uploads/2020/05/NB_final_results_publish.pdf',
-    total: 21.4,
-    max: 36.5,
-    rank: 16,
-    problems: [
-      { n: 1, got: 6, max: 6 },
-      { n: 2, got: 2, max: 10 },
-      { n: 3, got: 3, max: 3 },
-      { n: 4, got: 5.2, max: 9 },
-      { n: 5, got: 5.2, max: 8.5 },
-    ],
   },
 };
 
@@ -339,11 +331,11 @@ export const education = {
   school: 'Instituto Tecnológico de Aeronáutica (ITA)',
   degree: 'Engenharia Aeroespacial, minor em Ciência de Dados',
   dates: 'fev 2023 — dez 2027',
-  note: 'Mantido pela Força Aérea Brasileira desde 1950 e considerado por muitos a melhor escola de engenharia do Brasil.',
+  note: 'Mantido pela Força Aérea Brasileira desde 1950, e a escola de engenharia mais prestigiada do Brasil.',
   entry: [
-    { value: '24º', label: 'lugar no vestibular' },
-    { value: '4.033', label: 'candidatos na ampla concorrência' },
-    { value: '144', label: 'vagas' },
+    { value: 'Top 10%', label: 'da turma' },
+    { value: 'CNPq', label: 'iniciação científica em machine learning, 2023–24' },
+    { value: 'Melhor', label: 'projeto conceitual de satélite no II SPOCS, 2026' },
   ],
   logo: '/img/ita.png',
 };

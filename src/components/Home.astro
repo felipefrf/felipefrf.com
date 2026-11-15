@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Handwriting from '../components/Handwriting.astro';
-import Systems from '../components/Systems.astro';
 import ChiefOfStaff from '../components/ChiefOfStaff.astro';
 import Hero from '../components/Hero.astro';
 import MedAlvo from '../components/MedAlvo.astro';
@@ -33,7 +32,6 @@ const {
   national,
   otherHonors,
   education,
-  toolbox,
   flightPath,
 } = getSite(lang);
 
@@ -74,7 +72,6 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
       { href: '#chief', label: t.nav.chief },
       { href: '#medalvo', label: 'MedAlvo' },
       { href: '#imperio', label: 'Império' },
-      { href: '#systems', label: t.nav.systems },
       { href: '#work', label: t.nav.work },
       { href: '#log', label: t.nav.journey },
       { href: '#honors', label: t.nav.medals },
@@ -103,25 +100,11 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <MedAlvo lang={lang} n="02" />
     <Imperio lang={lang} n="03" />
 
-    <!-- systems -->
-    <section class="block wrap" id="systems" aria-labelledby="systems-title">
-      <div class="sec-head" data-reveal>
-        <div>
-          <div class="mono"><i>04</i><span>{t.sysKicker}</span></div>
-          <h2 id="systems-title" set:html={t.sysTitle} />
-        </div>
-        <p>{t.sysLead}</p>
-      </div>
-      <div data-reveal>
-        <Systems lang={lang} />
-      </div>
-    </section>
-
     <!-- selected work -->
     <section class="block wrap" id="work" aria-labelledby="work-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>05</i><span>{t.workKicker}</span></div>
+          <div class="mono"><i>04</i><span>{t.workKicker}</span></div>
           <h2 id="work-title" set:html={t.workTitle} />
         </div>
         <p>{t.workLead}</p>
@@ -154,17 +137,6 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                   ))}
                 </div>
               )}
-              <ul class="tags" aria-label={t.stack}>
-                {p.stack.map((t) => (
-                  <li>{t}</li>
-                ))}
-              </ul>
-              {p.status && (
-                <p class="status mono">
-                  <span class="pulse" aria-hidden="true" />
-                  {p.status}
-                </p>
-              )}
               {p.links.length > 0 && (
                 <div class="links">
                   {p.links.map((l, i) => (
@@ -177,20 +149,6 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
             </div>
 
             <div class="feature-media">
-              {p.slug === 'medalvo' && (
-                <div class="browser">
-                  <div class="browser-bar" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                    <span>medalvo.com.br</span>
-                  </div>
-                  <video data-inview muted loop playsinline preload="metadata" poster="/media/medalvo-poster.jpg" aria-label={t.medalvoVideo}>
-                    <source src="/media/medalvo.webm" type="video/webm" />
-                    <source src="/media/medalvo.mp4" type="video/mp4" />
-                  </video>
-                </div>
-              )}
               {p.slug === 'penpad' && (
                 <div class="sheet-wrap">
                   <Handwriting alt={t.penpadAlt} replay={t.writeAgain} />
@@ -314,7 +272,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="log" aria-labelledby="log-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>06</i><span>{t.logKicker}</span></div>
+          <div class="mono"><i>05</i><span>{t.logKicker}</span></div>
           <h2 id="log-title" set:html={t.logTitle} />
         </div>
         <p>{t.logLead}</p>
@@ -414,7 +372,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="honors" aria-labelledby="honors-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>07</i><span>{t.honorsKicker}</span></div>
+          <div class="mono"><i>06</i><span>{t.honorsKicker}</span></div>
           <h2 id="honors-title" set:html={t.honorsTitle} />
         </div>
         <p>{t.honorsLead}</p>
@@ -425,10 +383,8 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           medals.map((m) => (
             <figure class:list={['medal-card', m.kind]} data-tilt data-reveal>
               <div class="medal-wrap">
-                <video class="medal-3d" data-inview muted loop playsinline preload="none" poster={`/media/medal-${m.kind}-poster.jpg`} width="560" height="560" aria-label={`${m.title}, ${m.event}`}>
-                  <source src={`/media/medal-${m.kind}.webm`} type="video/webm" />
-                  <source src={`/media/medal-${m.kind}.mp4`} type="video/mp4" />
-                </video>
+                <canvas class="medal-3d" data-medal={`/3d/medal-${m.kind}-${lang}.glb`} role="img" aria-label={`${m.title}, ${m.event}. ${t.dragMedal}`}></canvas>
+                <span class="medal-hint mono" aria-hidden="true">{t.dragMedal}</span>
               </div>
               <figcaption>
                 <span class="mono scope">
@@ -490,53 +446,20 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           </figcaption>
         </figure>
 
-        <figure class="receipt table" data-reveal>
-          <div class="sheet-doc">
-            <div class="doc-title">
-              <span>Olimpiada Iberoamericana de Física 2020</span>
-              <b>MEDALLERO</b>
-            </div>
-            <table>
-              <thead>
-                <tr>{receipts.oibfRow.cols.map((c) => <th>{c}</th>)}</tr>
-              </thead>
-              <tbody>
-                <tr class="me">{receipts.oibfRow.row.map((c, i) => <td class:list={{ gold: i === 3 }}>{c}</td>)}</tr>
-                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
-                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
-                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
-                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
-                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
-                <tr class="blur" aria-hidden="true"><td colspan="5"></td></tr>
-              </tbody>
-            </table>
-          </div>
+        <figure class="receipt doc" data-reveal>
+          <a class="doc-sheet" href={receipts.oibf.href} target="_blank" rel="noopener">
+            <img src={receipts.oibf.src} width={receipts.oibf.w} height={receipts.oibf.h} loading="lazy" decoding="async" alt={receipts.oibf.caption} />
+          </a>
           <figcaption>
-            <span>{receipts.oibfRow.caption}</span>
-            <a class="textlink mono" href={receipts.certificate.medalTable} target="_blank" rel="noopener">{t.medalTable}</a>
+            <span>{receipts.oibf.caption}</span>
+            <a class="textlink mono" href={receipts.oibf.href} target="_blank" rel="noopener">{t.medalTable}</a>
           </figcaption>
         </figure>
 
-        <figure class="receipt score" data-reveal>
-          <div class="sheet-doc">
-            <div class="doc-title">
-              <span>{t.nbphoTitle}</span>
-              <b><em>{receipts.nbpho.total}</em> / {receipts.nbpho.max} pts · #{receipts.nbpho.rank}</b>
-            </div>
-            <ul class="bars">
-              {
-                receipts.nbpho.problems.map((pr) => (
-                  <li style={`--w:${((pr.got / pr.max) * 100).toFixed(1)}%`} class:list={{ full: pr.got === pr.max }}>
-                    <span class="mono">P{pr.n}</span>
-                    <i />
-                    <span class="mono v">
-                      {pr.got}/{pr.max}
-                    </span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
+        <figure class="receipt doc wide" data-reveal>
+          <a class="doc-sheet" href={receipts.nbpho.href} target="_blank" rel="noopener">
+            <img src={receipts.nbpho.src} width={receipts.nbpho.w} height={receipts.nbpho.h} loading="lazy" decoding="async" alt={t.nbphoCaption} />
+          </a>
           <figcaption>
             <span>{t.nbphoCaption}</span>
             <a class="textlink mono" href={receipts.nbpho.href} target="_blank" rel="noopener">{t.nbphoLink}</a>
@@ -588,39 +511,14 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="how" aria-labelledby="how-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>08</i><span>{t.howKicker}</span></div>
+          <div class="mono"><i>07</i><span>{t.howKicker}</span></div>
           <h2 id="how-title" set:html={t.howTitle} />
         </div>
       </div>
 
-      <div class="work-grid">
-        <div class="prose" data-reveal>
-          <p set:html={t.how1} />
-          <p set:html={t.how2} />
-          <div class="terminal">
-            <div class="bar" aria-hidden="true"><i></i><i></i><i></i></div>
-            <pre><span class="p">~</span> tmux attach -t fleet
-  agent-1  feat/streaming     <span class="ok">{t.evalsPassing}</span>
-  agent-2  fix/retry-backoff  <span class="ok">{t.evalsPassing}</span>
-  agent-3  chore/qa-batch     {t.running}</pre>
-          </div>
-          <p class="term-note mono">{t.termNote}</p>
-        </div>
-
-        <div class="toolbox" data-reveal>
-          {
-            toolbox.map((g) => (
-              <div>
-                <span class="mono">{g.area}</span>
-                <ul class="tags">
-                  {g.items.map((t) => (
-                    <li>{t}</li>
-                  ))}
-                </ul>
-              </div>
-            ))
-          }
-        </div>
+      <div class="how-cols" data-reveal>
+        <p set:html={t.how1} />
+        <p set:html={t.how2} />
       </div>
     </section>
 

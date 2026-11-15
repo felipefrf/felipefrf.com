@@ -13,10 +13,9 @@ export const person = {
 
 // Big numbers under the hero. `count` animates from 0 when it scrolls into view.
 export const impact = [
-  { value: '24th', label: 'of 4,033 in ITA’s entrance exam', detail: '144 seats at Brazil’s most respected engineering school', logo: '/img/ita.png' },
-  { value: '1st', label: 'overall, top gold', detail: 'Iberoamerican Physics Olympiad 2020', accent: true },
+  { value: 'Top 10%', label: 'of my class at ITA', detail: 'Brazil’s most prestigious engineering school', logo: '/img/ita.png' },
+  { value: '1st', label: 'overall, gold medal', detail: 'Iberoamerican Physics Olympiad 2020', accent: true },
   { value: '50+', count: 50, suffix: '+', label: 'olympiad medals', detail: 'Two international, 2017–2020' },
-  { value: '1 of 5', label: 'ITA students picked', detail: 'For Future Lab, Telles Foundation’s first edition, 2026' },
   { value: 'Best', label: 'satellite concept design', detail: 'Matsumoto-2, II SPOCS at ITA, 2026' },
 ];
 
@@ -64,7 +63,7 @@ export const featured: Project[] = [
       'Turns Markdown + LaTeX notes into realistic handwritten pages for iPad, Goodnotes and reMarkable. A writer model varies every glyph while a legibility clamp keeps it readable. Watch it write.',
     points: [
       'Fractions, integrals, roots and vectors laid out in handwriting',
-      'Seed-reproducible output, offline, pure pip install, cross-OS CI',
+      'Works offline and installs with pip; the same notes always give the same page',
     ],
     stack: ['Python', 'resvg', 'LaTeX'],
     links: [
@@ -80,9 +79,9 @@ export const featured: Project[] = [
     blurb:
       'A WhatsApp-first patient-care layer for Brazilian specialists and clinics: one conversation for the patient, while Curo talks to the doctor, the hospital and the insurer. Built with my brother Rafael (MIT). We took it seriously for a while, far enough to interview with Y Combinator.',
     points: [
-      'Agent with 14 tools for intake, scheduling, FAQ, documents and team handoff',
-      'Deterministic scheduling with idempotent bookings; per-clinic isolation from tenant one',
-      'Google ADK + Gemini on GCP, Postgres, clinic portal in React',
+      'An agent that handles intake, scheduling, questions, documents and handing off to the team',
+      'Bookings that can’t double up, and every clinic’s data kept apart from day one',
+      'A portal where the clinic sees every patient’s case and everything the agent did',
     ],
     stack: ['Google ADK', 'Gemini', 'Postgres', 'React', 'WhatsApp'],
     links: [{ label: 'felipefrf.com/curo', href: '/curo/' }],
@@ -92,15 +91,14 @@ export const featured: Project[] = [
     name: 'Flight Price Finder',
     kind: 'Side project',
     year: '2026',
-    status: 'Live Google Flights data through treg',
     blurb:
       'Finds the cheapest way between two cities, including hidden-city fares: a ticket to somewhere further that connects where you actually want to land. Every search proves it searched, because most of them find nothing, and that’s fine.',
     points: [
       'Real find: SSA→CGH direct was R$381; SSA→CGH→FLN was R$248',
-      'Groups nearby airports (GRU/CGH/VCP) and multi-leg through-fares',
-      'Fares come from Google Flights through treg; runs on my machine behind a Cloudflare Tunnel + Access',
+      'Treats São Paulo’s three airports as one city, and checks dozens of onward cities per search',
+      'Real Google Flights fares, and it says plainly when there’s nothing to save',
     ],
-    stack: ['Python', 'treg', 'Google Flights', 'Cloudflare Tunnel'],
+    stack: ['Python', 'FastAPI', 'Google Flights'],
     links: [],
   },
 ];
@@ -116,7 +114,7 @@ export const apice = {
     {
       client: 'Império Eventos',
       name: 'Império Logística',
-      what: 'A control tower (Next.js) and a field app (Expo) on Supabase, reading orders from EstoqueNOW so the office and the event crews see the same truth. More in section 03.',
+      what: 'The app that walks event crews through their day, and the live board the office follows them on. More in section 03.',
     },
     {
       client: 'Clinics & specialists',
@@ -132,7 +130,7 @@ export const more: Project[] = [
     name: 'Editable Pets',
     kind: 'macOS app',
     year: '2026',
-    blurb: 'A desktop companion for Claude Code and Codex. Native hooks keep every concurrent agent session visible at a glance.',
+    blurb: 'A little desktop companion for Mac that shows every AI coding agent you have running, at a glance.',
     stack: ['Swift', 'Hooks'],
     links: [{ label: 'GitHub', href: 'https://github.com/felipefrf/editable-pets' }],
   },
@@ -150,7 +148,7 @@ export const more: Project[] = [
     name: 'Dual Subtitles',
     kind: 'Chrome extension',
     year: '2026',
-    blurb: 'Two synced subtitle languages on YouTube, one to understand and one to learn, in a Shadow-DOM overlay.',
+    blurb: 'Two synced subtitle languages on YouTube, one to understand and one to learn.',
     stack: ['TypeScript', 'WXT', 'React'],
     links: [{ label: 'GitHub', href: 'https://github.com/felipefrf/dual-subtitles-extension' }],
   },
@@ -180,11 +178,11 @@ export const jobs: Job[] = [
     role: 'Founding Engineer',
     place: 'San Francisco · remote',
     dates: 'Sep 2026 — now',
-    summary: 'Building Milo, a peer-to-peer personal AI for teams. Each employee’s agent runs in its own Linux microVM with their tools.',
+    summary: 'Building Milo, an AI agent for every person on a team, each one running on its own private machine in the cloud with that person’s tools.',
     bullets: [
-      'Shipped Microsoft Teams and Google Chat integrations at parity with Slack and WhatsApp: act-as-user OAuth, streaming, files and voice transcription.',
-      'Built the credential layer for the hosted browser agent: an encrypted vault where OTPs and secrets are injected by alias, so they never enter model context.',
-      'Eval-first shipping: bilingual ship-gate suites replaying production cases, nightly LLM-judged reviews, and an “autopsy” tool that reconstructs any conversation end to end.',
+      'Shipped the Microsoft Teams and Google Chat integrations at parity with Slack and WhatsApp: the agent acts as the user, streams its replies, handles files and transcribes voice.',
+      'Built the vault behind the agent’s web browser: passwords and one-time codes are filled in by name, so the model never sees them.',
+      'Nothing ships without passing tests that replay real production cases in two languages, plus nightly AI-graded reviews and a tool that rebuilds any conversation end to end.',
     ],
   },
   {
@@ -194,9 +192,9 @@ export const jobs: Job[] = [
     dates: 'Jan 2026 — Sep 2026',
     summary: 'Production LLM agents and full-stack systems for a Brazilian fintech, where a wrong answer costs real money.',
     bullets: [
-      'WhatsApp debt-negotiation agent with multi-model orchestration and pricing kept deterministic in code: 19% lower latency, 0 leaks across a 34-attack prompt-injection battery.',
-      'Re-platformed legacy payroll into Fastify + React on Cloud Run with Terraform, plus a Gemini pipeline that validates contractor invoices.',
-      'Automated Legal’s judicial-notification triage with multimodal OCR and entity extraction, removing ~95% of manual review.',
+      'A WhatsApp agent that negotiates debts, with every price computed in code, never by the model: 19% faster, and not one leak across 34 attempts to trick it.',
+      'Rebuilt the legacy payroll system from scratch, plus an AI pipeline that checks contractor invoices.',
+      'Automated how Legal sorts court notices: the AI reads each document and pulls out what matters, removing ~95% of manual review.',
     ],
   },
   {
@@ -206,8 +204,8 @@ export const jobs: Job[] = [
     dates: 'Jul 2025 — Jan 2026',
     summary: 'Credit models for emerging-market B2B buyers that became the automated decision engine and drove seller pricing.',
     bullets: [
-      'XGBoost and logistic-regression classifiers that bucket buyers by predicted DPD and loss, deployed to production.',
-      'SQL + Python pipelines for near-real-time decisioning, with anomaly detection flagging fraud.',
+      'Models in production that rank buyers by how late they’re likely to pay and how much could be lost.',
+      'Near-real-time credit decisions, with anomaly detection flagging fraud.',
     ],
   },
   {
@@ -222,10 +220,9 @@ export const jobs: Job[] = [
 
 // Shorter stints: shown compactly under the main roles.
 export const earlier = [
-  { company: 'Safra', role: 'US Equities Summer Intern', dates: 'Jan — Feb 2025', note: 'NLP pipeline over SEC EDGAR 10-Ks' },
+  { company: 'Safra', role: 'US Equities Summer Intern', dates: 'Jan — Feb 2025', note: 'Read US companies’ annual reports at scale with NLP' },
   { company: 'BTG Pactual', role: 'Automation Engineer Intern', dates: 'Apr — Aug 2024', note: 'Automations for Legal and the reforestation business; a stint as PM' },
   { company: 'XP Inc.', role: 'Product Control Summer Intern', dates: 'Dec 2023 — Feb 2024', note: 'Spreadsheet automation for product control' },
-  { company: 'CNPq', role: 'Undergraduate research, ML', dates: 'Aug 2023 — Apr 2024', note: 'MLPs vs CNNs on MNIST, 97.4% → 99.2% accuracy' },
 ];
 
 export const building = [
@@ -238,24 +235,24 @@ export const medals = [
   {
     kind: 'gold' as const,
     rank: '1st',
-    title: 'Top gold, 1st place overall',
+    title: 'Gold medal, 1st overall',
     event: 'Iberoamerican Physics Olympiad',
     short: 'OIbF',
     year: '2020',
     ring: 'OLIMPÍADA IBEROAMERICANA DE FÍSICA · 2020 · ',
     logo: '/img/olympiads/oibf.png',
-    note: '1st overall, plus the special prize for the best solution to Problem 2.',
+    note: 'Plus the special prize for the best solution to Problem 2.',
   },
   {
     kind: 'silver' as const,
-    rank: 'Ag',
-    title: 'Silver medal',
+    rank: '16th',
+    title: 'Silver medal, 16th overall',
     event: 'Nordic-Baltic Physics Olympiad',
     short: 'NBPhO',
     year: '2020',
     ring: 'NORDIC-BALTIC PHYSICS OLYMPIAD · 2020 · ',
     logo: '/img/olympiads/nbpho.png',
-    note: 'Special prize for the best solution to Problem 1. 21.4 of 36.5 points, 16th overall, in Brazil’s first year as a guest.',
+    note: 'Plus the special prize for the best solution to Problem 1, in Brazil’s first year as a guest country.',
   },
 ];
 
@@ -267,23 +264,18 @@ export const receipts = {
     medalTable: 'https://drive.google.com/file/d/1Z2PJxCC9j0_KWcFwX-5_0-Jzsm5zoqWz/view',
     announcement: 'https://www.sbfisica.org.br/v1/sbf/olimpiada-iberoamericana-de-fisica-oibf-2020/',
   },
-  oibfRow: {
-    cols: ['Nombre', 'Apellido', 'País', 'Medalla', 'Premio especial'],
-    row: ['Felipe', 'Farias Ribeiro Filho', 'Brasil', 'ORO', 'Mejor resolución del problema 2'],
-    caption: 'Row 1 of the official OIbF 2020 medal table (46 awardees)',
+  oibf: {
+    src: '/img/olympiads/oibf-2020-results.webp',
+    w: 1100,
+    h: 754,
+    caption: 'OIbF 2020 official results: gold, first on the list',
+    href: 'https://drive.google.com/file/d/1Z2PJxCC9j0_KWcFwX-5_0-Jzsm5zoqWz/view',
   },
   nbpho: {
+    src: '/img/olympiads/nbpho-2020-results.webp',
+    w: 1600,
+    h: 401,
     href: 'https://nbpho.ee/wp-content/uploads/2020/05/NB_final_results_publish.pdf',
-    total: 21.4,
-    max: 36.5,
-    rank: 16,
-    problems: [
-      { n: 1, got: 6, max: 6 },
-      { n: 2, got: 2, max: 10 },
-      { n: 3, got: 3, max: 3 },
-      { n: 4, got: 5.2, max: 9 },
-      { n: 5, got: 5.2, max: 8.5 },
-    ],
   },
 };
 
@@ -360,11 +352,11 @@ export const education = {
   school: 'Instituto Tecnológico de Aeronáutica (ITA)',
   degree: 'Aerospace Engineering, Data Science minor',
   dates: 'Feb 2023 — Dec 2027',
-  note: 'Run by the Brazilian Air Force since 1950 and widely regarded as the best engineering school in Brazil.',
+  note: 'Run by the Brazilian Air Force since 1950, and Brazil’s most prestigious engineering school.',
   entry: [
-    { value: '24th', label: 'place in the entrance exam' },
-    { value: '4,033', label: 'open-track applicants' },
-    { value: '144', label: 'seats' },
+    { value: 'Top 10%', label: 'of the class' },
+    { value: 'CNPq', label: 'funded undergraduate research in machine learning, 2023–24' },
+    { value: 'Best', label: 'satellite concept design at II SPOCS, 2026' },
   ],
   logo: '/img/ita.png',
 };

@@ -8,7 +8,7 @@ Static [Astro](https://astro.build) site, deployed to GitHub Pages on every push
 
 The site is in English (`/`) and Brazilian Portuguese (`/pt/`).
 
-- Content (projects, jobs, honors, trajectory) lives in [`src/data/site.ts`](src/data/site.ts) and its translation [`src/data/site.pt.ts`](src/data/site.pt.ts); the system diagrams in `src/data/systems.ts` / `systems.pt.ts`. Keep each pair in the same shape.
+- Content (projects, jobs, honors, trajectory) lives in [`src/data/site.ts`](src/data/site.ts) and its translation [`src/data/site.pt.ts`](src/data/site.pt.ts). Keep the pair in the same shape.
 - Interface copy for both languages is in [`src/i18n/ui.ts`](src/i18n/ui.ts).
 - The home page is `src/components/Home.astro`, rendered by `src/pages/index.astro` and `src/pages/pt/index.astro`. `/penpad/` is English only.
 - Visitors are routed in `src/layouts/Base.astro`: a saved choice from the EN | PT switch wins; otherwise a Portuguese browser goes to `/pt/`. If the domain is proxied through Cloudflare (orange cloud), visitors from Portuguese-speaking countries are also sent to `/pt/`, read from `/cdn-cgi/trace`.
@@ -23,16 +23,16 @@ The site is in English (`/`) and Brazilian Portuguese (`/pt/`).
 
 ```sh
 blender -b -P 3d/satellite.py -- public/3d          # satellite.glb (+ a check render)
-blender -b -P 3d/medal.py -- gold /tmp/medal 72 24   # PNG frames, then ffmpeg to public/media/medal-*.webm/mp4
+# medals: one glTF per medal and language, then meshopt-compressed
+blender -b -P 3d/medal_glb.py -- gold en /tmp/medal-gold-en.glb $PWD/3d/ribbon-gold.png
+npx @gltf-transform/cli optimize /tmp/medal-gold-en.glb public/3d/medal-gold-en.glb \
+  --compress meshopt --texture-compress webp --simplify-error 0.0004
 ```
 
-The medal frames are composited over `#0b0c0f` (the card colour) and encoded twice:
+The medals are rendered live by `src/scripts/medal3d.ts` (transparent, drag to turn). `3d/medal.py` is the older Cycles turntable, kept for stills.
 
-```sh
-ffmpeg -framerate 18 -i /tmp/medal/gold-%04d.png -f lavfi -i color=c=0x0b0c0f:s=640x640:r=18 \
-  -filter_complex "[1][0]overlay=shortest=1,format=yuv420p,scale=560:560" -c:v libvpx-vp9 -b:v 0 -crf 34 public/media/medal-gold.webm
-# same filter with -c:v libx264 -crf 24 -movflags +faststart for the .mp4
-```
+- The Império walkthrough screens are in `public/media/imperio/app/`, captured from the field app's web preview with demo data; the copy is in `src/data/imperio-steps.ts`.
+- The olympiad result crops in `public/img/olympiads/*-results.webp` come from the organizers' PDFs, linked under each one.
 
 ```sh
 pnpm install

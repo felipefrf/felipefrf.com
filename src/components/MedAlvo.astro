@@ -1,7 +1,7 @@
 ---
 // MedAlvo: numbers, then a stage with four views: the Android app (a question
-// you can answer), the Claude connector (an animated tool-call run), the web
-// recording and the engine.
+// you can answer), studying inside Claude (an animated run), what's inside the
+// product and how it picks the next question.
 import { ventures } from '../data/ventures';
 import type { Lang } from '../i18n/ui';
 
@@ -121,7 +121,7 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
         <div class="pane-copy">
           <h3>{m.claude.title}</h3>
           <p>{m.claude.body}</p>
-          <ul class="toolchips mono">{m.claude.tools.map((tl) => <li>{tl}</li>)}</ul>
+          <ul class="toolchips">{m.claude.tools.map((tl) => <li>{tl}</li>)}</ul>
         </div>
         <div class="pane-visual">
           <div class="mcp-chat" data-chat>
@@ -143,20 +143,22 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
         </div>
       </div>
 
-      <!-- 3. Web -->
+      <!-- 3. What's inside -->
       <div class="pane" role="tabpanel" id="ma-pane-2" aria-labelledby="ma-tab-2" data-pane="2" hidden>
         <div class="pane-copy">
-          <h3>{m.web.title}</h3>
-          <p>{m.web.body}</p>
+          <h3>{m.features.title}</h3>
+          <p>{m.features.body}</p>
         </div>
         <div class="pane-visual">
-          <div class="browser">
-            <div class="browser-bar" aria-hidden="true"><i /><i /><i /><span>medalvo.com.br</span></div>
-            <video data-inview muted loop playsinline preload="none" poster="/media/medalvo-poster.jpg" aria-label="MedAlvo">
-              <source src="/media/medalvo.webm" type="video/webm" />
-              <source src="/media/medalvo.mp4" type="video/mp4" />
-            </video>
-          </div>
+          <ul class="ma-features">
+            {m.features.items.map((f, i) => (
+              <li style={`--k:${i}`}>
+                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <b>{f.t}</b>
+                <p>{f.d}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
@@ -167,7 +169,7 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
           <p>{m.engine.body}</p>
           <dl class="engine-rows">
             {m.engine.rows.map((r) => (
-              <div><dt class="mono">{r.k}</dt><dd>{r.v}</dd></div>
+              <div><dt>{r.k}</dt><dd>{r.v}</dd></div>
             ))}
           </dl>
         </div>
@@ -188,7 +190,6 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
   </div>
 
   <div class="v-foot" data-reveal>
-    <ul class="tags" aria-label="Stack">{m.stack.map((s) => <li>{s}</li>)}</ul>
     <a class="btn btn-sm btn-primary magnetic" href="https://medalvo.com.br" target="_blank" rel="noopener">{m.cta} <Fragment set:html={arrow} /></a>
   </div>
 </section>

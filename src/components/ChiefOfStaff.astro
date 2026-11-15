@@ -1,6 +1,6 @@
 ---
-// The AI chief of staff: the real app (demo data) playing in a phone, the
-// numbers behind "one person, run like a team", and how the pieces fit.
+// The AI chief of staff: the real app (demo data) playing in a phone, and
+// what it does, in four steps.
 import { ui, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -34,18 +34,6 @@ const c = ui[lang].chief;
     </figure>
 
     <div class="cos-side">
-      <div class="cos-stats" data-reveal>
-        {
-          c.stats.map((s) => (
-            <div>
-              <b {...(s.count ? { 'data-count': s.count, 'data-suffix': s.suffix } : {})}>{s.value}</b>
-              <span>{s.label}</span>
-            </div>
-          ))
-        }
-      </div>
-      <p class="cos-stats-note mono" data-reveal>{c.statsNote}</p>
-
       <ol class="cos-steps" data-reveal>
         {
           c.steps.map((s, i) => (
@@ -60,12 +48,6 @@ const c = ui[lang].chief;
         }
       </ol>
 
-      <div class="cos-foot" data-reveal>
-        <ul class="tags" aria-label="Stack">
-          {c.stack.map((t) => <li>{t}</li>)}
-        </ul>
-        <a class="btn btn-sm btn-primary" href="#systems" data-open-sys="cos">{c.cta} <span aria-hidden="true">↓</span></a>
-      </div>
     </div>
   </div>
 </section>

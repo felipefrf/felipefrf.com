@@ -346,23 +346,77 @@ function confetti(from: HTMLElement) {
   }
 }
 
-// ---------- Império carousel ----------
-document.querySelectorAll<HTMLElement>('[data-slides]').forEach((wrap) => {
-  const imgs = [...wrap.querySelectorAll('img')];
-  const dots = [...(wrap.parentElement?.querySelectorAll('.imp-dots li') ?? [])];
+// ---------- Império field app: one step at a time ----------
+document.querySelectorAll<HTMLElement>('[data-walk]').forEach((root) => {
+  const btns = [...root.querySelectorAll<HTMLButtonElement>('[data-walk-step]')];
+  const imgs = [...root.querySelectorAll<HTMLImageElement>('[data-walk-img]')];
+  const STEP = 4600;
   let i = 0;
+  let timer = 0;
   let vis = false;
-  new IntersectionObserver(([e]) => (vis = e.isIntersecting), { threshold: 0.3 }).observe(wrap);
-  if (reduced || imgs.length < 2) return;
-  setInterval(() => {
-    if (!vis) return;
-    imgs[i].classList.remove('on');
-    dots[i]?.classList.remove('on');
-    i = (i + 1) % imgs.length;
-    imgs[i].classList.add('on');
-    dots[i]?.classList.add('on');
-  }, 3800);
+  let hold = 0;
+  const show = (k: number) => {
+    i = k;
+    btns.forEach((b, j) => {
+      b.classList.toggle('on', j === k);
+      b.setAttribute('aria-pressed', String(j === k));
+      if (j === k) {
+        const bar = b.querySelector<HTMLElement>('.bar');
+        if (bar) {
+          bar.style.animation = 'none';
+          void bar.offsetWidth;
+          bar.style.animation = '';
+        }
+      }
+    });
+    imgs.forEach((im, j) => im.classList.toggle('on', j === k));
+    // preload the next screen so the swap never flashes
+    const nx = imgs[(k + 1) % imgs.length];
+    if (nx && nx.loading === 'lazy') nx.loading = 'eager';
+  };
+  const tick = () => {
+    clearTimeout(timer);
+    root.classList.toggle('paused', reduced || !vis || hold > performance.now());
+    if (reduced || !vis) return;
+    const wait = Math.max(STEP, hold - performance.now());
+    timer = window.setTimeout(() => {
+      if (hold <= performance.now()) show((i + 1) % btns.length);
+      tick();
+    }, wait);
+  };
+  btns.forEach((b, k) =>
+    b.addEventListener('click', () => {
+      hold = performance.now() + 12000;
+      show(k);
+      tick();
+    }),
+  );
+  root.style.setProperty('--walk-ms', `${STEP}ms`);
+  new IntersectionObserver(
+    ([e]) => {
+      vis = e.isIntersecting;
+      if (vis) imgs.forEach((im) => (im.loading = 'eager'));
+      tick();
+    },
+    { threshold: 0.35 },
+  ).observe(root);
 });
+
+// ---------- medals: live 3D models, loaded when they come near ----------
+{
+  const cans = [...document.querySelectorAll<HTMLCanvasElement>('canvas[data-medal]')];
+  if (cans.length) {
+    const io = new IntersectionObserver(
+      (es) => {
+        if (!es.some((e) => e.isIntersecting)) return;
+        io.disconnect();
+        import('./medal3d').then(({ startMedal }) => cans.forEach((c) => startMedal(c, c.dataset.medal!, reduced)));
+      },
+      { rootMargin: '600px' },
+    );
+    cans.forEach((c) => io.observe(c));
+  }
+}
 
 // ---------- medals turn toward the pointer a little, and play in view ----------
 ScrollTrigger.refresh();
