@@ -166,7 +166,8 @@ const stage = document.querySelector<HTMLElement>('[data-stage]');
 if (stage) {
   const tabs = [...stage.querySelectorAll<HTMLButtonElement>('[data-stage-tab]')];
   const panes = [...stage.querySelectorAll<HTMLElement>('[data-pane]')];
-  const DUR = [14000, 15000, 10000, 10000];
+  // per tab: the site tour runs ~30 s; the Claude run and the phone need time to play out
+  const DUR = panes.map((p) => (p.querySelector('video') ? 31000 : p.querySelector('[data-chat]') ? 15000 : p.querySelector('[data-ma-phone]') ? 14000 : 10000));
   let cur = 0;
   let timer = 0;
   let inView = false;
@@ -191,7 +192,7 @@ if (stage) {
       v.preload = 'auto';
       if (!reduced) v.play().catch(() => {});
     });
-    if (i === 1) runChat();
+    if (panes[i].querySelector('[data-chat]')) runChat();
     schedule();
   };
   const schedule = () => {
@@ -294,10 +295,10 @@ if (stage) {
     const autoTap = () => {
       clearTimeout(auto);
       auto = window.setTimeout(() => {
-        if (!userPicked && cur === 0 && inView && !answered && !reduced) opts.find((x) => x.hasAttribute('data-right'))?.click();
+        if (!userPicked && panes[cur].contains(phone) && inView && !answered && !reduced) opts.find((x) => x.hasAttribute('data-right'))?.click();
       }, 5200);
     };
-    new MutationObserver(autoTap).observe(panes[0], { attributes: true, attributeFilter: ['class'] });
+    new MutationObserver(autoTap).observe(phone.closest<HTMLElement>('[data-pane]')!, { attributes: true, attributeFilter: ['class'] });
     autoTap();
   }
 

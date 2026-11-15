@@ -26,7 +26,17 @@ const en = {
       { value: '334', count: 334, label: 'institutions, 42 specialties' },
       { value: '99.7%', label: 'with a commented solution, checked against the official answer key' },
     ],
-    tabs: ['Android app', 'Inside Claude', 'What’s inside', 'How it picks'],
+    tabs: ['The site', 'What’s inside', 'How it picks', 'Inside Claude', 'Android app'],
+    web: {
+      title: 'Study for the exam you’re aiming at',
+      body: 'Every question comes from an official exam, with the exam board’s answer key and a link to the original PDF. The site is where most students study.',
+      points: [
+        'Full past exams by institution, timed like the real day',
+        'A map of where you’d score today, area by area, for your target exam',
+        'Saw something in class or on shift? A photo of it becomes practice',
+      ],
+      videoLabel: 'A tour of medalvo.com.br: what’s inside the app, a three-question mini exam, the performance map, full exams by institution, XP and the pen on the question',
+    },
     app: {
       title: 'The Android app',
       body: 'Answer questions from real exams, keep a daily streak and climb a weekly league with your class. Every question shows the official answer and a commented solution.',
@@ -142,7 +152,17 @@ const pt: typeof en = {
       { value: '334', count: 334, label: 'instituições, 42 especialidades' },
       { value: '99,7%', label: 'com resolução comentada, conferida com o gabarito oficial' },
     ],
-    tabs: ['App Android', 'Dentro do Claude', 'O que tem dentro', 'Como escolhe'],
+    tabs: ['O site', 'O que tem dentro', 'Como escolhe', 'Dentro do Claude', 'App Android'],
+    web: {
+      title: 'Estude para a prova que você quer',
+      body: 'Toda questão vem de uma prova oficial, com o gabarito da banca e o link para o PDF original. É no site que a maior parte dos alunos estuda.',
+      points: [
+        'Provas inteiras por instituição, no tempo oficial',
+        'Um mapa de quanto você acertaria hoje, área por área, na sua prova-alvo',
+        'Viu algo na aula ou no plantão? Uma foto vira treino',
+      ],
+      videoLabel: 'Um passeio pelo medalvo.com.br: o que tem dentro do app, um minissimulado de três questões, o mapa de desempenho, provas inteiras por instituição, XP e a caneta na questão',
+    },
     app: {
       title: 'O app Android',
       body: 'Responda questões de provas reais, mantenha a sequência do dia e suba na liga semanal da turma. Toda questão mostra o gabarito oficial e uma resolução comentada.',

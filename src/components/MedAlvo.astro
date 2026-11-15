@@ -1,7 +1,7 @@
 ---
-// MedAlvo: numbers, then a stage with four views: the Android app (a question
-// you can answer), studying inside Claude (an animated run), what's inside the
-// product and how it picks the next question.
+// MedAlvo: numbers, then a stage with five views: the site (a recorded tour),
+// what's inside, how it picks the next question, studying inside Claude (an
+// animated run) and the Android app (a question you can answer).
 import { ventures } from '../data/ventures';
 import type { Lang } from '../i18n/ui';
 
@@ -51,8 +51,96 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
     </div>
 
     <div class="stage-body">
-      <!-- 1. Android app -->
+      <!-- the site -->
       <div class="pane active" role="tabpanel" id="ma-pane-0" aria-labelledby="ma-tab-0" data-pane="0">
+        <div class="pane-copy">
+          <h3>{m.web.title}</h3>
+          <p>{m.web.body}</p>
+          <ul class="points">{m.web.points.map((pt) => <li>{pt}</li>)}</ul>
+        </div>
+        <div class="pane-visual pane-visual-wide">
+          <div class="browser">
+            <div class="browser-bar" aria-hidden="true"><i /><i /><i /><span>medalvo.com.br</span></div>
+            <video data-inview muted loop playsinline preload="metadata" poster="/media/medalvo-poster.jpg" aria-label={m.web.videoLabel}>
+              <source src="/media/medalvo.webm" type="video/webm" />
+              <source src="/media/medalvo.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- what's inside -->
+      <div class="pane" role="tabpanel" id="ma-pane-1" aria-labelledby="ma-tab-1" data-pane="1" hidden>
+        <div class="pane-copy">
+          <h3>{m.features.title}</h3>
+          <p>{m.features.body}</p>
+        </div>
+        <div class="pane-visual">
+          <ul class="ma-features">
+            {m.features.items.map((f, i) => (
+              <li style={`--k:${i}`}>
+                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+                <b>{f.t}</b>
+                <p>{f.d}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- how it picks -->
+      <div class="pane" role="tabpanel" id="ma-pane-2" aria-labelledby="ma-tab-2" data-pane="2" hidden>
+        <div class="pane-copy">
+          <h3>{m.engine.title}</h3>
+          <p>{m.engine.body}</p>
+          <dl class="engine-rows">
+            {m.engine.rows.map((r) => (
+              <div><dt>{r.k}</dt><dd>{r.v}</dd></div>
+            ))}
+          </dl>
+        </div>
+        <div class="pane-visual">
+          <div class="pipe">
+            <ol>
+              {m.engine.pipe.map((s, i) => (
+                <li style={`--k:${i}`}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{s}</li>
+              ))}
+            </ol>
+            <i class="pipe-packet" aria-hidden="true" />
+            <i class="pipe-packet two" aria-hidden="true" />
+            <p class="mono">{m.engine.pipeNote}</p>
+          </div>
+        </div>
+      </div>
+      <!-- inside Claude -->
+      <div class="pane" role="tabpanel" id="ma-pane-3" aria-labelledby="ma-tab-3" data-pane="3" hidden>
+        <div class="pane-copy">
+          <h3>{m.claude.title}</h3>
+          <p>{m.claude.body}</p>
+          <ul class="toolchips">{m.claude.tools.map((tl) => <li>{tl}</li>)}</ul>
+        </div>
+        <div class="pane-visual">
+          <div class="mcp-chat" data-chat>
+            <div class="mcp-bar mono"><span class="dot" />Claude <span class="dim">· MedAlvo connector</span></div>
+            <div class="mcp-log">
+              <div class="cm user" data-step="0">{m.claude.user1}</div>
+              <div class="cm-tool" data-step="1"><i class="spin" /> MedAlvo · <b>{m.claude.tool1}</b><span>{m.claude.tool1Args}</span></div>
+              <div class="cm bot qcard" data-step="2">
+                <span class="mono">{m.claude.card}</span>
+                <p>{m.claude.cardQ}</p>
+                <ol><li>A</li><li class="pick">B</li><li>C</li><li>D</li></ol>
+              </div>
+              <div class="cm user" data-step="3">{m.claude.user2}</div>
+              <div class="cm-tool" data-step="4"><i class="spin" /> MedAlvo · <b>{m.claude.tool2}</b></div>
+              <div class="cm bot" data-step="5">{m.claude.reply}</div>
+              <div class="cm-tool ok" data-step="6"><i class="spin" /> MedAlvo · <b>{m.claude.tool3}</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- the Android app -->
+      <div class="pane" role="tabpanel" id="ma-pane-4" aria-labelledby="ma-tab-4" data-pane="4" hidden>
         <div class="pane-copy">
           <h3>{m.app.title}</h3>
           <p>{m.app.body}</p>
@@ -112,77 +200,6 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
             <div><b>12</b><small>🔥</small></div>
             <div><b data-ma-widget>19/20</b><small>{p.goal}</small></div>
             <div><b>8</b><small>{lang === 'pt' ? 'revisões' : 'reviews'}</small></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Claude connector -->
-      <div class="pane" role="tabpanel" id="ma-pane-1" aria-labelledby="ma-tab-1" data-pane="1" hidden>
-        <div class="pane-copy">
-          <h3>{m.claude.title}</h3>
-          <p>{m.claude.body}</p>
-          <ul class="toolchips">{m.claude.tools.map((tl) => <li>{tl}</li>)}</ul>
-        </div>
-        <div class="pane-visual">
-          <div class="mcp-chat" data-chat>
-            <div class="mcp-bar mono"><span class="dot" />Claude <span class="dim">· MedAlvo connector</span></div>
-            <div class="mcp-log">
-              <div class="cm user" data-step="0">{m.claude.user1}</div>
-              <div class="cm-tool" data-step="1"><i class="spin" /> MedAlvo · <b>{m.claude.tool1}</b><span>{m.claude.tool1Args}</span></div>
-              <div class="cm bot qcard" data-step="2">
-                <span class="mono">{m.claude.card}</span>
-                <p>{m.claude.cardQ}</p>
-                <ol><li>A</li><li class="pick">B</li><li>C</li><li>D</li></ol>
-              </div>
-              <div class="cm user" data-step="3">{m.claude.user2}</div>
-              <div class="cm-tool" data-step="4"><i class="spin" /> MedAlvo · <b>{m.claude.tool2}</b></div>
-              <div class="cm bot" data-step="5">{m.claude.reply}</div>
-              <div class="cm-tool ok" data-step="6"><i class="spin" /> MedAlvo · <b>{m.claude.tool3}</b></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. What's inside -->
-      <div class="pane" role="tabpanel" id="ma-pane-2" aria-labelledby="ma-tab-2" data-pane="2" hidden>
-        <div class="pane-copy">
-          <h3>{m.features.title}</h3>
-          <p>{m.features.body}</p>
-        </div>
-        <div class="pane-visual">
-          <ul class="ma-features">
-            {m.features.items.map((f, i) => (
-              <li style={`--k:${i}`}>
-                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
-                <b>{f.t}</b>
-                <p>{f.d}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <!-- 4. Engine -->
-      <div class="pane" role="tabpanel" id="ma-pane-3" aria-labelledby="ma-tab-3" data-pane="3" hidden>
-        <div class="pane-copy">
-          <h3>{m.engine.title}</h3>
-          <p>{m.engine.body}</p>
-          <dl class="engine-rows">
-            {m.engine.rows.map((r) => (
-              <div><dt>{r.k}</dt><dd>{r.v}</dd></div>
-            ))}
-          </dl>
-        </div>
-        <div class="pane-visual">
-          <div class="pipe">
-            <ol>
-              {m.engine.pipe.map((s, i) => (
-                <li style={`--k:${i}`}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{s}</li>
-              ))}
-            </ol>
-            <i class="pipe-packet" aria-hidden="true" />
-            <i class="pipe-packet two" aria-hidden="true" />
-            <p class="mono">{m.engine.pipeNote}</p>
           </div>
         </div>
       </div>
