@@ -73,12 +73,40 @@ type Craft = {
   period: number;
 };
 
+// Colours for the scene, so the same simulation can sit on a dark or a light page.
+export type OrbitPalette = {
+  light: boolean; // light page: normal blending, trails fade into `bg` instead of to black
+  bg: number;
+  core: number;
+  dayDot: [number, number, number];
+  nightDot: [number, number, number];
+  dotAlpha: [number, number];
+  ring: number;
+  ringOpacity: number;
+  atmoLo: [number, number, number];
+  atmoHi: [number, number, number];
+  atmoStrength: number;
+  stars: number;
+  starOpacity: number;
+  accent: number;
+  leo: number;
+  heo: number;
+};
+export const NIGHT: OrbitPalette = {
+  light: false, bg: 0x08090b, core: 0x07080b, dayDot: [0.93, 0.94, 0.96], nightDot: [0.16, 0.18, 0.24], dotAlpha: [0.55, 0.95],
+  ring: 0x2a2f3a, ringOpacity: 0.55, atmoLo: [0.25, 0.3, 0.55], atmoHi: [0.62, 0.74, 1.0], atmoStrength: 1,
+  stars: 0x9aa3b5, starOpacity: 0.55, accent: 0xff5a1f, leo: 0x9fb4ff, heo: 0xe9e4d8,
+};
+const v3 = (c: [number, number, number]) => `vec3(${c.map((x) => x.toFixed(3)).join(',')})`;
+
 export type Telemetry = { t: number; alt: number; vel: number; lat: number; lon: number; orbit: number; inc: number };
 
 export function startOrbit(
   canvas: HTMLCanvasElement,
-  opts: { reduced: boolean; onTelemetry?: (t: Telemetry) => void; label?: HTMLElement | null; host: HTMLElement },
+  opts: { reduced: boolean; onTelemetry?: (t: Telemetry) => void; label?: HTMLElement | null; host: HTMLElement; palette?: OrbitPalette },
 ) {
+  const P = opts.palette ?? NIGHT;
+  const bgCol = new THREE.Color(P.bg);
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -107,7 +135,7 @@ export function startOrbit(
   earth.add(
     new THREE.Mesh(
       new THREE.SphereGeometry(0.995, 96, 64),
-      new THREE.MeshBasicMaterial({ color: 0x07080b }),
+      new THREE.MeshBasicMaterial({ color: P.core, toneMapped: !P.light }),
     ),
   );
 
@@ -133,17 +161,17 @@ export function startOrbit(
         float d = length(c);
         if (d > 0.5) discard;
         float a = smoothstep(0.5, 0.2, d);
-        vec3 day = vec3(0.93, 0.94, 0.96);
-        vec3 night = vec3(0.16, 0.18, 0.24);
+        vec3 day = ${v3(P.dayDot)};
+        vec3 night = ${v3(P.nightDot)};
         vec3 col = mix(night, day, vLight);
         a *= smoothstep(-0.05, 0.25, vFacing);
-        gl_FragColor = vec4(col, a * mix(0.55, 0.95, vLight));
+        gl_FragColor = vec4(col, a * mix(${P.dotAlpha[0].toFixed(3)}, ${P.dotAlpha[1].toFixed(3)}, vLight));
       }`,
   });
 
   const grid = new THREE.Group();
   earth.add(grid);
-  const ringMat = new THREE.LineBasicMaterial({ color: 0x2a2f3a, transparent: true, opacity: 0.55 });
+  const ringMat = new THREE.LineBasicMaterial({ color: P.ring, transparent: true, opacity: P.ringOpacity });
   for (let lat = -60; lat <= 60; lat += 30) {
     const pts: THREE.Vector3[] = [];
     const r = Math.cos(lat * D2R) * 1.002, y = Math.sin(lat * D2R) * 1.002;
@@ -181,12 +209,12 @@ export function startOrbit(
     .catch(() => {});
 
   // São José dos Campos (ITA) beacon
-  const ita = new THREE.Mesh(new THREE.SphereGeometry(0.012, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff5a1f }));
+  const ita = new THREE.Mesh(new THREE.SphereGeometry(0.012, 16, 12), new THREE.MeshBasicMaterial({ color: P.accent }));
   ita.position.copy(llToVec(-23.21, -45.87, 1.006));
   earth.add(ita);
   const itaRing = new THREE.Mesh(
     new THREE.RingGeometry(0.02, 0.026, 48),
-    new THREE.MeshBasicMaterial({ color: 0xff5a1f, transparent: true, opacity: 0.8, side: THREE.DoubleSide }),
+    new THREE.MeshBasicMaterial({ color: P.accent, transparent: true, opacity: 0.8, side: THREE.DoubleSide }),
   );
   itaRing.position.copy(ita.position);
   itaRing.lookAt(ita.position.clone().multiplyScalar(2));
@@ -198,7 +226,7 @@ export function startOrbit(
       transparent: true,
       side: THREE.BackSide,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      blending: P.light ? THREE.NormalBlending : THREE.AdditiveBlending,
       uniforms: { uSun: { value: sunDir } },
       vertexShader: /* glsl */ `
         varying vec3 vN; varying vec3 vW;
@@ -209,8 +237,9 @@ export function startOrbit(
         void main() {
           float i = pow(max(0.0, 0.62 - dot(vN, vec3(0., 0., 1.))), 5.0);
           float lit = smoothstep(-0.5, 0.7, dot(vW, uSun));
-          vec3 col = mix(vec3(0.25, 0.30, 0.55), vec3(0.62, 0.74, 1.0), lit);
-          gl_FragColor = vec4(col, 1.0) * i * (0.9 + 1.6 * lit);
+          vec3 col = mix(${v3(P.atmoLo)}, ${v3(P.atmoHi)}, lit);
+          float k = i * (0.9 + 1.6 * lit) * ${P.atmoStrength.toFixed(3)};
+          gl_FragColor = ${P.light ? 'vec4(col, clamp(k, 0.0, 1.0))' : 'vec4(col, 1.0) * k'};
         }`,
     }),
   );
@@ -226,7 +255,7 @@ export function startOrbit(
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(p, 3));
-    scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0x9aa3b5, size: 0.09, sizeAttenuation: true, transparent: true, opacity: 0.55 })));
+    scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: P.stars, size: 0.09, sizeAttenuation: true, transparent: true, opacity: P.starOpacity })));
   }
 
   // ---- spacecraft ----
@@ -239,7 +268,7 @@ export function startOrbit(
     g.setAttribute('position', new THREE.BufferAttribute(trail, 3));
     g.setAttribute('color', new THREE.BufferAttribute(trailColors, 3));
     g.setDrawRange(0, 0);
-    const line = new THREE.Line(g, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const line = new THREE.Line(g, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, blending: P.light ? THREE.NormalBlending : THREE.AdditiveBlending, depthWrite: false }));
     world.add(line);
     const rn = Math.hypot(...s.r), vn = Math.hypot(...s.v);
     const a = 1 / (2 / rn - (vn * vn) / MU);
@@ -267,11 +296,11 @@ export function startOrbit(
   };
 
   // Matsumoto-2: sun-synchronous, 620 km, i = 97.8°
-  const m2 = mkCraft('MATSUMOTO-2', fromElements(RE + 620, 0.001, 97.8 * D2R, 40 * D2R, 0, 300 * D2R), 0xff5a1f, false);
+  const m2 = mkCraft('MATSUMOTO-2', fromElements(RE + 620, 0.001, 97.8 * D2R, 40 * D2R, 0, 300 * D2R), P.accent, false);
   // a space-station-like orbit, 420 km at 51.6°
-  mkCraft('LEO', fromElements(RE + 420, 0.0005, 51.6 * D2R, 200 * D2R, 0, 20 * D2R), 0x9fb4ff, true);
+  mkCraft('LEO', fromElements(RE + 420, 0.0005, 51.6 * D2R, 200 * D2R, 0, 20 * D2R), P.leo, true);
   // a highly elliptical orbit: watch it race through perigee and crawl at apogee (Kepler II)
-  mkCraft('HEO', fromElements(RE * 2.45, 0.56, 63.4 * D2R, 290 * D2R, 270 * D2R, 160 * D2R), 0xe9e4d8, true);
+  mkCraft('HEO', fromElements(RE * 2.45, 0.56, 63.4 * D2R, 290 * D2R, 270 * D2R, 160 * D2R), P.heo, true);
 
   // ground track of Matsumoto-2, in the Earth-fixed frame so it turns with the planet
   const GT = 700;
@@ -279,7 +308,7 @@ export function startOrbit(
   const gtGeo = new THREE.BufferGeometry();
   gtGeo.setAttribute('position', new THREE.BufferAttribute(gtPos, 3));
   gtGeo.setDrawRange(0, 0);
-  earth.add(new THREE.Points(gtGeo, new THREE.PointsMaterial({ color: 0xff5a1f, size: 0.012, transparent: true, opacity: 0.75, depthWrite: false })));
+  earth.add(new THREE.Points(gtGeo, new THREE.PointsMaterial({ color: P.accent, size: 0.012, transparent: true, opacity: 0.75, depthWrite: false })));
   let gtCount = 0, gtHead = 0, gtClock = 0;
 
   // the satellite model and its side-looking radar swath
@@ -287,7 +316,7 @@ export function startOrbit(
   world.add(sat);
   const beam = new THREE.Mesh(
     new THREE.ConeGeometry(0.035, 0.1, 32, 1, true),
-    new THREE.MeshBasicMaterial({ color: 0xff5a1f, transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }),
+    new THREE.MeshBasicMaterial({ color: P.accent, transparent: true, opacity: P.light ? 0.14 : 0.16, blending: P.light ? THREE.NormalBlending : THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }),
   );
   beam.geometry.translate(0, -0.05, 0); // apex at the satellite, opening toward Earth
   const beamPivot = new THREE.Group();
@@ -295,7 +324,7 @@ export function startOrbit(
   beamPivot.rotation.x = 0.5; // ~30° off nadir, to one side
   sat.add(beamPivot);
   // fallback marker until the model arrives
-  const satDot = new THREE.Mesh(new THREE.SphereGeometry(0.016, 16, 12), new THREE.MeshBasicMaterial({ color: 0xff5a1f }));
+  const satDot = new THREE.Mesh(new THREE.SphereGeometry(0.016, 16, 12), new THREE.MeshBasicMaterial({ color: P.accent }));
   sat.add(satDot);
   new GLTFLoader().load(
     '/3d/satellite.glb',
@@ -327,9 +356,10 @@ export function startOrbit(
   const paintTrail = (c: Craft) => {
     for (let i = 0; i < c.count; i++) {
       const f = Math.pow(1 - i / c.count, 1.6);
-      c.trailColors[i * 3] = c.color.r * f;
-      c.trailColors[i * 3 + 1] = c.color.g * f;
-      c.trailColors[i * 3 + 2] = c.color.b * f;
+      // dark page: fade to black under additive blending; light page: fade into the background
+      c.trailColors[i * 3] = P.light ? bgCol.r + (c.color.r - bgCol.r) * f : c.color.r * f;
+      c.trailColors[i * 3 + 1] = P.light ? bgCol.g + (c.color.g - bgCol.g) * f : c.color.g * f;
+      c.trailColors[i * 3 + 2] = P.light ? bgCol.b + (c.color.b - bgCol.b) * f : c.color.b * f;
     }
     const g = c.line.geometry;
     g.setDrawRange(0, c.count);
