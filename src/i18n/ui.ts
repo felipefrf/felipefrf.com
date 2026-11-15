@@ -53,7 +53,7 @@ export const ui = {
       kicker: 'AI chief of staff',
       title: 'One person, <span class="serif">run like a team</span>',
       lead: 'I built my own chief of staff. It reads WhatsApp, Slack, e-mail, meetings and GitHub, works out what needs me, and has the answer, the e-mail or a whole working session ready. I only approve, from my phone.',
-      videoLabel: 'The chief of staff app on Android: answering a question, approving a WhatsApp reply, asking for tomorrow’s agenda and checking the background sessions',
+      videoLabel: 'The chief of staff app on a phone: the day at a glance, answering a question from the queue, asking for tomorrow’s agenda in the chat, the background work and the pages it prepared',
       videoNote: 'The real app, with made-up data',
       steps: [
         { title: 'Reads everything', body: 'WhatsApp, Slack, three inboxes, meetings, calendar and GitHub. Voice notes are transcribed on my own Mac, so the audio never leaves it.' },
@@ -167,7 +167,7 @@ export const ui = {
       kicker: 'Chief of staff de IA',
       title: 'Uma pessoa, <span class="serif">rodando como time</span>',
       lead: 'Construí o meu próprio chief of staff. Ele lê WhatsApp, Slack, e-mail, reuniões e GitHub, descobre o que depende de mim e deixa pronta a resposta, o e-mail ou uma sessão de trabalho inteira. Eu só aprovo, pelo celular.',
-      videoLabel: 'O app do chief of staff no Android: respondendo uma pergunta, aprovando uma resposta no WhatsApp, pedindo a pauta de amanhã e vendo as sessões em segundo plano',
+      videoLabel: 'O app do chief of staff no celular: o dia num relance, uma pergunta da fila respondida, a pauta de amanhã pedida na conversa, o trabalho em segundo plano e as páginas que ele preparou',
       videoNote: 'O app de verdade, com dados inventados',
       steps: [
         { title: 'Lê tudo', body: 'WhatsApp, Slack, três caixas de e-mail, reuniões, agenda e GitHub. Os áudios são transcritos no meu próprio Mac, então nunca saem dele.' },
