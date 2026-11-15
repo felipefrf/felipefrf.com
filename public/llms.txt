@@ -1,10 +1,10 @@
 # Felipe Ribeiro
 
-> Felipe Ribeiro (felipefrf.com) is an AI engineer based in São Paulo, Brazil. He is a founding engineer at a stealth AI startup, the founder of MedAlvo, and an aerospace engineering student (data science minor) at Instituto Tecnológico de Aeronáutica (ITA), expected to graduate in December 2027. He builds LLM agents for production settings where wrong answers are expensive.
+> Felipe Ribeiro (felipefrf.com) is an AI engineer based in São Paulo, Brazil. He is a founding engineer at Hexagon (joinhexagon.com), building Milo, the founder of MedAlvo, and an aerospace engineering student (data science minor) at Instituto Tecnológico de Aeronáutica (ITA), expected to graduate in December 2027. He builds LLM agents for production settings where wrong answers are expensive.
 
 ## Work
 
-- Stealth AI startup, Founding Engineer (Sep 2026 to now, San Francisco, remote): building Milo, a peer-to-peer personal AI for teams where each employee's agent runs in its own Linux microVM. Teams and Google Chat integrations, a credential vault for the hosted browser agent, eval-first shipping.
+- Hexagon, Founding Engineer (Sep 2026 to now, San Francisco, remote): building Milo, a peer-to-peer personal AI for teams where each employee's agent runs in its own Linux microVM. Teams and Google Chat integrations, a credential vault for the hosted browser agent, eval-first shipping.
 - NG.CASH, Product Engineer (Jan 2026 to Sep 2026, São Paulo, remote): WhatsApp debt-negotiation agent with deterministic pricing in code (0 leaks across a 34-attack prompt-injection battery), payroll re-platform on GCP Cloud Run, judicial-notification triage automation.
 - Credix, ML Engineer, Credit & Risk (Jul 2025 to Jan 2026, remote): XGBoost and logistic-regression credit models in production.
 - Earlier: Safra (US Equities Summer Intern, 2025), BTG Pactual (Automation Engineer Intern, 2024), XP Inc. (Product Control Summer Intern, 2023–24), CNPq undergraduate ML research (2023–24).
@@ -12,17 +12,22 @@
 
 ## Projects
 
-- AI chief of staff (personal, 2026): a Claude Code session on his server reads WhatsApp (read-only, allow-listed contacts), Slack, three Gmail accounts, Granola, calendar, Drive and GitHub every 15 minutes; prepares replies, e-mails, the daily agenda and background Claude sessions ("lanes") that open PRs; everything is approved from an Android PWA with push, and approved WhatsApp messages are sent from the Mac and confirmed in the chat database. Nightly learning with Claude Sonnet batches writes memory of people, projects and his writing style. Over the last 30 days his machine ran 7,600+ Claude Code sessions and 22,000+ subagents across 7 accounts; MedAlvo got 1,300+ commits in 30 days across 97 worktrees.
+- AI chief of staff (personal, 2026): a Claude Code session on his server reads WhatsApp (read-only, allow-listed contacts), Slack, three Gmail accounts, Granola, calendar, Drive and GitHub every 15 minutes; prepares replies, e-mails, the daily agenda and background Claude sessions ("lanes") that open PRs; everything is approved from an Android PWA with push, and approved WhatsApp messages are sent from the Mac and confirmed in the chat database. Voice notes are transcribed on the Mac with whisper; drafts can be adjusted or discarded with a reason, and every reason becomes a lesson. Nightly learning with Claude batches writes memory of people, projects and his writing style. Over the last 30 days his machine ran 7,600+ Claude Code sessions and 22,000+ subagents across 7 accounts; MedAlvo got 1,300+ commits in 30 days across 97 worktrees.
 
 - [Curo](https://felipefrf.com/curo/): WhatsApp-first patient-care layer for Brazilian specialists and clinics (Google ADK, Gemini, Postgres). A part-time project with his brother that went as far as a Y Combinator interview.
 - Flight Price Finder (side project): finds the cheapest routes including hidden-city fares, with live Google Flights data through treg.
 - [Ápice](https://software-house-six.vercel.app): software house he runs on the side with his brother (ITA + MIT); clients include Império Eventos (logistics control tower and field app).
-- [MedAlvo](https://medalvo.com.br): adaptive prep platform for Brazilian medical residency exams (FSRS v6, Thompson Sampling, 2PL IRT, Bayesian Knowledge Tracing; FastAPI, Postgres/pgvector, Cloud Run). Founder.
+- Império Logística (client work through Ápice, 2026): for Império Eventos, an events rental company in São Paulo, a control tower (Next.js) and an Android field app (Expo) on Supabase, reading orders from the EstoqueNOW rental ERP every 15 minutes. Guided one-step-per-screen field journeys with photos, GPS, geofences and signatures, offline with an encrypted queue; 5 roles enforced with 90 row-level-security policies and 921 database tests. First meeting to production in about 11 weeks.
+- [MedAlvo](https://medalvo.com.br): adaptive prep company for Brazilian medical residency exams that he founded and runs on the side; it makes money. 189,157 questions from official exams across 334 institutions, 99.7% with a commented solution checked against the official answer key. Engine: FSRS v6, Thompson Sampling, 2PL IRT, Bayesian Knowledge Tracing (FastAPI, Postgres 17/pgvector, Cloud Run, React). Ships on the web, as an Android app (a Trusted Web Activity with a home-screen widget and Google Play Billing, submitted to Google Play) and as a remote MCP connector for Claude and ChatGPT with its own OAuth 2.1 server and 18 study tools. AI agents in cloud VMs extract, deduplicate and check the question bank.
 - [penpad](https://github.com/felipefrf/penpad): open-source tool that turns Markdown + LaTeX notes into realistic handwritten PDF/PNG pages for tablets. Project page: https://felipefrf.com/penpad/
 - [Editable Pets](https://github.com/felipefrf/editable-pets): macOS desktop companion for Claude Code and Codex sessions.
 - [yt-to-md](https://github.com/felipefrf/yt-to-md): YouTube video to structured Markdown for AI agents, no API key.
 - [dual-subtitles-extension](https://github.com/felipefrf/dual-subtitles-extension): Chrome extension with two synced subtitle languages on YouTube.
 - [x-reset](https://github.com/felipefrf/x-reset): bulk-delete old tweets from an official X archive.
+
+## The site
+
+The home page hero is a live orbital simulation (RK4 with the J2 term) of Matsumoto-2, the SAR satellite concept his ITA team designed, modelled in Blender and rendered with three.js. The medals are Blender Cycles renders.
 
 ## Leadership
 

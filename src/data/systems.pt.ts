@@ -66,7 +66,7 @@ export const systems: System[] = [
     id: 'milo',
     tab: 'Milo',
     title: 'Uma IA pessoal para cada funcionário',
-    where: 'Startup de IA stealth · hoje',
+    where: 'Hexagon · hoje',
     blurb:
       'Cada funcionário ganha um agente na própria microVM Linux, com as próprias ferramentas. Os agentes conversam entre si por um cérebro da empresa com permissões, agem num navegador hospedado e nunca veem um segredo.',
     facts: [

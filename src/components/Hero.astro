@@ -1,0 +1,57 @@
+---
+// Full-bleed hero over a live orbital simulation (src/scripts/orbit.ts).
+import { ui, type Lang } from '../i18n/ui';
+import { ventures } from '../data/ventures';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const t = ui[lang];
+const h = ventures[lang].hero;
+const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<section class="orbit-hero" aria-labelledby="hero-title" data-orbit-host>
+  <canvas class="orbit-canvas" aria-hidden="true"></canvas>
+  <div class="orbit-vignette" aria-hidden="true"></div>
+  <div class="sat-label hidden" aria-hidden="true" data-sat-label>
+    <i></i>
+    <span class="mono">{h.satLabel}</span>
+    <small class="mono">{h.satSub}</small>
+  </div>
+
+  <div class="wrap orbit-copy">
+    <div class="now" data-hero-in style="--i:0">
+      <span class="pulse" aria-hidden="true"></span>
+      <span><b>{h.now}</b> · {h.nowText}</span>
+    </div>
+    <h1 id="hero-title">
+      <span class="line" data-split>{t.h1a}</span>
+      <span class="line fade" data-split set:html={t.h1b} />
+    </h1>
+    <p class="lead" data-hero-in style="--i:3" set:html={t.lead} />
+    <div class="ctas" data-hero-in style="--i:4">
+      <a class="btn btn-primary magnetic" href="#medalvo">{t.ctaSystems} <Fragment set:html={arrow} /></a>
+      <a class="btn btn-ghost magnetic" href="#contact">{t.ctaContact}</a>
+    </div>
+  </div>
+
+  <div class="wrap orbit-foot">
+    <p class="orbit-caption" data-hero-in style="--i:6">{h.caption}</p>
+    <dl class="hud" data-hero-in style="--i:5" aria-label={h.hudTitle}>
+      <div class="hud-head">
+        <span class="mono"><i class="rec" aria-hidden="true"></i>{h.hudTitle}</span>
+        <span class="mono dim">{h.hudSub}</span>
+      </div>
+      <div><dt class="mono">{h.labels.t}</dt><dd data-tel="t">00:00:00</dd></div>
+      <div><dt class="mono">{h.labels.alt}</dt><dd><span data-tel="alt">620.0</span><small>km</small></dd></div>
+      <div><dt class="mono">{h.labels.vel}</dt><dd><span data-tel="vel">7.546</span><small>km/s</small></dd></div>
+      <div><dt class="mono">{h.labels.inc}</dt><dd><span data-tel="inc">97.80</span><small>°</small></dd></div>
+      <div><dt class="mono">{h.labels.lat}</dt><dd><span data-tel="lat">0.00</span><small>°</small></dd></div>
+      <div><dt class="mono">{h.labels.lon}</dt><dd><span data-tel="lon">0.00</span><small>°</small></dd></div>
+      <div><dt class="mono">{h.labels.orbit}</dt><dd data-tel="orbit">1</dd></div>
+    </dl>
+  </div>
+  <a class="scroll-cue mono" href="#chief" aria-label={h.scroll}><span>{h.scroll}</span><i aria-hidden="true"></i></a>
+</section>

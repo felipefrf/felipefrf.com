@@ -1,0 +1,71 @@
+---
+// Império Eventos: the control tower (a browser cycling through real demo
+// screens) and the field app (a phone that scrolls through a setup step).
+import { ventures } from '../data/ventures';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  n: string;
+}
+const { lang, n } = Astro.props;
+const v = ventures[lang].imperio;
+const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<section class="block wrap venture imperio-sec" id="imperio" aria-labelledby="imperio-title">
+  <div class="sec-head" data-reveal>
+    <div>
+      <div class="mono"><i>{n}</i><span>{v.kicker}</span></div>
+      <h2 id="imperio-title" data-split-lines set:html={v.title} />
+    </div>
+    <p>{v.lead}</p>
+  </div>
+
+  <div class="imp-stage" data-reveal>
+    <div class="imp-glow" aria-hidden="true"></div>
+    <div class="browser imp-browser" data-parallax="-0.04">
+      <div class="browser-bar" aria-hidden="true"><i /><i /><i /><span>sistema.imperioeventos.com</span></div>
+      <div class="imp-slides" data-slides>
+        {v.shots.map((s, i) => (
+          <img src={s.src} alt={s.alt} width="1366" height="900" loading="lazy" decoding="async" class:list={{ on: i === 0 }} />
+        ))}
+      </div>
+      <ol class="imp-dots" aria-hidden="true">{v.shots.map((_, i) => <li class:list={{ on: i === 0 }} />)}</ol>
+    </div>
+    <div class="android imp-phone" data-parallax="0.06">
+      <div class="android-screen imp-scroll">
+        <img src="/media/imperio/app-montagem.webp" alt={v.phoneAlt} width="540" height="3046" loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <img class="imp-crown" src="/media/imperio/crown.png" alt="" width="92" height="57" aria-hidden="true" />
+  </div>
+  <p class="imp-note mono" data-reveal>{v.note}</p>
+
+  <div class="v-stats" data-reveal>
+    {
+      v.stats.map((s) => (
+        <div>
+          <b {...(s.count ? { 'data-count': s.count } : {})}>{s.value}</b>
+          <span>{s.label}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="imp-cols" data-reveal>
+    <div>
+      <h3>{v.towerTitle}</h3>
+      <ul class="points">{v.tower.map((p) => <li>{p}</li>)}</ul>
+    </div>
+    <div>
+      <h3>{v.appTitle}</h3>
+      <ul class="points">{v.app.map((p) => <li>{p}</li>)}</ul>
+    </div>
+  </div>
+
+  <div class="v-foot" data-reveal>
+    <ul class="tags" aria-label="Stack">{v.stack.map((s) => <li>{s}</li>)}</ul>
+    <a class="btn btn-sm btn-gold magnetic" href={v.href} target="_blank" rel="noopener">{v.cta} <Fragment set:html={arrow} /></a>
+  </div>
+</section>

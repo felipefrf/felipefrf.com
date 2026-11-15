@@ -7,7 +7,7 @@ export const person = {
   email: 'felipe.frf27@gmail.com',
   github: 'https://github.com/felipefrf',
   linkedin: 'https://www.linkedin.com/in/felipe-farias-ribeiro',
-  now: 'Building at a stealth AI startup',
+  now: 'Founding engineer at Hexagon, building Milo',
   nowPlace: 'San Francisco · remote',
 };
 
@@ -116,7 +116,7 @@ export const apice = {
     {
       client: 'Império Eventos',
       name: 'Império Logística',
-      what: 'A logistics control tower (Next.js) and a field app for iOS and Android (Expo) on Supabase, reading stock from EstoqueNOW so the warehouse and the event crews see the same truth.',
+      what: 'A control tower (Next.js) and a field app (Expo) on Supabase, reading orders from EstoqueNOW so the office and the event crews see the same truth. More in section 03.',
     },
     {
       client: 'Clinics & specialists',
@@ -176,7 +176,7 @@ export type Job = {
 
 export const jobs: Job[] = [
   {
-    company: 'Stealth AI startup',
+    company: 'Hexagon',
     role: 'Founding Engineer',
     place: 'San Francisco · remote',
     dates: 'Sep 2026 — now',

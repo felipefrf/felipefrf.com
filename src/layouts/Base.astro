@@ -15,15 +15,18 @@ interface Props {
   description?: string;
   ogImage?: string;
   jsonLd?: object;
+  /** 'night' for the dark home page */
+  theme?: 'paper' | 'night';
 }
 
 const {
   lang = 'en',
   translated = true,
   title = `${person.name}, ${person.role}`,
-  description = 'Felipe Ribeiro builds AI agents that do real work: founding engineer at a stealth AI startup, founder of MedAlvo, aerospace engineering at ITA, international physics olympiad medalist.',
+  description = 'Felipe Ribeiro builds AI agents that do real work: founding engineer at Hexagon (Milo), founder of MedAlvo, aerospace engineering at ITA, international physics olympiad medalist.',
   ogImage: ogPath = '/og.png',
   jsonLd: pageJsonLd,
+  theme = 'paper',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -46,7 +49,7 @@ const jsonLd = pageJsonLd ?? personLd;
 ---
 
 <!doctype html>
-<html lang={ui[lang].htmlLang}>
+<html lang={ui[lang].htmlLang} class={theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -64,8 +67,8 @@ const jsonLd = pageJsonLd ?? personLd;
     }
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#F7F5F0" />
-    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content={theme === 'night' ? '#08090B' : '#F7F5F0'} />
+    <meta name="color-scheme" content={theme === 'night' ? 'dark' : 'light'} />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={ui[lang].ogLocale} />

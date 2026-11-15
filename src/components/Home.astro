@@ -3,10 +3,13 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Handwriting from '../components/Handwriting.astro';
-import Medal from '../components/Medal.astro';
 import Systems from '../components/Systems.astro';
 import ChiefOfStaff from '../components/ChiefOfStaff.astro';
+import Hero from '../components/Hero.astro';
+import MedAlvo from '../components/MedAlvo.astro';
+import Imperio from '../components/Imperio.astro';
 import '../styles/home.css';
+import '../styles/night.css';
 import { getSite } from '../data';
 import { ui, type Lang } from '../i18n/ui';
 
@@ -63,83 +66,24 @@ const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
 const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {});
 ---
 
-<Base lang={lang} title={t.title} description={t.description}>
+<Base lang={lang} title={t.title} description={t.description} theme="night">
   <a class="skip" href="#main">{t.skip}</a>
   <Nav
     lang={lang}
     links={[
       { href: '#chief', label: t.nav.chief },
+      { href: '#medalvo', label: 'MedAlvo' },
+      { href: '#imperio', label: 'Império' },
       { href: '#systems', label: t.nav.systems },
       { href: '#work', label: t.nav.work },
       { href: '#log', label: t.nav.journey },
       { href: '#honors', label: t.nav.medals },
-      { href: '#how', label: t.nav.how },
     ]}
     cta={{ href: '#contact', label: t.nav.contact }}
   />
 
   <main id="main">
-    <!-- hero -->
-    <section class="hero wrap" aria-labelledby="hero-title">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <div class="now rise" style="--i:0">
-            <span class="pulse" aria-hidden="true"></span>
-            <span><b>{t.now}</b> · {person.now} · {person.nowPlace}</span>
-          </div>
-          <h1 id="hero-title">
-            <span class="line rise" style="--i:1">{t.h1a}</span>
-            <span class="line rise fade" style="--i:2" set:html={t.h1b} />
-          </h1>
-          <p class="lead rise" style="--i:3" set:html={t.lead} />
-          <div class="ctas rise" style="--i:4">
-            <a class="btn btn-primary" href="#systems">{t.ctaSystems} <Fragment set:html={arrow} /></a>
-            <a class="btn btn-ghost" href={`mailto:${person.email}`}>{t.ctaContact}</a>
-          </div>
-        </div>
-
-        <figure class="portrait rise" style="--i:2">
-          <div class="photo">
-            <img src="/img/felipe.jpg" width="460" height="460" alt={t.portraitAlt} />
-          </div>
-          <figcaption>
-            <span class="mono">Felipe Ribeiro</span>
-            <span>{t.portraitRole}</span>
-          </figcaption>
-        </figure>
-      </div>
-
-      <figure class="figure rise" style="--i:5" aria-label={t.trajectoryLabel}>
-        <div class="plot">
-          <div class="plot-inner">
-            <svg viewBox={`0 0 ${W} ${H}`} role="presentation">
-              <path class="path" d={pathD} pathLength="1" />
-              <path class="path-next" d={nextD} style="--d:1" />
-              {
-                waypoints.map((w) => (
-                  <circle class:list={['dot', { 'now-dot': w.last }]} cx={w.x} cy={w.y} r={w.last ? 6 : 5} style={`--d:${w.t}`} />
-                ))
-              }
-            </svg>
-            {
-              waypoints.map((w) => (
-                <div
-                  class:list={['wp', { right: w.last, 'now-wp': w.last, keep: w.first || w.last }]}
-                  style={`left:${pct(w.x, W)};top:${pct(w.y, H)};--d:${w.t}`}
-                >
-                  <span class="mono">{w.year}</span>
-                  <span>{w.label}</span>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-        <figcaption class="fig-caption mono">
-          <span>{t.fig1}</span>
-          <span>{t.climbing}</span>
-        </figcaption>
-      </figure>
-    </section>
+    <Hero lang={lang} />
 
     <!-- impact -->
     <section class="wrap impact" aria-label={t.highlights} data-reveal>
@@ -156,12 +100,14 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     </section>
 
     <ChiefOfStaff lang={lang} />
+    <MedAlvo lang={lang} n="02" />
+    <Imperio lang={lang} n="03" />
 
     <!-- systems -->
     <section class="block wrap" id="systems" aria-labelledby="systems-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>02</i><span>{t.sysKicker}</span></div>
+          <div class="mono"><i>04</i><span>{t.sysKicker}</span></div>
           <h2 id="systems-title" set:html={t.sysTitle} />
         </div>
         <p>{t.sysLead}</p>
@@ -175,14 +121,14 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="work" aria-labelledby="work-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>03</i><span>{t.workKicker}</span></div>
+          <div class="mono"><i>05</i><span>{t.workKicker}</span></div>
           <h2 id="work-title" set:html={t.workTitle} />
         </div>
         <p>{t.workLead}</p>
       </div>
 
       {
-        featured.map((p) => (
+        featured.filter((p) => p.slug !== 'medalvo').map((p) => (
           <article class:list={['feature', p.slug]} data-reveal>
             <div class="feature-body">
               <div class="feature-meta mono">
@@ -368,11 +314,42 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="log" aria-labelledby="log-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>04</i><span>{t.logKicker}</span></div>
+          <div class="mono"><i>06</i><span>{t.logKicker}</span></div>
           <h2 id="log-title" set:html={t.logTitle} />
         </div>
         <p>{t.logLead}</p>
       </div>
+
+      <figure class="figure" data-reveal aria-label={t.trajectoryLabel}>
+        <div class="plot">
+          <div class="plot-inner">
+            <svg viewBox={`0 0 ${W} ${H}`} role="presentation">
+              <path class="path" d={pathD} pathLength="1" />
+              <path class="path-next" d={nextD} style="--d:1" />
+              {
+                waypoints.map((w) => (
+                  <circle class:list={['dot', { 'now-dot': w.last }]} cx={w.x} cy={w.y} r={w.last ? 6 : 5} style={`--d:${w.t}`} />
+                ))
+              }
+            </svg>
+            {
+              waypoints.map((w) => (
+                <div
+                  class:list={['wp', { right: w.last, 'now-wp': w.last, keep: w.first || w.last }]}
+                  style={`left:${pct(w.x, W)};top:${pct(w.y, H)};--d:${w.t}`}
+                >
+                  <span class="mono">{w.year}</span>
+                  <span>{w.label}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <figcaption class="fig-caption mono">
+          <span>{t.fig1}</span>
+          <span>{t.climbing}</span>
+        </figcaption>
+      </figure>
 
       <div class="log">
         {
@@ -437,7 +414,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="honors" aria-labelledby="honors-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>05</i><span>{t.honorsKicker}</span></div>
+          <div class="mono"><i>07</i><span>{t.honorsKicker}</span></div>
           <h2 id="honors-title" set:html={t.honorsTitle} />
         </div>
         <p>{t.honorsLead}</p>
@@ -448,7 +425,10 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           medals.map((m) => (
             <figure class:list={['medal-card', m.kind]} data-tilt data-reveal>
               <div class="medal-wrap">
-                <Medal kind={m.kind} mark={m.rank} sub={t.medalSub[m.kind]} ring={m.ring} />
+                <video class="medal-3d" data-inview muted loop playsinline preload="none" poster={`/media/medal-${m.kind}-poster.jpg`} width="560" height="560" aria-label={`${m.title}, ${m.event}`}>
+                  <source src={`/media/medal-${m.kind}.webm`} type="video/webm" />
+                  <source src={`/media/medal-${m.kind}.mp4`} type="video/mp4" />
+                </video>
               </div>
               <figcaption>
                 <span class="mono scope">
@@ -608,7 +588,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="how" aria-labelledby="how-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>06</i><span>{t.howKicker}</span></div>
+          <div class="mono"><i>08</i><span>{t.howKicker}</span></div>
           <h2 id="how-title" set:html={t.howTitle} />
         </div>
       </div>
@@ -657,4 +637,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
 
     <Footer lang={lang} />
   </main>
+  <script>
+    import '../scripts/night.ts';
+  </script>
 </Base>

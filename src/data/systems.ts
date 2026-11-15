@@ -99,7 +99,7 @@ export const systems: System[] = [
     id: 'milo',
     tab: 'Milo',
     title: 'A personal AI for every employee',
-    where: 'Stealth AI startup · now',
+    where: 'Hexagon · now',
     blurb:
       'Every employee gets an agent in its own Linux microVM, with their own tools. Agents talk to each other over a permissioned company brain, act in a hosted browser, and never see a secret.',
     facts: [
