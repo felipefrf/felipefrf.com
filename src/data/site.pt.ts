@@ -67,14 +67,14 @@ export const featured: Project[] = [
     blurb:
       'Uma camada de atendimento ao paciente, nativa do WhatsApp, para especialistas e clínicas: o paciente tem uma conversa só, e o Curo fala com o médico, o hospital e o convênio. Feito com meu irmão Rafael (MIT). Levamos a sério por um tempo, a ponto de fazer entrevista na Y Combinator.',
     points: [
-      'Um agente que faz triagem, agenda, tira dúvidas, cuida de documentos e passa para a equipe quando precisa',
-      'Agendamentos que nunca duplicam, e os dados de cada clínica separados desde o primeiro dia',
-      'Um portal onde a clínica vê o caso de cada paciente e tudo o que o agente fez',
+      'A clínica descreve o processo com as próprias palavras e o agente monta a jornada de cuidado: etapas, o que depende do quê, prazos',
+      'Mude a data de uma cirurgia e o plano inteiro se refaz: as etapas dependentes caem, o trabalho de desfazer abre, todos os prazos andam',
+      'Um portal com o caso de cada paciente, uma fila com prazos reais e LGPD de fábrica: 973 testes',
     ],
     stack: ['Google ADK', 'Gemini', 'Postgres', 'React', 'WhatsApp'],
     links: [
       { label: 'Abrir o painel da clínica', href: '/curo/painel/?lang=pt' },
-      { label: 'Página do Curo', href: '/curo/' },
+      { label: 'Ver o agente montar uma jornada', href: '/curo/' },
     ],
   },
   {

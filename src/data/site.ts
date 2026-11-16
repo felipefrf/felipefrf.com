@@ -79,14 +79,14 @@ export const featured: Project[] = [
     blurb:
       'A WhatsApp-first patient-care layer for Brazilian specialists and clinics: one conversation for the patient, while Curo talks to the doctor, the hospital and the insurer. Built with my brother Rafael (MIT). We took it seriously for a while, far enough to interview with Y Combinator.',
     points: [
-      'An agent that handles intake, scheduling, questions, documents and handing off to the team',
-      'Bookings that can’t double up, and every clinic’s data kept apart from day one',
-      'A portal where the clinic sees every patient’s case and everything the agent did',
+      'The clinic describes its process in plain words and the agent builds the care journey: steps, what depends on what, deadlines',
+      'Move a surgery date and the whole plan re-plans itself: dependent steps fall, the undo work opens, every deadline moves',
+      'A portal with every patient’s case, a queue with real deadlines, and LGPD built in: 973 tests',
     ],
     stack: ['Google ADK', 'Gemini', 'Postgres', 'React', 'WhatsApp'],
     links: [
       { label: 'Open the clinic portal', href: '/curo/painel/?lang=en' },
-      { label: 'Landing page', href: '/curo/' },
+      { label: 'See the agent build a journey', href: '/curo/' },
     ],
   },
   {
