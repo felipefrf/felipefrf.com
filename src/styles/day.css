@@ -784,3 +784,162 @@ html.day .entry .co {
     border-radius: 12px;
   }
 }
+
+/* ---------- showcase: features on one side, the device playing on the other ---------- */
+.showcase {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.45fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+  margin: 8px 0 28px;
+}
+.showcase.flip {
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.78fr);
+}
+.showcase.flip .sc-list {
+  order: 2;
+}
+.sc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sc-list li + li {
+  border-top: 1px solid var(--rule);
+}
+.sc-list button {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 4px;
+  padding: 16px 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: var(--ink-3);
+  cursor: pointer;
+}
+.sc-list .n {
+  font-size: 11px;
+  padding-top: 5px;
+}
+.sc-list b {
+  display: block;
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  transition: color 0.3s;
+}
+.sc-list .d {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease);
+}
+.sc-list .d > span {
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.sc-list button.on,
+.sc-list button:hover {
+  color: var(--ink);
+}
+.sc-list button.on .n {
+  color: var(--accent);
+}
+.sc-list button.on .d,
+.sc-list button.open .d {
+  grid-template-rows: 1fr;
+}
+.sc-list button.on .d > span {
+  padding-top: 6px;
+}
+.sc-list .bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(var(--p, 0));
+  transform-origin: 0 50%;
+  opacity: 0;
+}
+.sc-list button.on .bar {
+  opacity: 1;
+}
+.sc-stage {
+  position: relative;
+  display: grid;
+  min-height: 600px;
+}
+.sc-item {
+  grid-area: 1 / 1;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(0.985);
+  transition: opacity 0.5s var(--ease), transform 0.6s var(--ease), visibility 0s 0.5s;
+}
+.sc-item.on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.5s var(--ease), transform 0.6s var(--ease);
+}
+.sc-item.is-phone .phone {
+  width: min(300px, 70vw);
+}
+.sc-item .phone-screen video,
+.sc-item .phone-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sc-item.is-web .browser {
+  width: 100%;
+}
+.sc-item.is-web video,
+.sc-item.is-web img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 860px) {
+  .showcase,
+  .showcase.flip {
+    grid-template-columns: 1fr;
+  }
+  .showcase .sc-stage,
+  .showcase.flip .sc-stage {
+    order: -1;
+    min-height: 0;
+  }
+  .showcase.flip .sc-list {
+    order: 0;
+  }
+  .sc-list button:not(.on) .n + .t b {
+    font-size: 16px;
+  }
+}
+/* penpad in a card: the sheet on graph paper */
+.side-pen {
+  padding: 28px;
+  background-color: #fbfaf5;
+  background-image: linear-gradient(#e9e6dc 1px, transparent 1px), linear-gradient(90deg, #e9e6dc 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.side-pen .sheet-wrap {
+  width: min(100%, 360px);
+}
+.side-body .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}

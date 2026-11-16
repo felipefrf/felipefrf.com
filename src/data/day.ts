@@ -37,10 +37,15 @@ export const day = {
       ],
       photoAlt: 'The ITA career fair',
     },
+    cos: {
+      kicker: 'Personal · AI chief of staff',
+      title: 'An assistant that <span class="serif">runs my day</span>',
+      lead: 'It reads my WhatsApp, Slack, e-mail, meetings and GitHub, works out what needs me and gets it done: it drafts the replies and e-mails and sends them when I approve, opens Claude Code sessions to do the work, and turns every correction into a lesson, so it gets better the more I use it. It answers with real interface inside the chat, in a native Android app and on the web.',
+    },
     work: {
       kicker: 'Side projects',
       title: 'Built on <span class="serif">nights and weekends</span>',
-      lead: 'A startup that got as far as a Y Combinator interview, the assistant that runs my day, and tools people install.',
+      lead: 'A startup that got as far as a Y Combinator interview, a flight finder that beats normal fares, and tools people install.',
     },
     chief: {
       kind: 'Personal tool',
@@ -92,10 +97,15 @@ export const day = {
       ],
       photoAlt: 'A feira de carreiras do ITA',
     },
+    cos: {
+      kicker: 'Pessoal · chief of staff de IA',
+      title: 'Um assistente que <span class="serif">toca o meu dia</span>',
+      lead: 'Ele lê meu WhatsApp, Slack, e-mail, reuniões e GitHub, descobre o que depende de mim e resolve: escreve as respostas e os e-mails e envia quando eu aprovo, abre sessões do Claude Code para fazer o trabalho e transforma cada correção em lição, então fica melhor quanto mais eu uso. Responde com interface de verdade dentro da conversa, num app nativo para Android e na web.',
+    },
     work: {
       kicker: 'Projetos paralelos',
       title: 'Feitos em <span class="serif">noites e fins de semana</span>',
-      lead: 'Uma startup que chegou à entrevista da Y Combinator, o assistente que organiza o meu dia e ferramentas que o pessoal instala.',
+      lead: 'Uma startup que chegou à entrevista da Y Combinator, um buscador de passagens que bate a tarifa normal e ferramentas que o pessoal instala.',
     },
     chief: {
       kind: 'Ferramenta pessoal',

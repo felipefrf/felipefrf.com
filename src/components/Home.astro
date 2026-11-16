@@ -7,6 +7,7 @@ import Hero from '../components/Hero.astro';
 import MedAlvo from '../components/MedAlvo.astro';
 import Imperio from '../components/Imperio.astro';
 import Film from '../components/Film.astro';
+import Showcase from '../components/Showcase.astro';
 import '../styles/home.css';
 import '../styles/night.css';
 import { getSite } from '../data';
@@ -278,12 +279,55 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <MedAlvo lang={lang} n="03" />
     <Imperio lang={lang} n="04" />
 
+    <!-- 05 chief of staff -->
+    <section class="block wrap" id="chief" aria-labelledby="chief-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>05</i><span>{d.cos.kicker}</span></div>
+          <h2 id="chief-title" data-split-lines set:html={d.cos.title} />
+        </div>
+        <p>{d.cos.lead}</p>
+      </div>
+      {
+        existsSync('public/media/cos/manifest.json') ? (
+          <Showcase lang={lang} dir="cos" url="cos.felipefrf.com" />
+        ) : (
+          <div class="cos">
+            <figure class="cos-phone" data-reveal>
+              <div class="phone">
+                <span class="phone-notch" aria-hidden="true" />
+                <div class="phone-screen">
+                  <video data-inview muted loop playsinline preload="metadata" poster="/media/cos-app-poster.jpg" aria-label={t.chief.videoLabel}>
+                    <source src="/media/cos-app.webm" type="video/webm" />
+                    <source src="/media/cos-app.mp4" type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+            </figure>
+            <div class="cos-side">
+              <ol class="cos-steps" data-reveal>
+                {t.chief.steps.map((s, i) => (
+                  <li>
+                    <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h3>{s.title}</h3>
+                      <p>{s.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        )
+      }
+    </section>
+
 
     <!-- 05 side projects -->
     <section class="block wrap" id="work" aria-labelledby="work-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>05</i><span>{d.work.kicker}</span></div>
+          <div class="mono"><i>06</i><span>{d.work.kicker}</span></div>
           <h2 id="work-title" set:html={d.work.title} />
         </div>
         <p>{d.work.lead}</p>
@@ -363,24 +407,6 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
 
       <div class="side-grid">
         <article class="side-card" data-reveal>
-          <div class="side-media side-phone">
-            <div class="phone">
-              <span class="phone-notch" aria-hidden="true"></span>
-              <div class="phone-screen">
-                <video data-inview muted loop playsinline preload="metadata" poster="/media/cos-app-poster.jpg" aria-label={t.chief.videoLabel}>
-                  <source src="/media/cos-app.webm" type="video/webm" />
-                  <source src="/media/cos-app.mp4" type="video/mp4" />
-                </video>
-              </div>
-            </div>
-          </div>
-          <div class="side-body">
-            <div class="feature-meta mono"><span>{d.chief.kind}</span><span>2026</span></div>
-            <h3>{d.chief.name}</h3>
-            <p>{d.chief.blurb}</p>
-          </div>
-        </article>
-        <article class="side-card" data-reveal>
           <div class="side-media side-film">
             <Film lang={lang} id="flights" compact />
           </div>
@@ -391,79 +417,28 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
             <a class="btn btn-sm btn-primary" href="/flights/">{d.flights.cta} <Fragment set:html={arrow} /></a>
           </div>
         </article>
-      </div>
-
-      {(() => { const p = featured.find((x) => x.slug === 'penpad')!; return (
-          <article class:list={['feature', p.slug]} data-reveal>
-            <div class="feature-body">
-              <div class="feature-meta mono">
-                <span class:list={{ live: p.status }}>{p.kind}</span>
-                <span>{p.year}</span>
+        {(() => { const pp = featured.find((x) => x.slug === 'penpad')!; return (
+          <article class="side-card" data-reveal>
+            <div class="side-media side-pen">
+              <div class="sheet-wrap">
+                <Handwriting alt={t.penpadAlt} replay={t.writeAgain} />
               </div>
-              <h3>{p.name}</h3>
-              <p>{p.blurb}</p>
-              {p.points && (
-                <ul class="points">
-                  {p.points.map((pt) => (
-                    <li>{pt}</li>
-                  ))}
-                </ul>
-              )}
-              {p.stats && (
-                <div class="stats">
-                  {p.stats.map((s) => (
-                    <div>
-                      <b>{s.value}</b>
-                      <span>{s.label}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {p.links.length > 0 && (
-                <div class="links">
-                  {p.links.map((l, i) => (
-                    <a class:list={['btn btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost']} href={l.href} {...ext(l.href)}>
-                      {l.label} <Fragment set:html={arrow} />
-                    </a>
-                  ))}
-                </div>
-              )}
             </div>
-
-            <div class="feature-media">
-              {p.slug === 'penpad' && (
-                <div class="sheet-wrap">
-                  <Handwriting alt={t.penpadAlt} replay={t.writeAgain} />
-                </div>
-              )}
-              {p.slug === 'curo' && (
-                <div class="browser">
-                  <div class="browser-bar" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                    <span>felipefrf.com/curo/painel</span>
-                  </div>
-                  <video data-inview muted loop playsinline preload="metadata" poster="/media/curo-painel-poster.jpg" aria-label={t.curoVideo}>
-                    <source src="/media/curo-painel.webm" type="video/webm" />
-                    <source src="/media/curo-painel.mp4" type="video/mp4" />
-                  </video>
-                </div>
-              )}
-              {p.slug === 'flights' && (
-                <a class="browser flights-shot" href="/flights/" aria-label={t.routeAria}>
-                  <div class="browser-bar" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                    <span>felipefrf.com/flights</span>
-                  </div>
-                  <img src="/img/flights-demo.webp" width="1000" height="844" loading="lazy" decoding="async" alt={t.routeAria} />
-                </a>
-              )}
+            <div class="side-body">
+              <div class="feature-meta mono"><span>{pp.kind}</span><span>{pp.year}</span></div>
+              <h3>{pp.name}</h3>
+              <p>{pp.blurb}</p>
+              <div class="links">
+                {pp.links.map((l, i) => (
+                  <a class:list={['btn btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost']} href={l.href} {...ext(l.href)}>{l.label} <Fragment set:html={arrow} /></a>
+                ))}
+              </div>
             </div>
           </article>
-); })()}
+        ); })()}
+      </div>
+
+
 
       <ul class="index" data-reveal>
         {
@@ -488,7 +463,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
     <section class="block wrap" id="honors" aria-labelledby="honors-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>06</i><span>{d.education.kicker}</span></div>
+          <div class="mono"><i>07</i><span>{d.education.kicker}</span></div>
           <h2 id="honors-title" set:html={d.education.title} />
         </div>
         <p>{d.education.lead}</p>

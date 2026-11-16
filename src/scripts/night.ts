@@ -451,3 +451,7 @@ ScrollTrigger.refresh();
 // ---------- Blender films scrubbed by scroll ----------
 const films = document.querySelectorAll<HTMLElement>('[data-film]');
 if (films.length) import('./film').then(({ startFilm }) => films.forEach((f) => startFilm(f, reduced)));
+
+// ---------- showcase players ----------
+const showcases = document.querySelectorAll<HTMLElement>('[data-showcase]');
+if (showcases.length) import('./showcase').then(({ startShowcase }) => showcases.forEach((s) => startShowcase(s, reduced)));

@@ -1,0 +1,92 @@
+---
+// A product shown by what it does: a list of features beside a device that
+// plays the clip for the selected one, advancing on its own. The clips and
+// their captions come from public/media/<dir>/manifest.json, written when
+// the media is recorded.
+import { existsSync, readFileSync } from 'node:fs';
+import type { Lang } from '../i18n/ui';
+
+type Clip = {
+  slug: string;
+  device?: string;
+  kind?: string;
+  type?: 'video' | 'image';
+  w?: number;
+  h?: number;
+  title_en: string;
+  title_pt: string;
+  body_en: string;
+  body_pt: string;
+};
+
+interface Props {
+  lang: Lang;
+  dir: string; // e.g. 'cos' → public/media/cos/
+  url?: string; // address shown in the browser bar for web clips
+  only?: string[]; // slugs to show, in this order
+  flip?: boolean; // device on the right
+}
+const { lang, dir, url = '', only, flip = false } = Astro.props;
+const file = `public/media/${dir}/manifest.json`;
+let clips: Clip[] = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : [];
+if (only) clips = only.map((s) => clips.find((c) => c.slug === s)).filter(Boolean) as Clip[];
+const base = `/media/${dir}/`;
+const isPhone = (c: Clip) => (c.device ?? c.kind) === 'phone' || (c.device ?? c.kind) === 'crew' || (c.w && c.h ? c.h > c.w : false);
+const tx = (c: Clip) => (lang === 'pt' ? { t: c.title_pt, b: c.body_pt } : { t: c.title_en, b: c.body_en });
+---
+
+{
+  clips.length > 0 && (
+    <div class:list={['showcase', { flip }]} data-showcase data-reveal>
+      <ol class="sc-list">
+        {clips.map((c, i) => (
+          <li>
+            <button type="button" class:list={{ on: i === 0 }} data-sc-step={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+              <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
+              <span class="t">
+                <b>{tx(c).t}</b>
+                <span class="d">
+                  <span>{tx(c).b}</span>
+                </span>
+              </span>
+              <i class="bar" aria-hidden="true" />
+            </button>
+          </li>
+        ))}
+      </ol>
+      <div class="sc-stage">
+        {clips.map((c, i) => {
+          const media =
+            c.type === 'image' ? (
+              <img src={`${base}${c.slug}.webp`} alt={tx(c).t} loading="lazy" decoding="async" width={c.w} height={c.h} />
+            ) : (
+              <video muted playsinline preload="none" poster={`${base}${c.slug}.jpg`} aria-label={tx(c).t} data-sc-video>
+                <source src={`${base}${c.slug}.webm`} type="video/webm" />
+                <source src={`${base}${c.slug}.mp4`} type="video/mp4" />
+              </video>
+            );
+          return (
+            <figure class:list={['sc-item', isPhone(c) ? 'is-phone' : 'is-web', { on: i === 0 }]} data-sc-item={i}>
+              {isPhone(c) ? (
+                <div class="phone">
+                  <span class="phone-notch" aria-hidden="true" />
+                  <div class="phone-screen">{media}</div>
+                </div>
+              ) : (
+                <div class="browser">
+                  <div class="browser-bar" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <span>{url}</span>
+                  </div>
+                  {media}
+                </div>
+              )}
+            </figure>
+          );
+        })}
+      </div>
+    </div>
+  )
+}
