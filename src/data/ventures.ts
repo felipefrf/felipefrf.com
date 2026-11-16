@@ -20,7 +20,7 @@ const en = {
   medalvo: {
     kicker: 'Founder · MedAlvo',
     title: 'A prep company that <span class="serif">runs itself</span>',
-    lead: 'Prep for Brazil’s medical residency exams, built around real past exams. It lives on the web, in an Android app and inside Claude and ChatGPT. AI agents build and check the question bank; I run the company on the side, and it’s profitable.',
+    lead: 'My own company: prep for Brazil’s medical residency exams, built on the official past papers. Web, Android, and inside Claude and ChatGPT. Profitable.',
     stats: [
       { value: '189,157', count: 189157, label: 'questions from official exams' },
       { value: '334', count: 334, label: 'institutions, 42 specialties' },
@@ -108,7 +108,7 @@ const en = {
   imperio: {
     kicker: 'Client work · Ápice',
     title: 'The app that runs <span class="serif">event logistics</span>',
-    lead: 'Império Eventos rents and builds event structures across São Paulo. Their crews ran on memory and WhatsApp. We built the app that walks every crew through the day, one step at a time, while the office follows each event live.',
+    lead: 'Império’s event crews ran on memory and WhatsApp. Now one app walks each crew through the day while the office watches every event live.',
     walkTitle: 'A crew leader’s day, in the app',
     steps: STEPS_EN,
     note: 'Real app, demo account: the people and events are made up.',
@@ -146,7 +146,7 @@ const pt: typeof en = {
   medalvo: {
     kicker: 'Fundador · MedAlvo',
     title: 'Uma empresa de preparação <span class="serif">que se toca sozinha</span>',
-    lead: 'Preparação para as provas de residência médica, feita em cima das provas oficiais. Está na web, num app Android e dentro do Claude e do ChatGPT. Agentes de IA montam e conferem o banco de questões; eu toco a empresa nas horas vagas, e ela dá lucro.',
+    lead: 'Minha empresa: preparação para as provas de residência médica, feita em cima das provas oficiais. Web, Android e dentro do Claude e do ChatGPT. Dá lucro.',
     stats: [
       { value: '189.157', count: 189157, label: 'questões de provas oficiais' },
       { value: '334', count: 334, label: 'instituições, 42 especialidades' },
@@ -234,7 +234,7 @@ const pt: typeof en = {
   imperio: {
     kicker: 'Projeto para cliente · Ápice',
     title: 'O app que toca a <span class="serif">logística de eventos</span>',
-    lead: 'A Império Eventos aluga e monta estruturas para eventos em São Paulo. As equipes trabalhavam de memória e pelo WhatsApp. Fizemos o app que guia cada equipe pelo dia, uma etapa por vez, enquanto o escritório acompanha cada evento ao vivo.',
+    lead: 'As equipes da Império trabalhavam de memória e pelo WhatsApp. Agora um app guia cada equipe pelo dia enquanto o escritório acompanha cada evento ao vivo.',
     walkTitle: 'O dia de um líder de equipe, no app',
     steps: STEPS_PT,
     note: 'App de verdade, conta de demonstração: pessoas e eventos são fictícios.',

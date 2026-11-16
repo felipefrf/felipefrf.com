@@ -16,19 +16,19 @@ export const day = {
     hexagon: {
       kicker: 'Now · Hexagon',
       title: 'An AI agent for <span class="serif">every person on a team</span>',
-      lead: 'I’m a founding engineer at Hexagon, in San Francisco, building Milo. Every person on a team gets their own agent, running on its own private machine in the cloud with that person’s tools, and working where the team already talks.',
+      lead: 'Founding engineer at Hexagon, in San Francisco. Milo gives every person on a team their own agent, on its own machine, working where the team already talks.',
       link: { label: 'joinhexagon.com/milo', href: 'https://joinhexagon.com/milo' },
       howHead: 'How I work',
     },
     journey: {
       kicker: 'Before Hexagon',
       title: 'Where I learned <span class="serif">to ship</span>',
-      lead: 'A fintech where a wrong answer costs real money, credit models for a lender in Belgium, LinkedIn’s sales team in New York, and internships at Safra, BTG Pactual and XP before that.',
+      lead: 'A fintech where a wrong answer costs money, a lender in Belgium, LinkedIn in New York, and three banks before that.',
     },
     fair: {
       kicker: 'President, ITA Jobs Commission · 2023–24',
       title: 'Brazil’s largest career fair outside a state capital',
-      body: 'I led the student commission that connects ITA with the companies that hire its engineers: 45 people in five directorates, the annual fair on campus, training and corporate partnerships. The first sponsorship I closed myself, R$ 30k from SumUp, rebuilt the dorm’s cinema and opened the door to the rest.',
+      body: 'I led the student commission that brings the companies hiring ITA engineers to campus.',
       stats: [
         { value: '1,800+', label: 'students at the fair' },
         { value: '40+', label: 'companies on campus' },
@@ -40,7 +40,7 @@ export const day = {
     cos: {
       kicker: 'Personal · AI chief of staff',
       title: 'An assistant that <span class="serif">runs my day</span>',
-      lead: 'It reads my WhatsApp, Slack, e-mail, meetings and GitHub, works out what needs me and gets it done: it drafts the replies and e-mails and sends them when I approve, opens Claude Code sessions to do the work, and turns every correction into a lesson, so it gets better the more I use it. It answers with real interface inside the chat, in a native Android app and on the web.',
+      lead: 'It reads everything that reaches me, does the work, and only asks for my yes. It gets better every time I correct it.',
     },
     work: {
       kicker: 'Side projects',
@@ -61,7 +61,7 @@ export const day = {
     education: {
       kicker: 'Education & olympiads',
       title: 'Where it <span class="serif">started</span>',
-      lead: 'Aerospace engineering at ITA, and before that four years of physics, math and robotics olympiads, where I learned to like problems that don’t have a known answer yet.',
+      lead: 'Aerospace engineering at ITA, and four years of olympiads before it.',
     },
   },
   pt: {
@@ -76,19 +76,19 @@ export const day = {
     hexagon: {
       kicker: 'Hoje · Hexagon',
       title: 'Um agente de IA para <span class="serif">cada pessoa do time</span>',
-      lead: 'Sou founding engineer na Hexagon, em San Francisco, construindo o Milo. Cada pessoa do time ganha o seu próprio agente, rodando numa máquina privada na nuvem com as ferramentas daquela pessoa e trabalhando onde o time já conversa.',
+      lead: 'Founding engineer na Hexagon, em San Francisco. O Milo dá a cada pessoa do time o seu próprio agente, numa máquina só dele, trabalhando onde o time já conversa.',
       link: { label: 'joinhexagon.com/milo', href: 'https://joinhexagon.com/milo' },
       howHead: 'Como trabalho',
     },
     journey: {
       kicker: 'Antes da Hexagon',
       title: 'Onde aprendi <span class="serif">a entregar</span>',
-      lead: 'Uma fintech onde resposta errada custa dinheiro de verdade, modelos de crédito para uma credora na Bélgica, o time de vendas do LinkedIn em Nova York e, antes disso, estágios no Safra, no BTG Pactual e na XP.',
+      lead: 'Uma fintech onde resposta errada custa dinheiro, uma credora na Bélgica, o LinkedIn em Nova York e três bancos antes disso.',
     },
     fair: {
       kicker: 'Presidente da Comissão de Estágios e Empregos do ITA · 2023–24',
       title: 'A maior feira de carreiras do interior do Brasil',
-      body: 'Liderei a comissão de alunos que liga o ITA às empresas que contratam seus engenheiros: 45 pessoas em cinco diretorias, a feira anual no campus, capacitações e parcerias com empresas. O primeiro patrocínio, que fechei pessoalmente, R$ 30 mil da SumUp, reformou o cinema do alojamento e abriu a porta para os outros.',
+      body: 'Liderei a comissão de alunos que traz para o campus as empresas que contratam engenheiros do ITA.',
       stats: [
         { value: '1.800+', label: 'alunos na feira' },
         { value: '40+', label: 'empresas no campus' },
@@ -100,7 +100,7 @@ export const day = {
     cos: {
       kicker: 'Pessoal · chief of staff de IA',
       title: 'Um assistente que <span class="serif">toca o meu dia</span>',
-      lead: 'Ele lê meu WhatsApp, Slack, e-mail, reuniões e GitHub, descobre o que depende de mim e resolve: escreve as respostas e os e-mails e envia quando eu aprovo, abre sessões do Claude Code para fazer o trabalho e transforma cada correção em lição, então fica melhor quanto mais eu uso. Responde com interface de verdade dentro da conversa, num app nativo para Android e na web.',
+      lead: 'Ele lê tudo o que chega para mim, faz o trabalho e só pede o meu ok. Fica melhor a cada correção.',
     },
     work: {
       kicker: 'Projetos paralelos',
@@ -121,7 +121,7 @@ export const day = {
     education: {
       kicker: 'Formação e olimpíadas',
       title: 'Onde tudo <span class="serif">começou</span>',
-      lead: 'Engenharia aeroespacial no ITA e, antes disso, quatro anos de olimpíadas de física, matemática e robótica, onde aprendi a gostar de problemas que ainda não têm resposta.',
+      lead: 'Engenharia aeroespacial no ITA e, antes, quatro anos de olimpíadas.',
     },
   },
 } satisfies Record<Lang, unknown>;
