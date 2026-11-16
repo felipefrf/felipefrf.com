@@ -621,19 +621,7 @@ html.day .impact-cell b {
 }
 
 /* ---------- Hexagon film: no dead air between the title and the film ---------- */
-.film:not(.compact) .film-stage {
-  /* the stage fills the screen and the render is as big as the screen allows,
-     so there is no dead band above or below it */
-  height: 100vh;
-  top: 0;
-  align-items: center;
-  padding-top: 64px;
-  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-}
-.film:not(.compact) .film-view {
-  width: min(100%, calc((100vh - 120px) * 1.6));
-  justify-self: center;
-}
+
 .film:not(.compact) {
   height: 300vh;
 }
@@ -1285,20 +1273,78 @@ html.day .toolchips li {
   .fair-mosaic .m1 { grid-column: 1 / 3; grid-row: 3 / 5; }
   .fair-mosaic .m2, .fair-mosaic .m3, .fair-mosaic .m4, .fair-mosaic .m5 { display: none; }
 }
-/* the renders leave air around the scene; on the big film, zoom into it and
-   keep the labels on their anchors (positions scaled about the centre) */
-.film:not(.compact) {
-  --zoom: 1.32;
+
+
+/* ---------- the big scroll film: desktop layout ---------- */
+.film {
+  overflow-x: clip; /* the zoomed render never widens the page */
 }
-.film:not(.compact) .film-view canvas,
-.film:not(.compact) .film-poster {
-  transform: scale(var(--zoom));
+@media (min-width: 861px) {
+  .film:not(.compact) .film-stage {
+    /* the stage fills the screen and the render is as big as the screen allows,
+       so there is no dead band above or below it */
+    height: 100vh;
+    top: 0;
+    align-items: center;
+    padding-top: 64px;
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+  }
+  .film:not(.compact) .film-view {
+    width: min(100%, calc((100vh - 120px) * 1.6));
+    justify-self: center;
+  }
+  /* the renders leave air around the scene; on the big film, zoom into it and
+     keep the labels on their anchors (positions scaled about the centre) */
+  .film:not(.compact) {
+    --zoom: 1.32;
+  }
+  .film:not(.compact) .film-view canvas,
+  .film:not(.compact) .film-poster {
+    transform: scale(var(--zoom));
+  }
+  .film:not(.compact) .film-label {
+    left: calc(50% + (var(--x) - 50%) * var(--zoom));
+    top: calc(50% + (var(--y) - 50%) * var(--zoom));
+  }
+  .film:not(.compact) .film-copy {
+    position: relative;
+    z-index: 2;
+  }
 }
-.film:not(.compact) .film-label {
-  left: calc(50% + (var(--x) - 50%) * var(--zoom));
-  top: calc(50% + (var(--y) - 50%) * var(--zoom));
+@media (max-width: 860px) {
+  /* phones: the render on top, full width, one step of copy under it */
+  .film:not(.compact) .film-stage {
+    grid-template-columns: 1fr;
+    align-content: center;
+    padding-top: 70px;
+  }
+  .film:not(.compact) .film-view {
+    width: calc(100% + 2 * var(--gutter));
+    margin: 0 calc(-1 * var(--gutter));
+  }
+  .film:not(.compact) .film-view canvas,
+  .film:not(.compact) .film-poster {
+    transform: scale(1.18);
+  }
+  .film:not(.compact) .film-label {
+    left: calc(50% + (var(--x) - 50%) * 1.18);
+    top: calc(50% + (var(--y) - 50%) * 1.18);
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+  .film-kicker {
+    font-size: 10px;
+  }
 }
-.film:not(.compact) .film-copy {
-  position: relative;
-  z-index: 2;
+
+/* ---------- wide screens: the layout grows instead of floating in white ---------- */
+@media (min-width: 1700px) {
+  html.day {
+    --max: min(1560px, 78vw);
+  }
+}
+@media (min-width: 2200px) {
+  html.day {
+    --max: min(1880px, 76vw);
+  }
 }
