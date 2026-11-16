@@ -34,7 +34,7 @@ OUT = os.path.join(ROOT, 'public', 'film', 'flights')
 RAW = os.environ.get('FILM_RAW', os.path.join(ROOT, '.work', 'film-flights'))
 W, H = 1280, 800
 N = 150
-BG = (0xFB, 0xFB, 0xF9)
+BG = (0xFC, 0xFC, 0xFA)  # the page colour; also round-trips exactly through lossy WebP
 
 
 def load_js(name):
@@ -52,8 +52,10 @@ def pack():
     for f in files:
         src = os.path.join(RAW, f)
         flat = os.path.join(RAW, f[:-4] + '.flat.png')
-        subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', bg, '-i', src,
-                        '-filter_complex', '[0][1]overlay=format=auto', '-frames:v', '1', flat], check=True)
+        subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', src, '-filter_complex',
+                        # an RGB background: a YUV one shifts the page colour by a level or two
+                        bg + ',format=rgba[b];[0:v]format=rgba[f];[b][f]overlay=format=auto:shortest=1,format=rgb24',
+                        '-frames:v', '1', flat], check=True)
         subprocess.run(['cwebp', '-quiet', '-q', '72', '-m', '6', '-sharp_yuv', flat, '-o',
                         os.path.join(OUT, '1280', f[:-4] + '.webp')], check=True)
     last = os.path.join(RAW, files[-1][:-4] + '.flat.png')

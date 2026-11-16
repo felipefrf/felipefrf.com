@@ -34,7 +34,7 @@ if (host) {
           ? {
               ...NIGHT,
               light: true,
-              bg: hex(css.getPropertyValue('--paper')) || 0xfbfbf9,
+              bg: hex(css.getPropertyValue('--paper')) || 0xfcfcfa,
               core: 0xffffff,
               dayDot: [0.055, 0.06, 0.07] as [number, number, number],
               nightDot: [0.62, 0.63, 0.65] as [number, number, number],
