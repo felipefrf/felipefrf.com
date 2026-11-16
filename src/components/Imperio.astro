@@ -24,11 +24,10 @@ const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="
     <p>{v.lead}</p>
   </div>
 
-  <h3 class="mono sub-head imp-sub" data-reveal>{lang === 'pt' ? 'O escritório' : 'The office'}</h3>
-  <Showcase lang={lang} dir="imperio/v2" url="sistema.imperioeventos.com" only={['office-today', 'office-live-map', 'office-live-tracking', 'office-estoquenow', 'office-agenda', 'office-payments', 'office-billing']} />
-
-  <h3 class="mono sub-head imp-sub" data-reveal>{lang === 'pt' ? 'Em campo e no bolso do chefe' : 'In the field, and in the boss’s pocket'}</h3>
-  <Showcase lang={lang} dir="imperio/v2" flip only={['boss-alerts', 'boss-notify', 'crew-boarding', 'crew-trip', 'crew-checklist', 'crew-photos', 'crew-signature']} />
+  <!-- one story, in the order a day happens: the order arrives, the week is
+       planned, the crew boards, the office and the boss follow them live, the
+       crew counts and gets the sign-off, and the money is settled -->
+  <Showcase lang={lang} dir="imperio/v2" url="sistema.imperioeventos.com" only={['office-estoquenow', 'office-agenda', 'crew-boarding', 'office-live-map', 'office-live-tracking', 'boss-alerts', 'crew-checklist', 'crew-signature', 'office-payments', 'office-billing']} />
 
   <div class="v-foot" data-reveal>
     <span class="imp-built mono">{v.built}</span>

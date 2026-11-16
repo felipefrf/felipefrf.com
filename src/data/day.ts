@@ -9,7 +9,7 @@ export const day = {
     heroCta: 'See the work',
     impact: [
       { value: 'Hexagon', label: 'Founding engineer, building Milo', detail: 'San Francisco · since Sep 2026' },
-      { value: '189,157', label: 'questions in MedAlvo, the prep company I run', detail: 'Paying customers · web, Android, Claude and ChatGPT' },
+      { value: '189,157', label: 'questions in MedAlvo, the prep company I run', detail: 'Profitable · web, Android, Claude and ChatGPT' },
       { value: '−95%', label: 'manual review of court notices at NG.CASH', detail: 'Production AI in a fintech, 2026' },
       { value: '1st', label: 'overall, gold medal', detail: 'Iberoamerican Physics Olympiad 2020' },
     ],
@@ -25,6 +25,15 @@ export const day = {
       title: 'Where I learned <span class="serif">to ship</span>',
       lead: 'A fintech where a wrong answer costs money, a lender in Belgium, LinkedIn in New York, and three banks before that.',
     },
+    roles: {
+      'NG.CASH': { big: '−95%', label: 'manual review of court notices', chips: ['0 leaks in 34 attacks', 'debt agent 19% faster', 'payroll rebuilt'], line: 'Production AI in a fintech, where a wrong answer costs money.' },
+      Credix: { big: 'Live', label: 'credit decisions for B2B buyers', chips: ['late-payment risk', 'fraud flags', 'seller pricing'], line: 'The models became the lender’s automated decision engine.' },
+      LinkedIn: { big: 'Ask', label: 'the CRM, get the forecast', chips: ['Salesforce data', 'US & Canada sales'], line: 'An LLM chatbot that replaced analyst-made revenue forecasts.' },
+    },
+    earlierHead: 'Before that',
+    leadHead: 'Leading',
+    video: 'Watch the 2024 fair',
+    feynman: 'Iniciativa Feynman · co-founder: 0 → 81 volunteers in six months, 350+ public-school students taught during COVID.',
     fair: {
       kicker: 'President, ITA Jobs Commission · 2023–24',
       title: 'Brazil’s largest career fair outside a state capital',
@@ -69,7 +78,7 @@ export const day = {
     heroCta: 'Ver o trabalho',
     impact: [
       { value: 'Hexagon', label: 'Founding engineer, construindo o Milo', detail: 'San Francisco · desde set 2026' },
-      { value: '189.157', label: 'questões no MedAlvo, a empresa de preparação que eu toco', detail: 'Clientes pagantes · web, Android, Claude e ChatGPT' },
+      { value: '189.157', label: 'questões no MedAlvo, a empresa de preparação que eu toco', detail: 'Lucrativa · web, Android, Claude e ChatGPT' },
       { value: '−95%', label: 'de revisão manual de intimações na NG.CASH', detail: 'IA em produção numa fintech, 2026' },
       { value: '1º', label: 'lugar geral, ouro', detail: 'Olimpíada Iberoamericana de Física 2020' },
     ],
@@ -85,6 +94,15 @@ export const day = {
       title: 'Onde aprendi <span class="serif">a entregar</span>',
       lead: 'Uma fintech onde resposta errada custa dinheiro, uma credora na Bélgica, o LinkedIn em Nova York e três bancos antes disso.',
     },
+    roles: {
+      'NG.CASH': { big: '−95%', label: 'de revisão manual de intimações', chips: ['0 vazamentos em 34 ataques', 'agente de dívidas 19% mais rápido', 'folha refeita'], line: 'IA em produção numa fintech, onde resposta errada custa dinheiro.' },
+      Credix: { big: 'Ao vivo', label: 'decisões de crédito para compradores B2B', chips: ['risco de atraso', 'alerta de fraude', 'preço do vendedor'], line: 'Os modelos viraram o motor automático de decisão da credora.' },
+      LinkedIn: { big: 'Pergunte', label: 'ao CRM, receba a previsão', chips: ['dados do Salesforce', 'vendas EUA e Canadá'], line: 'Um chatbot com LLM que substituiu previsões de receita feitas por analistas.' },
+    },
+    earlierHead: 'Antes disso',
+    leadHead: 'Liderando',
+    video: 'Ver o vídeo da feira de 2024',
+    feynman: 'Iniciativa Feynman · cofundador: de 0 a 81 voluntários em seis meses, 350+ alunos de escola pública na pandemia.',
     fair: {
       kicker: 'Presidente da Comissão de Estágios e Empregos do ITA · 2023–24',
       title: 'A maior feira de carreiras do interior do Brasil',

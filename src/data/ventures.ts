@@ -20,7 +20,7 @@ const en = {
   medalvo: {
     kicker: 'Founder · MedAlvo',
     title: 'A prep company that <span class="serif">runs itself</span>',
-    lead: 'My own company: prep for Brazil’s medical residency exams, built on the official past papers. Web, Android, and inside Claude and ChatGPT. It makes money.',
+    lead: 'My own company: prep for Brazil’s medical residency exams, built on the official past papers. Web, Android, and inside Claude and ChatGPT. Profitable.',
     stats: [
       { value: '189,157', count: 189157, label: 'questions from official exams' },
       { value: '334', count: 334, label: 'institutions, 42 specialties' },
@@ -146,7 +146,7 @@ const pt: typeof en = {
   medalvo: {
     kicker: 'Fundador · MedAlvo',
     title: 'Uma empresa de preparação <span class="serif">que se toca sozinha</span>',
-    lead: 'Minha empresa: preparação para as provas de residência médica, feita em cima das provas oficiais. Web, Android e dentro do Claude e do ChatGPT. Já fatura.',
+    lead: 'Minha empresa: preparação para as provas de residência médica, feita em cima das provas oficiais. Web, Android e dentro do Claude e do ChatGPT. Dá lucro.',
     stats: [
       { value: '189.157', count: 189157, label: 'questões de provas oficiais' },
       { value: '334', count: 334, label: 'instituições, 42 especialidades' },

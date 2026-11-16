@@ -191,7 +191,7 @@ export const jobs: Job[] = [
   {
     company: 'NG.CASH',
     role: 'Product Engineer',
-    place: 'São Paulo · remote',
+    place: 'São Paulo · hybrid',
     dates: 'Jan 2026 — Sep 2026',
     summary: 'Production LLM agents and full-stack systems for a Brazilian fintech, where a wrong answer costs real money.',
     bullets: [

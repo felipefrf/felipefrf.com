@@ -5,7 +5,7 @@
 ## Work
 
 - Hexagon, Founding Engineer (Sep 2026 to now, San Francisco, remote): building Milo, a peer-to-peer personal AI for teams where each employee's agent runs in its own Linux microVM. Teams and Google Chat integrations, a credential vault for the hosted browser agent, eval-first shipping.
-- NG.CASH, Product Engineer (Jan 2026 to Sep 2026, São Paulo, remote): WhatsApp debt-negotiation agent with deterministic pricing in code (0 leaks across a 34-attack prompt-injection battery), payroll re-platform on GCP Cloud Run, judicial-notification triage automation.
+- NG.CASH, Product Engineer (Jan 2026 to Sep 2026, São Paulo, hybrid): WhatsApp debt-negotiation agent with deterministic pricing in code (0 leaks across a 34-attack prompt-injection battery), payroll re-platform on GCP Cloud Run, judicial-notification triage automation.
 - Credix, ML Engineer, Credit & Risk (Jul 2025 to Jan 2026, remote): XGBoost and logistic-regression credit models in production.
 - Earlier: Safra (US Equities Summer Intern, 2025), BTG Pactual (Automation Engineer Intern, 2024), XP Inc. (Product Control Summer Intern, 2023–24).
 - LinkedIn, Sales Strategy Intern, Data & AI (Feb 2025 to Jul 2025, remote): LLM chatbot over Salesforce CRM data for US & Canada sales forecasting.

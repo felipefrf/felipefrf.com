@@ -455,3 +455,17 @@ if (films.length) import('./film').then(({ startFilm }) => films.forEach((f) => 
 // ---------- showcase players ----------
 const showcases = document.querySelectorAll<HTMLElement>('[data-showcase]');
 if (showcases.length) import('./showcase').then(({ startShowcase }) => showcases.forEach((s) => startShowcase(s, reduced)));
+
+// ---------- the fair video: a poster until clicked, then YouTube (no-cookie) ----------
+document.querySelectorAll<HTMLButtonElement>('[data-yt]').forEach((b) =>
+  b.addEventListener('click', () => {
+    const f = document.createElement('iframe');
+    f.src = `https://www.youtube-nocookie.com/embed/${b.dataset.yt}?autoplay=1&rel=0`;
+    f.title = b.getAttribute('aria-label') || 'Video';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    f.className = 'fair-iframe';
+    b.replaceChildren(f);
+    b.disabled = true;
+  }),
+);
