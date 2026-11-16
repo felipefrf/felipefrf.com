@@ -628,21 +628,11 @@ html.day .impact-cell b {
 
 /* ---------- receipts: the two official result tables side by side ---------- */
 html.day .receipts {
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
 }
 html.day .receipt.nbpho .doc-sheet {
   transform: rotate(-0.5deg);
-  aspect-ratio: 1100 / 754;
-}
-/* the NBPhO sheet is a very wide table: zoom into the names, the medal and
-   the highlighted row, the full sheet is one click away */
-html.day .receipt.nbpho .doc-sheet img {
-  width: auto;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: 0 50%;
 }
 @media (max-width: 760px) {
   html.day .receipts {
@@ -1600,4 +1590,10 @@ html.day .mcp-chat {
     transform: scale(0.88);
     transform-origin: 100% 100%;
   }
+}
+.earlier-item .wordmark {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-size: 15px;
 }

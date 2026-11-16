@@ -342,7 +342,7 @@ if (stage) {
     steps.forEach((s) => s.classList.remove('on', 'done'));
     chat.removeAttribute('data-answered');
     const wait = (ms: number) => new Promise((r) => setTimeout(r, reduced ? 0 : ms));
-    const gaps = [400, 900, 1300, 1500, 900, 1200, 900];
+    const gaps = [120, 500, 750, 900, 500, 700, 500];
     for (let i = 0; i < steps.length; i++) {
       await wait(gaps[i]);
       if (id !== chatRun) return;

@@ -36,8 +36,6 @@ const LOGOS: Record<string, string> = {
   Safra: '/img/logos/safra.svg',
   'BTG Pactual': '/img/logos/btg.svg',
   BTG: '/img/logos/btg.svg',
-  'XP Inc.': '/img/logos/xp.svg',
-  XP: '/img/logos/xp.svg',
   ITA: '/img/ita.png',
   MedAlvo: '/img/logos/medalvo.svg',
 };
@@ -182,7 +180,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
         {
           earlier.map((e) => (
             <div class="earlier-item">
-              {logoOf(e.company) && <img src={logoOf(e.company)} alt={e.company} loading="lazy" />}
+              {logoOf(e.company) ? <img src={logoOf(e.company)} alt={e.company} loading="lazy" /> : <b class="wordmark">{e.company}</b>}
               <span><b>{e.role}</b> <small class="mono">{e.dates}</small></span>
             </div>
           ))

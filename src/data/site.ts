@@ -86,7 +86,7 @@ export const featured: Project[] = [
     stack: ['Google ADK', 'Gemini', 'Postgres', 'React', 'WhatsApp'],
     links: [
       { label: 'Open the clinic portal', href: '/curo/painel/?lang=en' },
-      { label: 'See the agent build a journey', href: '/curo/' },
+      { label: 'See the agent build a journey', href: '/curo/?lang=en' },
     ],
   },
   {
@@ -275,8 +275,8 @@ export const receipts = {
   },
   nbpho: {
     src: '/img/olympiads/nbpho-2020-results.webp',
-    w: 1600,
-    h: 401,
+    w: 2000,
+    h: 1346,
     href: 'https://nbpho.ee/wp-content/uploads/2020/05/NB_final_results_publish.pdf',
   },
 };
