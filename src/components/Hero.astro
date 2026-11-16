@@ -5,8 +5,10 @@ import { ventures } from '../data/ventures';
 
 interface Props {
   lang: Lang;
+  /** the first button; defaults to the chief of staff section */
+  cta?: { href: string; label: string };
 }
-const { lang } = Astro.props;
+const { lang, cta } = Astro.props;
 const t = ui[lang];
 const h = ventures[lang].hero;
 const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -32,7 +34,7 @@ const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="
     </h1>
     <p class="lead" data-hero-in style="--i:3" set:html={t.lead} />
     <div class="ctas" data-hero-in style="--i:4">
-      <a class="btn btn-primary magnetic" href="#chief">{t.ctaSystems} <Fragment set:html={arrow} /></a>
+      <a class="btn btn-primary magnetic" href={cta?.href ?? '#chief'}>{cta?.label ?? t.ctaSystems} <Fragment set:html={arrow} /></a>
       <a class="btn btn-ghost magnetic" href="#contact">{t.ctaContact}</a>
     </div>
   </div>
@@ -53,5 +55,5 @@ const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="
       <div><dt class="mono">{h.labels.orbit}</dt><dd data-tel="orbit">1</dd></div>
     </dl>
   </div>
-  <a class="scroll-cue mono" href="#chief" aria-label={h.scroll}><span>{h.scroll}</span><i aria-hidden="true"></i></a>
+  <a class="scroll-cue mono" href={cta?.href ?? "#chief"} aria-label={h.scroll}><span>{h.scroll}</span><i aria-hidden="true"></i></a>
 </section>

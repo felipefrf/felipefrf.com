@@ -117,7 +117,7 @@ export const apice = {
     {
       client: 'Império Eventos',
       name: 'Império Logística',
-      what: 'The app that walks event crews through their day, and the live board the office follows them on. More in section 03.',
+      what: 'The app that walks event crews through their day, and the live board the office follows them on. More above, in its own section.',
     },
     {
       client: 'Clinics & specialists',

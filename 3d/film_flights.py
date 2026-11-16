@@ -1,16 +1,17 @@
 """Flight Price Finder: a scroll-scrubbed clay film of one real search.
 
-The route, the airports and the fares come from public/flights/data.js (the demo
-replay of real cached searches): Fortaleza → São Paulo, where the direct ticket to
-Campinas (VCP) cost R$ 1,474 and a ticket to Belo Horizonte (CNF) that changes
-planes at VCP cost R$ 750. You get off at VCP: R$ 724 saved.
+One live search from the app (2026-11-15): Salvador → São Paulo on 2026-12-10.
+The cheapest normal ticket that ends anywhere in São Paulo was R$ 792 (direct to
+Campinas, VCP). A ticket to Brasília (BSB) that changes planes at Congonhas (CGH)
+cost R$ 534: you get off at CGH and pay R$ 258 less than any normal São Paulo
+ticket. Airport coordinates come from public/flights/data.js.
 
 Beats, over 150 frames (the page scrubs them with the scroll):
-  1  the map is there; the Fortaleza and Campinas pins rise
-  2  the obvious direct flight draws, and its fare stands up as a tall bar
-  3  the search fans out: tickets through VCP to 15 other cities
+  1  the map is there; the Salvador and Congonhas pins rise
+  2  the cheapest normal ticket (to Campinas) draws, and its fare stands up as a bar
+  3  the search fans out: tickets through São Paulo to 8 cities beyond
   4  the arcs fold away except the winner; the leg you fly turns orange and a
-     small plane flies it, stopping at VCP (the onward leg stays a thin line)
+     small plane flies it, stopping at CGH (the onward leg stays a thin line)
   5  the cheaper fare stands next to the direct one, and the gap between them,
      the saving, drops in as an orange block
 
@@ -80,16 +81,25 @@ f0, f1 = (int(x) for x in opt['frames'].split('-'))
 
 data = load_js('data.js')
 basemap = load_js('basemap.js')
-route = next(r for r in data['routes'] if r['slug'] == 'fortaleza-sao-paulo')
-win = max(route['finds'], key=lambda f: f['savings'])
-ORIGIN = route['originAirports'][0]                 # FOR
-DEST = win['exit_at']                               # VCP
-BEYOND = win['final_destination']                   # CNF
-DIRECT = int(win['direct_price'])                   # 1474
-FOUND = int(win['multi_leg_price'])                 # 750
-SAVING = int(win['savings'])                        # 724
-AIR = route['airports']
-CANDS = [c for c in route['candidates'] if c in AIR and c not in (DEST, ORIGIN)]
+# Coordinates for every airport the demo knows
+AIR = {}
+for r in data['routes']:
+    AIR.update(r['airports'])
+
+# The search: a live one from the app, 2026-11-15 (flight-tickets data/app.db,
+# search 745654864e10; HANDOVER.md). Salvador to São Paulo on 2026-12-10.
+# The honest yardstick is the cheapest *normal* ticket that ends anywhere in São
+# Paulo (R$ 792, direct to Campinas), not the direct fare to the same airport.
+ORIGIN = 'SSA'
+DEST = 'CGH'          # where you get off
+BEYOND = 'BSB'        # the city the ticket is really to
+NORMAL = 'VCP'        # the cheapest normal São Paulo ticket lands here
+DIRECT = 792          # cheapest normal ticket to São Paulo (SSA→VCP)
+FOUND = 534           # SSA→CGH→BSB, getting off at CGH
+SAVING = DIRECT - FOUND
+CANDS = ['GIG', 'BSB', 'CNF', 'POA', 'CWB', 'FOR', 'BEL', 'CGB']
+route = {'currency': 'BRL'}
+win = {'legs': [{'departure': '2026-12-10T05:55:00'}], 'book_route': 'SSA→CGH→BSB'}
 
 # ---- projection: the same equirectangular view as the demo's basemap
 P = basemap['projection']
@@ -358,7 +368,9 @@ B = city(DEST, TOP + 0.02)
 C = city(BEYOND, TOP + 0.02)
 
 # beat 2: the obvious direct flight
-_, cu_direct = arc('direct', A, B, INK, radius=0.0055, lift=0.22)
+V = city(NORMAL, TOP + 0.02)
+dot(NORMAL, 12)
+_, cu_direct = arc('direct', A, V, INK, radius=0.0055, lift=0.22)
 draw(cu_direct, 14, 34)
 
 # beat 3: the fan-out of tickets through VCP to the cities beyond
@@ -600,8 +612,9 @@ meta = {
     'origin': ORIGIN, 'originCity': AIR[ORIGIN]['city'],
     'dest': DEST, 'destCity': AIR[DEST]['city'],
     'beyond': BEYOND, 'beyondCity': AIR[BEYOND]['city'],
+    'normal': NORMAL, 'normalCity': AIR[NORMAL]['city'],
     'direct': DIRECT, 'found': FOUND, 'saving': SAVING, 'currency': route['currency'],
-    'date': win['legs'][0]['departure'][:10], 'candidates': len(CANDS) + 1,
+    'date': win['legs'][0]['departure'][:10], 'candidates': len(CANDS),
     'bookRoute': win['book_route'],
 }
 if not TEST:

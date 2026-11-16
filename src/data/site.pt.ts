@@ -105,7 +105,7 @@ export const apice = {
     {
       client: 'Império Eventos',
       name: 'Império Logística',
-      what: 'O app que guia as equipes de evento pelo dia, e o painel ao vivo em que o escritório acompanha tudo. Mais na seção 03.',
+      what: 'O app que guia as equipes de evento pelo dia, e o painel ao vivo em que o escritório acompanha tudo. Mais acima, na seção dele.',
     },
     {
       client: 'Clínicas e especialistas',

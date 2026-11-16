@@ -10,6 +10,10 @@ type FilmData = {
   meta?: { origin?: string; dest?: string; beyond?: string; direct?: number; found?: number; currency?: string };
 };
 
+// the film's height can change once it knows whether it scrubs or sits still;
+// a resize makes the scroll-driven reveals below it recompute their positions
+const relayout = () => requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+
 export function startFilm(root: HTMLElement, reduced: boolean) {
   const base = root.dataset.film!.replace(/\/?$/, '/');
   const canvas = root.querySelector<HTMLCanvasElement>('canvas')!;
@@ -35,10 +39,15 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
         found: money(m.found),
         saving: m.direct != null && m.found != null ? '−' + money(m.direct - m.found) : '',
       };
-      for (const [id, el] of labels) {
-        const b = el.querySelector('b');
-        if (b) b.textContent = text[id] ?? '';
-        if (!text[id]) labels.delete(id), el.remove();
+      // meta-driven labels (codes, prices) get their value; a meta label with no
+      // value is dropped. Other films' labels are plain captions, left as they are.
+      if (d.meta) {
+        for (const [id, el] of labels) {
+          if (!(id in text)) continue;
+          const b = el.querySelector('b');
+          if (b) b.textContent = text[id];
+          if (!text[id]) labels.delete(id), el.remove();
+        }
       }
       canvas.width = d.w;
       canvas.height = d.h;
@@ -95,9 +104,36 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
       };
       new IntersectionObserver((es) => es[0].isIntersecting && load(), { rootMargin: '600px' }).observe(root);
 
+      // compact films play on their own while in view (6 s through, 3 s hold)
+      if (root.dataset.filmMode === 'loop' && !reduced) {
+        let playing = false;
+        let t0 = 0;
+        const RUN = 6000, HOLD = 3000;
+        const tick = (now: number) => {
+          if (!playing) return;
+          const t = (now - t0) % (RUN + HOLD);
+          want = Math.min(N - 1, Math.round((t / RUN) * (N - 1)));
+          if (bar) bar.style.transform = `scaleX(${want / (N - 1)})`;
+          draw();
+          requestAnimationFrame(tick);
+        };
+        new IntersectionObserver(
+          (es) => {
+            const on = es[0].isIntersecting;
+            if (on && !playing) {
+              playing = true;
+              t0 = performance.now() - (want / (N - 1)) * RUN;
+              requestAnimationFrame(tick);
+            } else if (!on) playing = false;
+          },
+          { threshold: 0.35 },
+        ).observe(root);
+        return;
+      }
       if (reduced) {
         root.classList.add('static');
         steps.forEach((s) => s.classList.add('on'));
+        relayout();
         return;
       }
       let raf = 0;
@@ -118,5 +154,8 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
       addEventListener('resize', onScroll);
       onScroll();
     })
-    .catch(() => root.classList.add('static'));
+    .catch(() => {
+      root.classList.add('static');
+      relayout();
+    });
 }

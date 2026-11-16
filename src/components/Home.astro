@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Handwriting from '../components/Handwriting.astro';
-import ChiefOfStaff from '../components/ChiefOfStaff.astro';
 import Hero from '../components/Hero.astro';
 import MedAlvo from '../components/MedAlvo.astro';
 import Imperio from '../components/Imperio.astro';
@@ -12,14 +11,21 @@ import '../styles/home.css';
 import '../styles/night.css';
 import { getSite } from '../data';
 import { ui, type Lang } from '../i18n/ui';
+import { day } from '../data/day';
+import { existsSync } from 'node:fs';
+import '@fontsource-variable/libre-franklin';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/day.css';
 
 interface Props {
   lang: Lang;
-  /** 'day' renders the light identity (private preview for now) */
-  look?: 'night' | 'day';
 }
-const { lang, look = 'night' } = Astro.props;
+const { lang } = Astro.props;
 const t = ui[lang];
+const d = day[lang];
+// a film shows only once its frames have been rendered (3d/film_*.py)
+const hasFilm = (id: string) => existsSync(`public/film/${id}/film.json`);
 const {
   person,
   impact,
@@ -66,32 +72,30 @@ const arrowUp = `<svg class="arrow" viewBox="0 0 16 16" fill="none" aria-hidden=
 const pct = (v: number, total: number) => `${((v / total) * 100).toFixed(3)}%`;
 const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {});
 ---
-
-<Base lang={lang} title={t.title} description={t.description} theme={look} noindex={look === 'day'} translated={look !== 'day'}>
+<Base lang={lang} title={t.title} description={t.description} theme="day">
   <a class="skip" href="#main">{t.skip}</a>
   <Nav
     lang={lang}
     links={[
-      { href: '#chief', label: t.nav.chief },
+      { href: '#hexagon', label: d.nav.hexagon },
+      { href: '#log', label: d.nav.journey },
       { href: '#medalvo', label: 'MedAlvo' },
       { href: '#imperio', label: 'Império' },
-      { href: '#work', label: t.nav.work },
-      { href: '#log', label: t.nav.journey },
-      { href: '#honors', label: t.nav.medals },
+      { href: '#work', label: d.nav.work },
+      { href: '#honors', label: d.nav.education },
     ]}
     cta={{ href: '#contact', label: t.nav.contact }}
   />
 
   <main id="main">
-    <Hero lang={lang} />
+    <Hero lang={lang} cta={{ href: '#hexagon', label: d.heroCta }} />
 
-    <!-- impact -->
+    <!-- impact: professional proof first -->
     <section class="wrap impact" aria-label={t.highlights} data-reveal>
       {
-        impact.map((n) => (
-          <div class:list={['impact-cell', { accent: n.accent, 'has-logo': n.logo }]}>
-            {n.logo && <img class="impact-logo" src={n.logo} alt="ITA" width="124" height="47" loading="lazy" />}
-            <b {...(n.count ? { 'data-count': n.count, 'data-suffix': n.suffix } : {})}>{n.value}</b>
+        d.impact.map((n) => (
+          <div class="impact-cell">
+            <b>{n.value}</b>
             <span class="what">{n.label}</span>
             <span class="detail">{n.detail}</span>
           </div>
@@ -99,23 +103,186 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
       }
     </section>
 
-    <ChiefOfStaff lang={lang} />
-    <MedAlvo lang={lang} n="02" />
-    <Imperio lang={lang} n="03" />
+    <!-- 01 Hexagon -->
+    <section class="block wrap" id="hexagon" aria-labelledby="hexagon-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>01</i><span>{d.hexagon.kicker}</span></div>
+          <h2 id="hexagon-title" data-split-lines set:html={d.hexagon.title} />
+        </div>
+        <p>{d.hexagon.lead}</p>
+      </div>
+      {hasFilm('hexagon') && <Film lang={lang} id="hexagon" />}
+      <div class="hex-foot" data-reveal>
+        <div>
+          <h3 class="mono sub-head">{d.hexagon.howHead}</h3>
+          <div class="how-cols">
+            <p set:html={t.how1} />
+            <p set:html={t.how2} />
+          </div>
+        </div>
+        <a class="btn btn-sm btn-ghost" href={d.hexagon.link.href} target="_blank" rel="noopener">{d.hexagon.link.label} <Fragment set:html={arrowUp} /></a>
+      </div>
+    </section>
 
-    <!-- selected work -->
+    <!-- 02 journey -->
+    <section class="block wrap" id="log" aria-labelledby="log-title">
+      <div class="sec-head" data-reveal>
+        <div>
+          <div class="mono"><i>02</i><span>{d.journey.kicker}</span></div>
+          <h2 id="log-title" set:html={d.journey.title} />
+        </div>
+        <p>{d.journey.lead}</p>
+      </div>
+
+      <figure class="figure" data-reveal aria-label={t.trajectoryLabel}>
+        <div class="plot">
+          <div class="plot-inner">
+            <svg viewBox={`0 0 ${W} ${H}`} role="presentation">
+              <path class="path" d={pathD} pathLength="1" />
+              <path class="path-next" d={nextD} style="--d:1" />
+              {
+                waypoints.map((w) => (
+                  <circle class:list={['dot', { 'now-dot': w.last }]} cx={w.x} cy={w.y} r={w.last ? 6 : 5} style={`--d:${w.t}`} />
+                ))
+              }
+            </svg>
+            {
+              waypoints.map((w) => (
+                <div
+                  class:list={['wp', { right: w.last, 'now-wp': w.last, keep: w.first || w.last }]}
+                  style={`left:${pct(w.x, W)};top:${pct(w.y, H)};--d:${w.t}`}
+                >
+                  <span class="mono">{w.year}</span>
+                  <span>{w.label}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <figcaption class="fig-caption mono">
+          <span>{t.fig1}</span>
+          <span>{t.climbing}</span>
+        </figcaption>
+      </figure>
+
+      <div class="log">
+        {
+          jobs.slice(1).map((j) => (
+            <article class="entry" data-reveal>
+              <span class="dates mono">{j.dates}</span>
+              <div class="entry-main">
+                <h3 class="co">
+                  {j.company}
+                  <small>{j.role}</small>
+                </h3>
+                <p>{j.summary}</p>
+                <ul>
+                  {j.bullets.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              </div>
+              <span class="place">{j.place}</span>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="log-more">
+        <div data-reveal>
+          <h3 class="mono sub-head">{t.earlierHead}</h3>
+          <ul class="mini">
+            {
+              earlier.map((e) => (
+                <li>
+                  <span class="dates mono">{e.dates}</span>
+                  <span class="who">
+                    <b>{e.company}</b> {e.role}
+                  </span>
+                  <span class="note">{e.note}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div data-reveal>
+          <h3 class="mono sub-head">{t.buildingHead}</h3>
+          <ul class="mini">
+            {
+              building.map((e) => (
+                <li>
+                  <span class="dates mono">{e.dates}</span>
+                  <span class="who">
+                    <b>{e.name}</b> {e.role}
+                  </span>
+                  <span class="note">{e.note}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <MedAlvo lang={lang} n="03" />
+    <Imperio lang={lang} n="04" />
+
+    <!-- Ápice built Império -->
+    <section class="wrap apice-sec" aria-label="Ápice">
+      <h3 class="mono sub-head" data-reveal>{d.apiceHead}</h3>
+      <!-- Ápice -->
+      <article class="apice" data-reveal>
+        <div class="apice-left">
+        <div class="apice-head">
+          <div class="feature-meta mono">
+            <span>{apice.kind}</span>
+            <span>{apice.year}</span>
+          </div>
+          <h3>{apice.name}</h3>
+          <p>{apice.blurb}</p>
+          <a class="btn btn-sm btn-primary" href={apice.href} target="_blank" rel="noopener">{t.seeApice} <Fragment set:html={arrow} /></a>
+        </div>
+        <ul class="apice-work">
+          {
+            apice.work.map((w) => (
+              <li>
+                <span class="mono">{w.client}</span>
+                <h4>{w.name}</h4>
+                <p>{w.what}</p>
+              </li>
+            ))
+          }
+        </ul>
+        </div>
+        <div class="apice-media">
+          <div class="browser">
+            <div class="browser-bar" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+              <span>software-house-six.vercel.app</span>
+            </div>
+            <video data-inview muted loop playsinline preload="metadata" poster="/media/apice-poster.jpg" aria-label={t.apiceVideo}>
+              <source src="/media/apice.webm" type="video/webm" />
+              <source src="/media/apice.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- 05 side projects -->
     <section class="block wrap" id="work" aria-labelledby="work-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>04</i><span>{t.workKicker}</span></div>
-          <h2 id="work-title" set:html={t.workTitle} />
+          <div class="mono"><i>05</i><span>{d.work.kicker}</span></div>
+          <h2 id="work-title" set:html={d.work.title} />
         </div>
-        <p>{t.workLead}</p>
+        <p>{d.work.lead}</p>
       </div>
 
-      {
-        featured.filter((p) => p.slug !== 'medalvo').map((p) => (
-          <>
+      {(() => { const p = featured.find((x) => x.slug === 'curo')!; return (
           <article class:list={['feature', p.slug]} data-reveal>
             <div class="feature-body">
               <div class="feature-meta mono">
@@ -185,50 +352,111 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
               )}
             </div>
           </article>
-          {look === 'day' && p.slug === 'flights' && <Film lang={lang} id="flights" />}
-          </>
-        ))
-      }
+); })()}
 
-      <!-- Ápice -->
-      <article class="apice" data-reveal>
-        <div class="apice-left">
-        <div class="apice-head">
-          <div class="feature-meta mono">
-            <span>{apice.kind}</span>
-            <span>{apice.year}</span>
-          </div>
-          <h3>{apice.name}</h3>
-          <p>{apice.blurb}</p>
-          <a class="btn btn-sm btn-primary" href={apice.href} target="_blank" rel="noopener">{t.seeApice} <Fragment set:html={arrow} /></a>
-        </div>
-        <ul class="apice-work">
-          {
-            apice.work.map((w) => (
-              <li>
-                <span class="mono">{w.client}</span>
-                <h4>{w.name}</h4>
-                <p>{w.what}</p>
-              </li>
-            ))
-          }
-        </ul>
-        </div>
-        <div class="apice-media">
-          <div class="browser">
-            <div class="browser-bar" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-              <span>software-house-six.vercel.app</span>
+      <div class="side-grid">
+        <article class="side-card" data-reveal>
+          <div class="side-media side-phone">
+            <div class="phone">
+              <span class="phone-notch" aria-hidden="true"></span>
+              <div class="phone-screen">
+                <video data-inview muted loop playsinline preload="metadata" poster="/media/cos-app-poster.jpg" aria-label={t.chief.videoLabel}>
+                  <source src="/media/cos-app.webm" type="video/webm" />
+                  <source src="/media/cos-app.mp4" type="video/mp4" />
+                </video>
+              </div>
             </div>
-            <video data-inview muted loop playsinline preload="metadata" poster="/media/apice-poster.jpg" aria-label={t.apiceVideo}>
-              <source src="/media/apice.webm" type="video/webm" />
-              <source src="/media/apice.mp4" type="video/mp4" />
-            </video>
           </div>
-        </div>
-      </article>
+          <div class="side-body">
+            <div class="feature-meta mono"><span>{d.chief.kind}</span><span>2026</span></div>
+            <h3>{d.chief.name}</h3>
+            <p>{d.chief.blurb}</p>
+          </div>
+        </article>
+        <article class="side-card" data-reveal>
+          <div class="side-media side-film">
+            <Film lang={lang} id="flights" compact />
+          </div>
+          <div class="side-body">
+            <div class="feature-meta mono"><span>{d.flights.kind}</span><span>2026</span></div>
+            <h3>{d.flights.name}</h3>
+            <p>{d.flights.blurb}</p>
+            <a class="btn btn-sm btn-primary" href="/flights/">{d.flights.cta} <Fragment set:html={arrow} /></a>
+          </div>
+        </article>
+      </div>
+
+      {(() => { const p = featured.find((x) => x.slug === 'penpad')!; return (
+          <article class:list={['feature', p.slug]} data-reveal>
+            <div class="feature-body">
+              <div class="feature-meta mono">
+                <span class:list={{ live: p.status }}>{p.kind}</span>
+                <span>{p.year}</span>
+              </div>
+              <h3>{p.name}</h3>
+              <p>{p.blurb}</p>
+              {p.points && (
+                <ul class="points">
+                  {p.points.map((pt) => (
+                    <li>{pt}</li>
+                  ))}
+                </ul>
+              )}
+              {p.stats && (
+                <div class="stats">
+                  {p.stats.map((s) => (
+                    <div>
+                      <b>{s.value}</b>
+                      <span>{s.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {p.links.length > 0 && (
+                <div class="links">
+                  {p.links.map((l, i) => (
+                    <a class:list={['btn btn-sm', i === 0 ? 'btn-primary' : 'btn-ghost']} href={l.href} {...ext(l.href)}>
+                      {l.label} <Fragment set:html={arrow} />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div class="feature-media">
+              {p.slug === 'penpad' && (
+                <div class="sheet-wrap">
+                  <Handwriting alt={t.penpadAlt} replay={t.writeAgain} />
+                </div>
+              )}
+              {p.slug === 'curo' && (
+                <div class="browser">
+                  <div class="browser-bar" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <span>felipefrf.com/curo/painel</span>
+                  </div>
+                  <video data-inview muted loop playsinline preload="metadata" poster="/media/curo-painel-poster.jpg" aria-label={t.curoVideo}>
+                    <source src="/media/curo-painel.webm" type="video/webm" />
+                    <source src="/media/curo-painel.mp4" type="video/mp4" />
+                  </video>
+                </div>
+              )}
+              {p.slug === 'flights' && (
+                <a class="browser flights-shot" href="/flights/" aria-label={t.routeAria}>
+                  <div class="browser-bar" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                    <span>felipefrf.com/flights</span>
+                  </div>
+                  <img src="/img/flights-demo.webp" width="1000" height="844" loading="lazy" decoding="async" alt={t.routeAria} />
+                </a>
+              )}
+            </div>
+          </article>
+); })()}
 
       <ul class="index" data-reveal>
         {
@@ -249,114 +477,35 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
       </div>
     </section>
 
-    <!-- journey -->
-    <section class="block wrap" id="log" aria-labelledby="log-title">
+    <!-- 06 education & olympiads -->
+    <section class="block wrap" id="honors" aria-labelledby="honors-title">
       <div class="sec-head" data-reveal>
         <div>
-          <div class="mono"><i>05</i><span>{t.logKicker}</span></div>
-          <h2 id="log-title" set:html={t.logTitle} />
+          <div class="mono"><i>06</i><span>{d.education.kicker}</span></div>
+          <h2 id="honors-title" set:html={d.education.title} />
         </div>
-        <p>{t.logLead}</p>
+        <p>{d.education.lead}</p>
       </div>
 
-      <figure class="figure" data-reveal aria-label={t.trajectoryLabel}>
-        <div class="plot">
-          <div class="plot-inner">
-            <svg viewBox={`0 0 ${W} ${H}`} role="presentation">
-              <path class="path" d={pathD} pathLength="1" />
-              <path class="path-next" d={nextD} style="--d:1" />
-              {
-                waypoints.map((w) => (
-                  <circle class:list={['dot', { 'now-dot': w.last }]} cx={w.x} cy={w.y} r={w.last ? 6 : 5} style={`--d:${w.t}`} />
-                ))
-              }
-            </svg>
+      <div class="honor-row">
+        <div class="school" data-reveal>
+          <img class="school-logo" src={education.logo} alt={t.itaAlt} width="496" height="188" loading="lazy" />
+          <div class="school-copy">
+            <span class="mono">{t.education} · {education.dates}</span>
+            <h3>{education.school}</h3>
+            <p>{education.degree}. {education.note}</p>
+          </div>
+          <div class="school-entry">
             {
-              waypoints.map((w) => (
-                <div
-                  class:list={['wp', { right: w.last, 'now-wp': w.last, keep: w.first || w.last }]}
-                  style={`left:${pct(w.x, W)};top:${pct(w.y, H)};--d:${w.t}`}
-                >
-                  <span class="mono">{w.year}</span>
-                  <span>{w.label}</span>
+              education.entry.map((e) => (
+                <div>
+                  <b>{e.value}</b>
+                  <span>{e.label}</span>
                 </div>
               ))
             }
           </div>
         </div>
-        <figcaption class="fig-caption mono">
-          <span>{t.fig1}</span>
-          <span>{t.climbing}</span>
-        </figcaption>
-      </figure>
-
-      <div class="log">
-        {
-          jobs.map((j) => (
-            <article class="entry" data-reveal>
-              <span class="dates mono">{j.dates}</span>
-              <div class="entry-main">
-                <h3 class="co">
-                  {j.company}
-                  <small>{j.role}</small>
-                </h3>
-                <p>{j.summary}</p>
-                <ul>
-                  {j.bullets.map((b) => (
-                    <li>{b}</li>
-                  ))}
-                </ul>
-              </div>
-              <span class="place">{j.place}</span>
-            </article>
-          ))
-        }
-      </div>
-
-      <div class="log-more">
-        <div data-reveal>
-          <h3 class="mono sub-head">{t.earlierHead}</h3>
-          <ul class="mini">
-            {
-              earlier.map((e) => (
-                <li>
-                  <span class="dates mono">{e.dates}</span>
-                  <span class="who">
-                    <b>{e.company}</b> {e.role}
-                  </span>
-                  <span class="note">{e.note}</span>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <div data-reveal>
-          <h3 class="mono sub-head">{t.buildingHead}</h3>
-          <ul class="mini">
-            {
-              building.map((e) => (
-                <li>
-                  <span class="dates mono">{e.dates}</span>
-                  <span class="who">
-                    <b>{e.name}</b> {e.role}
-                  </span>
-                  <span class="note">{e.note}</span>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- medals -->
-    <section class="block wrap" id="honors" aria-labelledby="honors-title">
-      <div class="sec-head" data-reveal>
-        <div>
-          <div class="mono"><i>06</i><span>{t.honorsKicker}</span></div>
-          <h2 id="honors-title" set:html={t.honorsTitle} />
-        </div>
-        <p>{t.honorsLead}</p>
       </div>
 
       <div class="medals">
@@ -416,6 +565,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
         </div>
       </div>
 
+      
       <div class="receipts">
         <figure class="receipt cert" data-reveal>
           <div class="paper">
@@ -448,6 +598,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
         </figure>
       </div>
 
+      
       <h3 class="mono sub-head gallery-head" data-reveal>{t.recognition}</h3>
       <div class="gallery">
         {
@@ -466,42 +617,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
         }
       </div>
 
-      <div class="honor-row">
-        <div class="school" data-reveal>
-          <img class="school-logo" src={education.logo} alt={t.itaAlt} width="496" height="188" loading="lazy" />
-          <div class="school-copy">
-            <span class="mono">{t.education} · {education.dates}</span>
-            <h3>{education.school}</h3>
-            <p>{education.degree}. {education.note}</p>
-          </div>
-          <div class="school-entry">
-            {
-              education.entry.map((e) => (
-                <div>
-                  <b>{e.value}</b>
-                  <span>{e.label}</span>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- how I work -->
-    <section class="block wrap" id="how" aria-labelledby="how-title">
-      <div class="sec-head" data-reveal>
-        <div>
-          <div class="mono"><i>07</i><span>{t.howKicker}</span></div>
-          <h2 id="how-title" set:html={t.howTitle} />
-        </div>
-      </div>
-
-      <div class="how-cols" data-reveal>
-        <p set:html={t.how1} />
-        <p set:html={t.how2} />
-      </div>
-    </section>
+          </section>
 
     <!-- contact -->
     <section class="contact wrap" id="contact" aria-labelledby="contact-title">
@@ -519,32 +635,4 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
   <script>
     import '../scripts/night.ts';
   </script>
-  {
-    look === 'day' && (
-      <div class="look-switch" data-look-switch>
-        <span class="mono">Fonte</span>
-        <a href="?t=franklin" data-t="franklin">Franklin</a>
-        <a href="?t=plex" data-t="plex">Plex</a>
-        <a href="?t=host" data-t="host">Host</a>
-        <span class="mono">Cor</span>
-        <a href="?a=orange" data-a="orange" aria-label="Laranja"><i style="background:#ff4f00" /></a>
-        <a href="?a=green" data-a="green" aria-label="Verde"><i style="background:#0b7a4b" /></a>
-        <a href="?a=blue" data-a="blue" aria-label="Azul"><i style="background:#1f45d6" /></a>
-        <a href="?a=ink" data-a="ink" aria-label="Sem cor"><i style="background:#0e0f11" /></a>
-        <span class="mono">Língua</span>
-        <a href={lang === 'pt' ? '../' : 'pt/'} data-keep>{lang === 'pt' ? 'EN' : 'PT'}</a>
-      </div>
-      <script is:inline>
-        (function () {
-          var q = new URLSearchParams(location.search), d = document.documentElement;
-          var get = function (k, def) { var v = q.get(k); try { if (v) localStorage.setItem('look-' + k, v); else v = localStorage.getItem('look-' + k); } catch (e) {} return v || def; };
-          d.dataset.type = get('t', 'franklin');
-          d.dataset.accent = get('a', 'orange');
-          document.querySelectorAll('[data-look-switch] a').forEach(function (a) {
-            if (a.dataset.t === d.dataset.type || a.dataset.a === d.dataset.accent) a.classList.add('on');
-          });
-        })();
-      </script>
-    )
-  }
 </Base>
