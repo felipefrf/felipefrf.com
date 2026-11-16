@@ -32,7 +32,10 @@ const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="
       <span class="line" data-split>{t.h1a}</span>
       <span class="line fade" data-split set:html={t.h1b} />
     </h1>
-    <p class="lead" data-hero-in style="--i:3" set:html={t.lead} />
+    <div class="hero-me" data-hero-in style="--i:3">
+      <img class="hero-face" src="/img/face.webp" width="480" height="480" alt="Felipe Ribeiro" fetchpriority="high" decoding="async" />
+      <p class="lead" set:html={t.lead} />
+    </div>
     <div class="ctas" data-hero-in style="--i:4">
       <a class="btn btn-primary magnetic" href={cta?.href ?? '#chief'}>{cta?.label ?? t.ctaSystems} <Fragment set:html={arrow} /></a>
       <a class="btn btn-ghost magnetic" href="#contact">{t.ctaContact}</a>

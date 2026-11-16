@@ -1348,3 +1348,32 @@ html.day .toolchips li {
     --max: min(1880px, 76vw);
   }
 }
+
+/* ---------- the face, in the first screen ---------- */
+.hero-me {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: 28px;
+  max-width: 640px;
+}
+.hero-me .lead {
+  margin-top: 0 !important;
+}
+.hero-face {
+  flex: none;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px var(--rule-2), 0 14px 30px -14px rgba(14, 15, 17, 0.45);
+}
+@media (max-width: 620px) {
+  .hero-me {
+    gap: 14px;
+  }
+  .hero-face {
+    width: 58px;
+    height: 58px;
+  }
+}
