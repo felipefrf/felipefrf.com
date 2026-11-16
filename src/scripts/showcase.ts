@@ -56,6 +56,15 @@ export function startShowcase(root: HTMLElement, reduced: boolean) {
     run();
   };
 
+  // posters download only when the player comes near, not on first paint
+  new IntersectionObserver(
+    (es, io) => {
+      if (!es[0].isIntersecting) return;
+      root.querySelectorAll<HTMLVideoElement>('video[data-poster]').forEach((v) => (v.poster = v.dataset.poster!));
+      io.disconnect();
+    },
+    { rootMargin: '700px 0px' },
+  ).observe(root);
   items.forEach((_, i) => media(i)?.addEventListener('ended', () => i === cur && go(cur + 1)));
   steps.forEach((s, i) => s.addEventListener('click', () => go(i)));
   new IntersectionObserver(

@@ -60,7 +60,7 @@ const tx = (c: Clip) => (lang === 'pt' ? { t: c.title_pt, b: c.body_pt } : { t: 
             c.type === 'image' ? (
               <img src={`${base}${c.slug}.webp`} alt={tx(c).t} loading="lazy" decoding="async" width={c.w} height={c.h} />
             ) : (
-              <video muted playsinline preload="none" poster={`${base}${c.slug}.jpg`} aria-label={tx(c).t} data-sc-video>
+              <video muted playsinline preload="none" data-poster={`${base}${c.slug}.jpg`} aria-label={tx(c).t} data-sc-video width={c.w} height={c.h} style={c.w && c.h ? `aspect-ratio:${c.w}/${c.h}` : undefined}>
                 <source src={`${base}${c.slug}.webm`} type="video/webm" />
                 <source src={`${base}${c.slug}.mp4`} type="video/mp4" />
               </video>

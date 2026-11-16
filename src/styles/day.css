@@ -978,3 +978,9 @@ html.day .toolchips li {
   width: 100%;
   height: auto;
 }
+/* only the clip on show sets the stage's height (a tall phone clip hidden
+   behind a wide browser one would otherwise leave a blank band) */
+.sc-item:not(.on) {
+  position: absolute;
+  inset: 0;
+}
