@@ -8,9 +8,9 @@ export const day = {
     nav: { hexagon: 'Hexagon', journey: 'Journey', work: 'Side projects', education: 'Education' },
     heroCta: 'See the work',
     impact: [
-      { value: 'Hexagon', label: 'Founding engineer, building Milo', detail: 'San Francisco · since Sep 2026' },
       { value: '189,157', label: 'questions in MedAlvo, the prep company I run', detail: 'Profitable · web, Android, Claude and ChatGPT' },
       { value: '−95%', label: 'manual review of court notices at NG.CASH', detail: 'Production AI in a fintech, 2026' },
+      { value: '11 wk', label: 'from first meeting to Império’s crews using the system', detail: 'Client work through Ápice, 2026' },
       { value: '1st', label: 'overall, gold medal', detail: 'Iberoamerican Physics Olympiad 2020' },
     ],
     hexagon: {
@@ -77,9 +77,9 @@ export const day = {
     nav: { hexagon: 'Hexagon', journey: 'Trajetória', work: 'Projetos', education: 'Formação' },
     heroCta: 'Ver o trabalho',
     impact: [
-      { value: 'Hexagon', label: 'Founding engineer, construindo o Milo', detail: 'San Francisco · desde set 2026' },
-      { value: '189.157', label: 'questões no MedAlvo, a empresa de preparação que eu toco', detail: 'Lucrativa · web, Android, Claude e ChatGPT' },
+      { value: '189.157', label: 'questões no MedAlvo, a empresa de preparação que eu dirijo', detail: 'Lucrativa · web, Android, Claude e ChatGPT' },
       { value: '−95%', label: 'de revisão manual de intimações na NG.CASH', detail: 'IA em produção numa fintech, 2026' },
+      { value: '11 sem', label: 'da primeira reunião às equipes da Império usando o sistema', detail: 'Projeto para cliente pela Ápice, 2026' },
       { value: '1º', label: 'lugar geral, ouro', detail: 'Olimpíada Iberoamericana de Física 2020' },
     ],
     hexagon: {
@@ -92,17 +92,17 @@ export const day = {
     journey: {
       kicker: 'Antes da Hexagon',
       title: 'Onde aprendi <span class="serif">a entregar</span>',
-      lead: 'Uma fintech onde resposta errada custa dinheiro, uma credora na Bélgica, o LinkedIn em Nova York e três bancos antes disso.',
+      lead: 'Uma fintech onde resposta errada custa dinheiro, uma fintech de crédito na Bélgica, o LinkedIn em Nova York e três bancos antes disso.',
     },
     roles: {
-      'NG.CASH': { big: '−95%', label: 'de revisão manual de intimações', chips: ['0 vazamentos em 34 ataques', 'agente de dívidas 19% mais rápido', 'folha refeita'], line: 'IA em produção numa fintech, onde resposta errada custa dinheiro.' },
+      'NG.CASH': { big: '−95%', label: 'de revisão manual de intimações', chips: ['0 vazamentos em 34 ataques', 'agente de dívidas 19% mais rápido', 'folha de pagamento refeita'], line: 'IA em produção numa fintech, onde resposta errada custa dinheiro.' },
       Credix: { big: 'Ao vivo', label: 'decisões de crédito para compradores B2B', chips: ['risco de atraso', 'alerta de fraude', 'preço do vendedor'], line: 'Os modelos viraram o motor automático de decisão da credora.' },
       LinkedIn: { big: 'Pergunte', label: 'ao CRM, receba a previsão', chips: ['dados do Salesforce', 'vendas EUA e Canadá'], line: 'Um chatbot com LLM que substituiu previsões de receita feitas por analistas.' },
     },
     earlierHead: 'Antes disso',
     leadHead: 'Liderando',
     video: 'Ver o vídeo da feira de 2024',
-    feynman: 'Iniciativa Feynman · cofundador: de 0 a 81 voluntários em seis meses, 350+ alunos de escola pública na pandemia.',
+    feynman: 'Iniciativa Feynman · cofundador: de 0 a 81 voluntários em seis meses, 350+ alunos de escola pública atendidos na pandemia.',
     fair: {
       kicker: 'Presidente da Comissão de Estágios e Empregos do ITA · 2023–24',
       title: 'A maior feira de carreiras do interior do Brasil',
@@ -117,7 +117,7 @@ export const day = {
     },
     cos: {
       kicker: 'Pessoal · chief of staff de IA',
-      title: 'Um assistente que <span class="serif">toca o meu dia</span>',
+      title: 'Um assistente que <span class="serif">cuida do meu dia</span>',
       lead: 'Ele lê tudo o que chega para mim, faz o trabalho e só pede o meu ok. Fica melhor a cada correção.',
     },
     work: {

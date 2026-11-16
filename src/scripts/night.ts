@@ -159,9 +159,13 @@ const sections = navLinks.map((a) => document.querySelector<HTMLElement>(a.getAt
 const onScroll = () => {
   const max = document.documentElement.scrollHeight - innerHeight;
   bar.style.setProperty('--p', String(max > 0 ? scrollY / max : 0));
+  // the link is active only while its own section is under the reading line
+  // (sections without a link, like the chief of staff or contact, clear it)
   let cur = -1;
+  const line = innerHeight * 0.35;
   sections.forEach((s, i) => {
-    if (s.getBoundingClientRect().top < innerHeight * 0.35) cur = i;
+    const r = s.getBoundingClientRect();
+    if (r.top < line && r.bottom > line) cur = i;
   });
   navLinks.forEach((a, i) => a.classList.toggle('active', i === cur));
 };

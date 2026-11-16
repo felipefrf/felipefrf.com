@@ -6,7 +6,7 @@
     "h": 900,
     "title_en": "Every answer checked against the official key",
     "title_pt": "Cada resposta conferida com o gabarito oficial",
-    "body_en": "A real question from USP-SP 2025, with the X-ray from the exam. Pick an answer and you see the exam board's key, why the right one is right and why yours isn't.",
+    "body_en": "A real question from USP-SP 2025, with the X-ray from the exam. Pick an answer and you see the exam board’s key, why the right one is right and why yours isn’t.",
     "body_pt": "Uma questão real da USP-SP 2025, com o raio X da prova. Marque e veja o gabarito da banca, por que a certa está certa e por que a sua não está."
   },
   {
@@ -14,10 +14,10 @@
     "device": "web",
     "w": 1440,
     "h": 900,
-    "title_en": "Where you'd score today",
+    "title_en": "Where you’d score today",
     "title_pt": "Onde você acertaria hoje",
-    "body_en": "Your expected score on the exam you're aiming at, area by area and specialty by specialty, weighted by what that exam asks most.",
-    "body_pt": "Seu acerto esperado na prova que você quer passar, por área e por especialidade, com o peso que essa prova dá a cada uma."
+    "body_en": "Your expected score on the exam you’re aiming at, area by area and specialty by specialty, weighted by what that exam asks most.",
+    "body_pt": "Seu acerto esperado na prova em que você quer passar, por área e por especialidade, com o peso que essa prova dá a cada uma."
   },
   {
     "slug": "plano",
@@ -56,7 +56,7 @@
     "h": 1784,
     "title_en": "The same study on the phone",
     "title_pt": "O mesmo estudo no celular",
-    "body_en": "The Android app opens on today's plan and your streak. Answer a question and the official key and its commented solution come up from the bottom.",
+    "body_en": "The Android app opens on today’s plan and your streak. Answer a question and the official key and its commented solution come up from the bottom.",
     "body_pt": "O app Android abre no plano do dia e na sua sequência. Responda e o gabarito oficial sobe com a resolução comentada."
   }
 ]

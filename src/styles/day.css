@@ -1377,3 +1377,227 @@ html.day .toolchips li {
     height: 58px;
   }
 }
+
+/* =====================================================================
+   Review pass: grid, spacing and detail fixes
+   ===================================================================== */
+
+/* rules and edges sit on the content column, not the gutter */
+html.day .impact,
+html.day footer.foot {
+  width: calc(100% - 2 * var(--gutter));
+  max-width: var(--max);
+  padding-left: 0;
+  padding-right: 0;
+}
+html.day .impact {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 640px) {
+  html.day .impact-cell:first-child {
+    grid-column: auto;
+    border-top: 1px solid var(--rule);
+  }
+  html.day .impact-cell:nth-child(-n + 2) {
+    border-top: 0;
+  }
+  html.day .impact-cell:nth-child(even) {
+    padding-left: 14px;
+    border-left: 1px solid var(--rule);
+  }
+}
+
+/* the nav reads cleanly over whatever scrolls under it */
+html.day .nav-pill {
+  background: rgba(252, 252, 250, 0.82) !important;
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+}
+
+/* the hero: face right away, headline never under the globe */
+html.day .hero-me,
+html.day .hero-me .hero-face {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+.hero-face {
+  width: 96px;
+  height: 96px;
+}
+@media (min-width: 900px) {
+  html.day .orbit-hero h1 {
+    max-width: min(900px, 58vw);
+  }
+}
+
+/* How I work: one rule the full width, link inline */
+.hex-foot {
+  display: block;
+}
+.hex-foot .sub-head {
+  margin: 0 0 14px;
+}
+
+/* line breaks that don't leave one word alone */
+html.day h1,
+html.day h2,
+html.day h3 {
+  text-wrap: balance;
+}
+html.day p,
+html.day li,
+html.day dd {
+  text-wrap: pretty;
+}
+
+/* showcases: list and device start on the same line */
+.showcase {
+  align-items: start;
+}
+.sc-stage {
+  min-height: 0;
+}
+
+/* side projects: both media areas the same height, so the text lines up */
+.side-media {
+  height: 380px;
+  min-height: 0;
+  overflow: hidden;
+}
+.side-phone {
+  height: 380px;
+}
+@media (max-width: 860px) {
+  .side-media,
+  .side-phone {
+    height: 300px;
+  }
+}
+
+/* the Curo card: copy and buttons stay together */
+html.day .feature-body {
+  justify-content: flex-start !important;
+}
+html.day .feature-body .links {
+  margin-top: 22px !important;
+}
+
+/* education: ITA label visible, one gap down the stack */
+html.day .school .mono {
+  color: var(--ink-3) !important;
+}
+html.day .honor-row {
+  margin: 0 0 20px;
+}
+html.day .receipts {
+  margin-top: 20px;
+  align-items: end;
+}
+html.day .gallery-head {
+  margin-top: 40px;
+}
+
+/* recognition titles: the site's heading style, two lines at most */
+html.day .gallery .honor-mini b {
+  font-family: var(--sans);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.3em;
+}
+
+/* 50+ card: no forced height on phones */
+@media (max-width: 860px) {
+  html.day .medal-card.bulk {
+    min-height: 0 !important;
+  }
+}
+
+/* side-project list: names on the column edge */
+html.day .index li a {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* MedAlvo tool chips are labels, not buttons */
+html.day .toolchips li {
+  background: transparent;
+  border-style: dashed;
+  cursor: default;
+}
+
+/* the Claude chat is as tall as its conversation */
+html.day .stage.single .pane-visual {
+  align-items: start;
+}
+html.day .mcp-chat {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* role cards: words get a calmer headline than numbers */
+.role-big b.word {
+  font-size: clamp(24px, 2.1vw, 30px);
+}
+
+/* internships: a fixed logo column, one line per role */
+.earlier {
+  display: grid;
+  grid-template-columns: auto repeat(3, minmax(0, 1fr));
+  gap: 12px 24px;
+}
+.earlier-item {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  align-items: center;
+}
+.earlier-item img {
+  justify-self: start;
+}
+@media (max-width: 900px) {
+  .earlier {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* the fair video: a real frame, a small play button */
+.fair-video .play {
+  left: 16px;
+  top: auto;
+  bottom: 16px;
+  margin: 0;
+  width: 48px;
+  height: 48px;
+}
+.fair-video .play i {
+  border-left-width: 12px;
+  border-top-width: 8px;
+  border-bottom-width: 8px;
+}
+.fair-video .cap {
+  left: 74px;
+  bottom: 28px;
+}
+
+/* the hero on phones: telemetry header on one line, satellite label inside */
+@media (max-width: 620px) {
+  html.day .hud-head .dim {
+    display: none;
+  }
+  html.day .sat-label {
+    max-width: calc(100vw - 32px);
+  }
+}
+@media (max-height: 760px) and (min-width: 900px) {
+  html.day .hud {
+    transform: scale(0.88);
+    transform-origin: 100% 100%;
+  }
+}

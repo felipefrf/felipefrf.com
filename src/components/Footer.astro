@@ -13,8 +13,6 @@ const t = ui[lang];
 <footer class="foot wrap mono">
   <span>© {new Date().getFullYear()} {person.name} · {person.location}</span>
   <span>
-    <a href={localePath(lang, '/')}>{t.footer.home}</a> · <a href="/penpad/">penpad</a> · <a href="/curo/">Curo</a> ·
-    <a href="/llms.txt">llms.txt</a> ·
-    <a href="https://github.com/felipefrf/felipefrf.com" target="_blank" rel="noopener">{t.footer.source}</a>
+    <a href={localePath(lang, '/')}>{t.footer.home}</a> · <a href="/penpad/">penpad</a> · <a href={lang === 'pt' ? '/curo/' : '/curo/?lang=en'}>Curo</a> · <a href="/llms.txt">llms.txt</a> · <a href="https://github.com/felipefrf/felipefrf.com" target="_blank" rel="noopener">{t.footer.source}</a>
   </span>
 </footer>

@@ -109,14 +109,11 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
       </div>
       {hasFilm('hexagon') && <Film lang={lang} id="hexagon" />}
       <div class="hex-foot" data-reveal>
-        <div>
-          <h3 class="mono sub-head">{d.hexagon.howHead}</h3>
-          <div class="how-cols">
-            <p set:html={t.how1} />
-            <p set:html={t.how2} />
-          </div>
+        <h3 class="mono sub-head">{d.hexagon.howHead}</h3>
+        <div class="how-cols">
+          <p set:html={t.how1} />
+          <p><Fragment set:html={t.how2} /> <a class="textlink" href={d.hexagon.link.href} target="_blank" rel="noopener">{d.hexagon.link.label}&nbsp;↗</a></p>
         </div>
-        <a class="btn btn-sm btn-ghost" href={d.hexagon.link.href} target="_blank" rel="noopener">{d.hexagon.link.label} <Fragment set:html={arrowUp} /></a>
       </div>
     </section>
 
@@ -170,7 +167,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                     </svg>
                   )}
                 </div>
-                <p class="role-big"><b>{r.big}</b> <span>{r.label}</span></p>
+                <p class="role-big"><b class:list={{ word: !/^[−+\-\d]/.test(r.big) }}>{r.big}</b> <span>{r.label}</span></p>
                 <ul class="chips">{r.chips.map((c) => <li>{c}</li>)}</ul>
                 <footer class="mono">{j.dates} · {j.place}</footer>
               </article>

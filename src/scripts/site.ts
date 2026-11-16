@@ -254,11 +254,17 @@ document.querySelectorAll<HTMLElement>('[data-medals]').forEach((card) => {
 
 // ---------- language choice sticks ----------
 document.querySelectorAll<HTMLAnchorElement>('[data-set-lang]').forEach((a) => {
-  a.addEventListener('click', () => {
+  a.addEventListener('click', (e) => {
     try {
       localStorage.setItem('lang', a.dataset.setLang ?? 'en');
     } catch {
       /* storage blocked: the link still works */
+    }
+    // keep the reader's place: the section they're in (same ids in both languages)
+    const here = [...document.querySelectorAll<HTMLElement>('main section[id]')].filter((s) => s.getBoundingClientRect().top < innerHeight * 0.35).pop();
+    if (here && scrollY > 200) {
+      e.preventDefault();
+      location.href = a.href.split('#')[0] + '#' + here.id;
     }
   });
 });

@@ -89,9 +89,7 @@ const jsonLd = pageJsonLd ?? personLd;
     {
       translated && (
         <script is:inline data-alt={altPath} data-lang={lang}>
-          // Language routing: a saved choice wins; otherwise a Portuguese browser goes to
-          // /pt/, and, when the site sits behind the Cloudflare proxy, so do visitors from
-          // Portuguese-speaking countries (read from /cdn-cgi/trace).
+          // Language routing: a saved choice wins; otherwise a Portuguese browser goes to /pt/.
           (function () {
             var s = document.currentScript, alt = s.dataset.alt, here = s.dataset.lang;
             var go = function (l) { if (l !== here) location.replace(alt + location.search + location.hash); };
@@ -100,15 +98,6 @@ const jsonLd = pageJsonLd ?? personLd;
             if (saved === 'en' || saved === 'pt') return go(saved);
             var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
             if (nav.indexOf('pt') === 0) return go('pt');
-            if (here === 'pt') return;
-            try { if (sessionStorage.getItem('geo')) return; sessionStorage.setItem('geo', '1'); } catch (e) {}
-            fetch('/cdn-cgi/trace', { cache: 'no-store' })
-              .then(function (r) { return r.ok ? r.text() : ''; })
-              .then(function (t) {
-                var m = /loc=([A-Z]{2})/.exec(t);
-                if (m && /^(BR|PT|AO|MZ|CV|GW|ST|TL)$/.test(m[1])) go('pt');
-              })
-              .catch(function () {});
           })();
         </script>
       )

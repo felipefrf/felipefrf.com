@@ -106,7 +106,7 @@ const en = {
     cta: 'medalvo.com.br',
   },
   imperio: {
-    kicker: 'Client work · Ápice',
+    kicker: 'Client work · built by Ápice, my software house',
     title: 'The system that runs <span class="serif">an event company</span>',
     lead: 'Império’s event crews ran on memory and WhatsApp. Now one app walks each crew through the day while the office watches every event live.',
     walkTitle: 'A crew leader’s day, in the app',
@@ -140,13 +140,13 @@ const pt: typeof en = {
     satLabel: 'Matsumoto-2',
     satSub: 'SAR banda C · SSO 620 km',
     caption:
-      'O satélite radar que meu time do ITA projetou (melhor projeto, II SPOCS 2026), modelado no Blender e voando um integrador orbital de verdade no seu navegador. O ponto laranja é o ITA. Arraste para girar o planeta.',
-    scroll: 'Role',
+      'O satélite radar que meu time do ITA projetou (melhor projeto, II SPOCS 2026), modelado no Blender e voando com física orbital de verdade, no seu navegador. O ponto laranja é o ITA. Arraste para girar o planeta.',
+    scroll: 'Rolar',
   },
   medalvo: {
     kicker: 'Fundador · MedAlvo',
-    title: 'Uma empresa de preparação <span class="serif">que se toca sozinha</span>',
-    lead: 'Minha empresa: preparação para as provas de residência médica, feita em cima das provas oficiais. Web, Android e dentro do Claude e do ChatGPT. Dá lucro.',
+    title: 'Uma empresa de preparação <span class="serif">que roda sozinha</span>',
+    lead: 'Minha empresa: preparação para as provas de residência médica, construída sobre as provas oficiais. Web, Android e dentro do Claude e do ChatGPT. Dá lucro.',
     stats: [
       { value: '189.157', count: 189157, label: 'questões de provas oficiais' },
       { value: '334', count: 334, label: 'instituições, 42 especialidades' },
@@ -232,8 +232,8 @@ const pt: typeof en = {
     cta: 'medalvo.com.br',
   },
   imperio: {
-    kicker: 'Projeto para cliente · Ápice',
-    title: 'O sistema que toca <span class="serif">uma empresa de eventos</span>',
+    kicker: 'Projeto para cliente · feito pela Ápice, minha software house',
+    title: 'O sistema que move <span class="serif">uma empresa de eventos</span>',
     lead: 'As equipes da Império trabalhavam de memória e pelo WhatsApp. Agora um app guia cada equipe pelo dia enquanto o escritório acompanha cada evento ao vivo.',
     walkTitle: 'O dia de um líder de equipe, no app',
     steps: STEPS_PT,
@@ -250,7 +250,7 @@ const pt: typeof en = {
       'Os pedidos vêm direto do sistema de locação que eles já usavam',
       'O pagamento do campo num lugar só: diárias, horas extras, hotel e refeições',
     ],
-    built: 'Feito pela Ápice em 11 semanas, da primeira reunião às equipes usando.',
+    built: 'Feito pela Ápice em 11 semanas, da primeira reunião às equipes em campo.',
     cta: 'sistema.imperioeventos.com',
     href: 'https://sistema.imperioeventos.com/imperio/logistica',
   },

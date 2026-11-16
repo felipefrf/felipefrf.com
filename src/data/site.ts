@@ -243,7 +243,7 @@ export const medals = [
     year: '2020',
     ring: 'OLIMPÍADA IBEROAMERICANA DE FÍSICA · 2020 · ',
     logo: '/img/olympiads/oibf.png',
-    note: 'Plus the special prize for the best solution to Problem 2.',
+    note: 'Also won the special prize for the best solution to Problem 2.',
   },
   {
     kind: 'silver' as const,
@@ -254,7 +254,7 @@ export const medals = [
     year: '2020',
     ring: 'NORDIC-BALTIC PHYSICS OLYMPIAD · 2020 · ',
     logo: '/img/olympiads/nbpho.png',
-    note: 'Plus the special prize for the best solution to Problem 1, in Brazil’s first year as a guest country.',
+    note: 'Also won the special prize for the best solution to Problem 1, in Brazil’s first year as a guest country.',
   },
 ];
 

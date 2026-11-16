@@ -48,7 +48,7 @@ export const featured: Project[] = [
     kind: 'Open source',
     year: '2026',
     blurb:
-      'Transforma anotações em Markdown + LaTeX em páginas manuscritas realistas para iPad, Goodnotes e reMarkable. Um modelo de escrita varia cada glifo, e uma trava de legibilidade garante que tudo continue legível. Veja ele escrevendo.',
+      'Transforma anotações em Markdown + LaTeX em páginas manuscritas realistas para iPad, Goodnotes e reMarkable. Um modelo de escrita varia cada glifo, e uma trava garante que o texto continue legível. Veja-o escrever.',
     points: [
       'Frações, integrais, raízes e vetores diagramados à mão',
       'Funciona offline e instala com pip; as mesmas notas sempre geram a mesma página',
@@ -62,10 +62,10 @@ export const featured: Project[] = [
   {
     slug: 'curo',
     name: 'Curo',
-    kind: 'Side project',
+    kind: 'Projeto paralelo',
     year: '2026',
     blurb:
-      'Atendimento ao paciente que anda sozinho pelo WhatsApp: a clínica descreve o processo, o agente monta a jornada e fala com médico, hospital e convênio. Feito com meu irmão Rafael (MIT); nos levou a uma entrevista na Y Combinator.',
+      'Atendimento ao paciente que funciona sozinho no WhatsApp: a clínica descreve o processo, o agente monta a jornada e fala com médico, hospital e convênio. Feito com meu irmão Rafael (MIT); nos levou a uma entrevista na Y Combinator.',
     points: [
       'A clínica descreve o processo com as próprias palavras e o agente monta a jornada de cuidado: etapas, o que depende do quê, prazos',
       'Mude a data de uma cirurgia e o plano inteiro se refaz: as etapas dependentes caem, o trabalho de desfazer abre, todos os prazos andam',
@@ -80,7 +80,7 @@ export const featured: Project[] = [
   {
     slug: 'flights',
     name: 'Flight Price Finder',
-    kind: 'Side project',
+    kind: 'Projeto paralelo',
     year: '2026',
     blurb:
       'Acha o jeito mais barato de ir de uma cidade a outra, incluindo tarifas hidden-city: uma passagem para um destino mais distante, com conexão justamente onde você quer descer. Toda busca mostra que buscou, porque a maioria não acha nada, e tudo bem.',
@@ -137,7 +137,7 @@ export const more: Project[] = [
   {
     slug: 'dual-subtitles',
     name: 'Dual Subtitles',
-    kind: 'Extensão Chrome',
+    kind: 'Extensão do Chrome',
     year: '2026',
     blurb: 'Legendas em dois idiomas, sincronizadas, no YouTube: uma para entender e outra para aprender.',
     stack: ['TypeScript', 'WXT', 'React'],
@@ -209,20 +209,20 @@ export const earlier = [
 
 export const building = [
   { name: 'Comissão de Estágios do ITA', role: 'Presidente', dates: '2023 — 2024', note: 'A maior feira de carreiras do interior do país, 1.800+ pessoas' },
-  { name: 'Iniciativa Feynman', role: 'Cofundador e Coordenador', dates: 'set 2019 — abr 2021', note: '0 → 81 voluntários em menos de 6 meses, 350+ alunos de escola pública na pandemia' },
+  { name: 'Iniciativa Feynman', role: 'Cofundador e Coordenador', dates: 'set 2019 — abr 2021', note: '0 → 81 voluntários em menos de 6 meses, 350+ alunos de escola pública atendidos na pandemia' },
 ];
 
 export const medals = [
   {
     kind: 'gold' as const,
     rank: '1º',
-    title: 'Medalha de ouro, 1º no geral',
+    title: 'Medalha de ouro, 1º lugar geral',
     event: 'Olimpíada Iberoamericana de Física',
     short: 'OIbF',
     year: '2020',
     ring: 'OLIMPÍADA IBEROAMERICANA DE FÍSICA · 2020 · ',
     logo: '/img/olympiads/oibf.png',
-    note: 'Mais o prêmio especial pela melhor solução do Problema 2.',
+    note: 'Também levou o prêmio especial pela melhor solução do Problema 2.',
   },
   {
     kind: 'silver' as const,
@@ -233,7 +233,7 @@ export const medals = [
     year: '2020',
     ring: 'NORDIC-BALTIC PHYSICS OLYMPIAD · 2020 · ',
     logo: '/img/olympiads/nbpho.png',
-    note: 'Mais o prêmio especial pela melhor solução do Problema 1, no primeiro ano do Brasil como país convidado.',
+    note: 'Também levou o prêmio especial pela melhor solução do Problema 1, no primeiro ano do Brasil como país convidado.',
   },
 ];
 
@@ -333,7 +333,7 @@ export const education = {
   school: 'Instituto Tecnológico de Aeronáutica (ITA)',
   degree: 'Engenharia Aeroespacial, minor em Ciência de Dados',
   dates: 'fev 2023 — dez 2027',
-  note: 'Mantido pela Força Aérea Brasileira desde 1950, e a escola de engenharia mais prestigiada do Brasil.',
+  note: 'Mantido pela Força Aérea Brasileira desde 1950; a escola de engenharia mais prestigiada do Brasil.',
   entry: [
     { value: 'Top 10%', label: 'da turma' },
     { value: 'CNPq', label: 'iniciação científica em machine learning, 2023–24' },
