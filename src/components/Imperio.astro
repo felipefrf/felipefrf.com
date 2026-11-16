@@ -1,8 +1,9 @@
 ---
-// Império Eventos: the field app, walked through one step at a time. A phone
-// shows each real screen (demo account) while the list beside it says what the
-// crew does there and why.
+// Império Eventos: the whole system, shown working. The office side (live map,
+// arrival forecast, EstoqueNOW orders, agenda, pay, margin) and the field side
+// (the bosses' alerts and the crew's day), recorded with demo data.
 import { ventures } from '../data/ventures';
+import Showcase from './Showcase.astro';
 import type { Lang } from '../i18n/ui';
 
 interface Props {
@@ -23,52 +24,11 @@ const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="
     <p>{v.lead}</p>
   </div>
 
-  <div class="imp-walk" data-walk data-reveal>
-    <div class="imp-walk-visual">
-      <div class="imp-glow" aria-hidden="true"></div>
-      <div class="android imp-walk-phone">
-        <div class="android-screen"><span class="imp-status mono" aria-hidden="true"><span>12:02</span><span>5G ▮</span></span>
-          {
-            v.steps.map((s, i) => (
-              <img src={s.src} alt={s.alt} width="780" height="1688" loading="lazy" decoding="async" class:list={{ on: i === 0 }} data-walk-img={i} />
-            ))
-          }
-        </div>
-      </div>
-    </div>
+  <h3 class="mono sub-head imp-sub" data-reveal>{lang === 'pt' ? 'O escritório' : 'The office'}</h3>
+  <Showcase lang={lang} dir="imperio/v2" url="sistema.imperioeventos.com" only={['office-today', 'office-live-map', 'office-live-tracking', 'office-estoquenow', 'office-agenda', 'office-payments', 'office-billing']} />
 
-    <div class="imp-walk-copy">
-      <p class="imp-walk-kicker mono">{v.walkTitle}</p>
-      <ol class="imp-walk-steps">
-        {
-          v.steps.map((s, i) => (
-            <li>
-              <button type="button" class:list={{ on: i === 0 }} data-walk-step={i} aria-pressed={i === 0 ? 'true' : 'false'}>
-                <span class="n mono">{String(i + 1).padStart(2, '0')}</span>
-                <span class="t">
-                  <b>{s.title}</b>
-                  <span class="d"><span>{s.body}</span></span>
-                </span>
-                <i class="bar" aria-hidden="true" />
-              </button>
-            </li>
-          ))
-        }
-      </ol>
-      <p class="imp-note mono">{v.note}</p>
-    </div>
-  </div>
-
-  <div class="imp-cols" data-reveal>
-    <div>
-      <h3>{v.crewTitle}</h3>
-      <ul class="points">{v.crew.map((p) => <li>{p}</li>)}</ul>
-    </div>
-    <div>
-      <h3>{v.officeTitle}</h3>
-      <ul class="points">{v.office.map((p) => <li>{p}</li>)}</ul>
-    </div>
-  </div>
+  <h3 class="mono sub-head imp-sub" data-reveal>{lang === 'pt' ? 'Em campo e no bolso do chefe' : 'In the field, and in the boss’s pocket'}</h3>
+  <Showcase lang={lang} dir="imperio/v2" flip only={['boss-alerts', 'boss-notify', 'crew-boarding', 'crew-trip', 'crew-checklist', 'crew-photos', 'crew-signature']} />
 
   <div class="v-foot" data-reveal>
     <span class="imp-built mono">{v.built}</span>

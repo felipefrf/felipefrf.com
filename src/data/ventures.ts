@@ -107,7 +107,7 @@ const en = {
   },
   imperio: {
     kicker: 'Client work · Ápice',
-    title: 'The app that runs <span class="serif">event logistics</span>',
+    title: 'The system that runs <span class="serif">an event company</span>',
     lead: 'Império’s event crews ran on memory and WhatsApp. Now one app walks each crew through the day while the office watches every event live.',
     walkTitle: 'A crew leader’s day, in the app',
     steps: STEPS_EN,
@@ -233,7 +233,7 @@ const pt: typeof en = {
   },
   imperio: {
     kicker: 'Projeto para cliente · Ápice',
-    title: 'O app que toca a <span class="serif">logística de eventos</span>',
+    title: 'O sistema que toca <span class="serif">uma empresa de eventos</span>',
     lead: 'As equipes da Império trabalhavam de memória e pelo WhatsApp. Agora um app guia cada equipe pelo dia enquanto o escritório acompanha cada evento ao vivo.',
     walkTitle: 'O dia de um líder de equipe, no app',
     steps: STEPS_PT,
