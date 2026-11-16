@@ -1,8 +1,9 @@
 ---
-// MedAlvo: numbers, then a stage with five views: the site (a recorded tour),
-// what's inside, how it picks the next question, studying inside Claude (an
-// animated run) and the Android app (a question you can answer).
+// MedAlvo: numbers, the real product at work (six recorded clips of a demo
+// student on the web and the phone), then studying inside Claude (an
+// animated run of the MedAlvo connector).
 import { ventures } from '../data/ventures';
+import Showcase from './Showcase.astro';
 import type { Lang } from '../i18n/ui';
 
 interface Props {
@@ -11,10 +12,7 @@ interface Props {
 }
 const { lang, n } = Astro.props;
 const m = ventures[lang].medalvo;
-const p = m.phone;
-const letters = ['A', 'B', 'C', 'D'];
 const arrow = `<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 ---
 
 <section class="block wrap venture medalvo-sec" id="medalvo" aria-labelledby="medalvo-title">
@@ -37,10 +35,13 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
     }
   </div>
 
-  <div class="stage" data-stage data-reveal>
+  <Showcase lang={lang} dir="medalvo/v2" url="medalvo.com.br" />
+
+  <h3 class="mono sub-head imp-sub" data-reveal>{lang === 'pt' ? 'Também dentro do Claude e do ChatGPT' : 'Also inside Claude and ChatGPT'}</h3>
+  <div class="stage single" data-stage data-reveal>
     <div class="stage-tabs" role="tablist" aria-label="MedAlvo">
       {
-        m.tabs.map((label, i) => (
+        [m.tabs[3]].map((label, i) => (
           <button role="tab" type="button" id={`ma-tab-${i}`} aria-controls={`ma-pane-${i}`} aria-selected={i === 0 ? 'true' : 'false'} data-stage-tab={i}>
             <span class="mono">0{i + 1}</span>
             {label}
@@ -51,69 +52,8 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
     </div>
 
     <div class="stage-body">
-      <!-- the site -->
-      <div class="pane active" role="tabpanel" id="ma-pane-0" aria-labelledby="ma-tab-0" data-pane="0">
-        <div class="pane-copy">
-          <h3>{m.web.title}</h3>
-          <p>{m.web.body}</p>
-          <ul class="points">{m.web.points.map((pt) => <li>{pt}</li>)}</ul>
-        </div>
-        <div class="pane-visual pane-visual-wide">
-          <div class="browser">
-            <div class="browser-bar" aria-hidden="true"><i /><i /><i /><span>medalvo.com.br</span></div>
-            <video data-inview muted loop playsinline preload="none" poster="/media/medalvo-poster.jpg" aria-label={m.web.videoLabel}>
-              <source src="/media/medalvo.webm" type="video/webm" />
-              <source src="/media/medalvo.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
-
-      <!-- what's inside -->
-      <div class="pane" role="tabpanel" id="ma-pane-1" aria-labelledby="ma-tab-1" data-pane="1" hidden>
-        <div class="pane-copy">
-          <h3>{m.features.title}</h3>
-          <p>{m.features.body}</p>
-        </div>
-        <div class="pane-visual">
-          <ul class="ma-features">
-            {m.features.items.map((f, i) => (
-              <li style={`--k:${i}`}>
-                <span class="mono">{String(i + 1).padStart(2, '0')}</span>
-                <b>{f.t}</b>
-                <p>{f.d}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <!-- how it picks -->
-      <div class="pane" role="tabpanel" id="ma-pane-2" aria-labelledby="ma-tab-2" data-pane="2" hidden>
-        <div class="pane-copy">
-          <h3>{m.engine.title}</h3>
-          <p>{m.engine.body}</p>
-          <dl class="engine-rows">
-            {m.engine.rows.map((r) => (
-              <div><dt>{r.k}</dt><dd>{r.v}</dd></div>
-            ))}
-          </dl>
-        </div>
-        <div class="pane-visual">
-          <div class="pipe">
-            <ol>
-              {m.engine.pipe.map((s, i) => (
-                <li style={`--k:${i}`}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{s}</li>
-              ))}
-            </ol>
-            <i class="pipe-packet" aria-hidden="true" />
-            <i class="pipe-packet two" aria-hidden="true" />
-            <p class="mono">{m.engine.pipeNote}</p>
-          </div>
-        </div>
-      </div>
       <!-- inside Claude -->
-      <div class="pane" role="tabpanel" id="ma-pane-3" aria-labelledby="ma-tab-3" data-pane="3" hidden>
+      <div class="pane active" role="tabpanel" id="ma-pane-0" aria-labelledby="ma-tab-0" data-pane="0">
         <div class="pane-copy">
           <h3>{m.claude.title}</h3>
           <p>{m.claude.body}</p>
@@ -139,70 +79,6 @@ const days = lang === 'pt' ? ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'] : ['M', 'T', 'W
         </div>
       </div>
 
-      <!-- the Android app -->
-      <div class="pane" role="tabpanel" id="ma-pane-4" aria-labelledby="ma-tab-4" data-pane="4" hidden>
-        <div class="pane-copy">
-          <h3>{m.app.title}</h3>
-          <p>{m.app.body}</p>
-          <ul class="points">{m.app.points.map((pt) => <li>{pt}</li>)}</ul>
-          <p class="pane-note mono">{m.app.note}</p>
-        </div>
-        <div class="pane-visual">
-          <div class="android" data-ma-phone>
-            <div class="android-screen ma-ui">
-              <div class="ma-status mono" aria-hidden="true"><span>9:41</span><span>▲ ▮</span></div>
-              <div class="ma-top">
-                <div>
-                  <span class="ma-kicker">{p.today}</span>
-                  <b class="ma-hello">{p.hello}</b>
-                </div>
-                <span class="ma-xp"><i>2</i><b data-ma-xp>1,960</b> {p.xp}</span>
-              </div>
-              <div class="ma-card ma-goal">
-                <svg class="ma-ring" viewBox="0 0 64 64" aria-hidden="true">
-                  <circle cx="32" cy="32" r="26" class="track" />
-                  <circle cx="32" cy="32" r="26" class="fill" data-ma-ring pathLength="20" />
-                </svg>
-                <div class="ma-ring-n"><b data-ma-done>19</b><small>/20</small></div>
-                <div class="ma-goal-copy">
-                  <span class="ma-kicker">{p.goal}</span>
-                  <b data-ma-left>{p.left}</b>
-                  <span class="ma-streak">🔥 {p.streak}</span>
-                </div>
-                <ol class="ma-week" aria-hidden="true">
-                  {days.map((d, i) => <li class:list={{ done: i < 6, today: i === 6 }} data-ma-today={i === 6 ? '' : undefined}><i />{d}</li>)}
-                </ol>
-              </div>
-              <div class="ma-card ma-q">
-                <div class="ma-q-head"><span class="ma-tag">● {p.tag}</span><span>{p.of}</span></div>
-                <p class="ma-q-text">{p.q}</p>
-                <div class="ma-opts" role="group" aria-label={p.q}>
-                  {
-                    p.opts.map((o, i) => (
-                      <button type="button" class="ma-opt" data-ma-opt={i} data-right={i === p.right ? '' : undefined}>
-                        <i>{letters[i]}</i>
-                        {o}
-                      </button>
-                    ))
-                  }
-                </div>
-                <p class="ma-feedback" data-ma-feedback data-correct={p.correct} data-wrong={p.wrong} aria-live="polite"></p>
-                <p class="ma-why">💡 {p.why}</p>
-              </div>
-              <div class="ma-card ma-league">
-                <span class="ma-avatars" aria-hidden="true"><i>AL</i><i>RM</i><i class="me">Eu</i><i>TS</i></span>
-                <div><b>{p.league}</b><small>{p.leagueSub}</small></div>
-              </div>
-            </div>
-          </div>
-          <div class="ma-widget" aria-hidden="true">
-            <img src="/media/medalvo/icon.svg" alt="" width="28" height="28" />
-            <div><b>12</b><small>🔥</small></div>
-            <div><b data-ma-widget>19/20</b><small>{p.goal}</small></div>
-            <div><b>8</b><small>{lang === 'pt' ? 'revisões' : 'reviews'}</small></div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 

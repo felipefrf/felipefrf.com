@@ -946,3 +946,21 @@ html.day .entry .co {
 .imp-sub {
   margin: 36px 0 4px;
 }
+/* a stage with one view needs no tab strip */
+html.day .stage.single .stage-tabs {
+  display: none;
+}
+/* the Claude pane: the chat window stays dark (it's a screen); its chrome and
+   the tool chips beside it follow the page */
+html.day .mcp-chat {
+  --ink: #eceef1;
+  --ink-2: #a2a7b0;
+  --ink-3: #8b8e94;
+  --rule: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+}
+html.day .toolchips li {
+  border-color: var(--rule-2);
+  color: var(--ink-2);
+  background: var(--card);
+}

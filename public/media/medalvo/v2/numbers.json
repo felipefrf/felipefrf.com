@@ -1,0 +1,7 @@
+[
+  { "value": 189157, "label_en": "questions from official residency exams", "label_pt": "questões de provas oficiais de residência", "source": "medalvo repo, frontend/src/lib/numeros.json (questoes), 10 Nov 2026" },
+  { "value": 334, "label_en": "institutions", "label_pt": "instituições", "source": "medalvo repo, frontend/src/lib/numeros.json (instituicoes), 10 Nov 2026" },
+  { "value": 42, "label_en": "specialties", "label_pt": "especialidades", "source": "medalvo repo, frontend/src/lib/numeros.json (especialidades), 10 Nov 2026" },
+  { "value": 188698, "display": "99.7%", "label_en": "of questions with a commented solution (188,698)", "label_pt": "das questões com resolução comentada (188.698)", "source": "medalvo repo, frontend/src/lib/numeros.json (com_resolucao / questoes), 10 Nov 2026" },
+  { "value": 166321, "display": "88%", "label_en": "of questions linked to the original exam PDF (166,321)", "label_pt": "das questões com link para o PDF original da prova (166.321)", "source": "medalvo repo, frontend/src/lib/numeros.json (com_link_prova / questoes), 10 Nov 2026" }
+]
