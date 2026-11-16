@@ -230,7 +230,6 @@ export const earlier = [
 
 export const building = [
   { name: 'ITA Jobs Commission', role: 'President', dates: '2023 — 2024', note: 'Ran Brazil’s largest countryside career fair, 1,800+ attendees' },
-  { name: 'Fundação Estudar', role: 'Multiplicador', dates: 'Mar — Oct 2024', note: 'Workshops and mentoring for students from underrepresented backgrounds' },
   { name: 'Iniciativa Feynman', role: 'Co-founder & Coordinator', dates: 'Sep 2019 — Apr 2021', note: '0 → 81 volunteers in under 6 months, 350+ public-school students during COVID' },
 ];
 

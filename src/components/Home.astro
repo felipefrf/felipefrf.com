@@ -12,7 +12,7 @@ import '../styles/night.css';
 import { getSite } from '../data';
 import { ui, type Lang } from '../i18n/ui';
 import { day } from '../data/day';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import '@fontsource-variable/libre-franklin';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
@@ -26,6 +26,23 @@ const t = ui[lang];
 const d = day[lang];
 // a film shows only once its frames have been rendered (3d/film_*.py)
 const hasFilm = (id: string) => existsSync(`public/film/${id}/film.json`);
+// company marks, shown small and in ink so they read as type, not as ads
+const LOGOS: Record<string, string> = {
+  Hexagon: '/img/logos/hexagon.svg',
+  'NG.CASH': '/img/logos/ngcash.svg',
+  Credix: '/img/logos/credix.png',
+  LinkedIn: '/img/logos/linkedin.svg',
+  Safra: '/img/logos/safra.svg',
+  'BTG Pactual': '/img/logos/btg.svg',
+  BTG: '/img/logos/btg.svg',
+  'XP Inc.': '/img/logos/xp.svg',
+  XP: '/img/logos/xp.svg',
+  ITA: '/img/ita.png',
+  MedAlvo: '/img/logos/medalvo.svg',
+};
+// photos of the fair go in public/img/fair/ (shown as soon as they exist)
+const fairPhotos = existsSync('public/img/fair') ? readdirSync('public/img/fair').filter((f) => /\.(webp|jpe?g|png)$/.test(f)).sort().map((f) => `/img/fair/${f}`) : [];
+const logoOf = (name: string) => LOGOS[name] ?? LOGOS[name.split(' ')[0]];
 const {
   person,
   impact,
@@ -153,6 +170,9 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                   class:list={['wp', { right: w.last, 'now-wp': w.last, keep: w.first || w.last }]}
                   style={`left:${pct(w.x, W)};top:${pct(w.y, H)};--d:${w.t}`}
                 >
+                  <span class="wp-logos" aria-hidden="true">
+                    {(w.last ? ['Hexagon'] : w.label.split(' · ')).map((n) => logoOf(n) && <img src={logoOf(n)} alt="" loading="lazy" />)}
+                  </span>
                   <span class="mono">{w.year}</span>
                   <span>{w.label}</span>
                 </div>
@@ -173,8 +193,11 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
               <span class="dates mono">{j.dates}</span>
               <div class="entry-main">
                 <h3 class="co">
-                  {j.company}
-                  <small>{j.role}</small>
+                  {logoOf(j.company) && <span class="co-logo"><img src={logoOf(j.company)} alt="" loading="lazy" /></span>}
+                  <span>
+                    {j.company}
+                    <small>{j.role}</small>
+                  </span>
                 </h3>
                 <p>{j.summary}</p>
                 <ul>
@@ -198,6 +221,7 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                 <li>
                   <span class="dates mono">{e.dates}</span>
                   <span class="who">
+                    {logoOf(e.company) && <img class="mini-logo" src={logoOf(e.company)} alt="" loading="lazy" />}
                     <b>{e.company}</b> {e.role}
                   </span>
                   <span class="note">{e.note}</span>
@@ -223,54 +247,37 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           </ul>
         </div>
       </div>
+
+      <!-- the ITA career fair, the biggest thing I've led -->
+      <article class="fair" data-reveal>
+        <div class="fair-copy">
+          <span class="mono kicker">{d.fair.kicker}</span>
+          <h3>{d.fair.title}</h3>
+          <p>{d.fair.body}</p>
+        </div>
+        <dl class="fair-stats">
+          {
+            d.fair.stats.map((x) => (
+              <div>
+                <dt>{x.value}</dt>
+                <dd>{x.label}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        {
+          fairPhotos.length > 0 && (
+            <div class="fair-photos">
+              {fairPhotos.map((f) => <img src={f} alt={d.fair.photoAlt} loading="lazy" decoding="async" />)}
+            </div>
+          )
+        }
+      </article>
     </section>
 
     <MedAlvo lang={lang} n="03" />
     <Imperio lang={lang} n="04" />
 
-    <!-- Ápice built Império -->
-    <section class="wrap apice-sec" aria-label="Ápice">
-      <h3 class="mono sub-head" data-reveal>{d.apiceHead}</h3>
-      <!-- Ápice -->
-      <article class="apice" data-reveal>
-        <div class="apice-left">
-        <div class="apice-head">
-          <div class="feature-meta mono">
-            <span>{apice.kind}</span>
-            <span>{apice.year}</span>
-          </div>
-          <h3>{apice.name}</h3>
-          <p>{apice.blurb}</p>
-          <a class="btn btn-sm btn-primary" href={apice.href} target="_blank" rel="noopener">{t.seeApice} <Fragment set:html={arrow} /></a>
-        </div>
-        <ul class="apice-work">
-          {
-            apice.work.map((w) => (
-              <li>
-                <span class="mono">{w.client}</span>
-                <h4>{w.name}</h4>
-                <p>{w.what}</p>
-              </li>
-            ))
-          }
-        </ul>
-        </div>
-        <div class="apice-media">
-          <div class="browser">
-            <div class="browser-bar" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-              <span>software-house-six.vercel.app</span>
-            </div>
-            <video data-inview muted loop playsinline preload="metadata" poster="/media/apice-poster.jpg" aria-label={t.apiceVideo}>
-              <source src="/media/apice.webm" type="video/webm" />
-              <source src="/media/apice.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </article>
-    </section>
 
     <!-- 05 side projects -->
     <section class="block wrap" id="work" aria-labelledby="work-title">
@@ -567,13 +574,14 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
 
       
       <div class="receipts">
-        <figure class="receipt cert" data-reveal>
-          <div class="paper">
-            <img src={receipts.certificate.src} width="1100" height="778" loading="lazy" decoding="async" alt={t.certAlt} />
-          </div>
+
+        <figure class="receipt doc nbpho" data-reveal>
+          <a class="doc-sheet" href={receipts.nbpho.href} target="_blank" rel="noopener">
+            <img src={receipts.nbpho.src} width={receipts.nbpho.w} height={receipts.nbpho.h} loading="lazy" decoding="async" alt={t.nbphoCaption} />
+          </a>
           <figcaption>
-            <span>{receipts.certificate.caption}</span>
-            <a class="textlink mono" href={receipts.certificate.announcement} target="_blank" rel="noopener">{t.sbf}</a>
+            <span>{t.nbphoCaption}</span>
+            <a class="textlink mono" href={receipts.nbpho.href} target="_blank" rel="noopener">{t.nbphoLink}</a>
           </figcaption>
         </figure>
 
@@ -587,15 +595,6 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
           </figcaption>
         </figure>
 
-        <figure class="receipt doc wide" data-reveal>
-          <a class="doc-sheet" href={receipts.nbpho.href} target="_blank" rel="noopener">
-            <img src={receipts.nbpho.src} width={receipts.nbpho.w} height={receipts.nbpho.h} loading="lazy" decoding="async" alt={t.nbphoCaption} />
-          </a>
-          <figcaption>
-            <span>{t.nbphoCaption}</span>
-            <a class="textlink mono" href={receipts.nbpho.href} target="_blank" rel="noopener">{t.nbphoLink}</a>
-          </figcaption>
-        </figure>
       </div>
 
       

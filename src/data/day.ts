@@ -25,7 +25,18 @@ export const day = {
       title: 'Where I learned <span class="serif">to ship</span>',
       lead: 'A fintech where a wrong answer costs real money, credit models for a lender in Belgium, LinkedIn’s sales team in New York, and internships at Safra, BTG Pactual and XP before that.',
     },
-    apiceHead: 'Built by Ápice, the software house my brother and I run',
+    fair: {
+      kicker: 'President, ITA Jobs Commission · 2023–24',
+      title: 'Brazil’s largest career fair outside a state capital',
+      body: 'I led the student commission that connects ITA with the companies that hire its engineers: 45 people in five directorates, the annual fair on campus, training and corporate partnerships. The first sponsorship I closed myself, R$ 30k from SumUp, rebuilt the dorm’s cinema and opened the door to the rest.',
+      stats: [
+        { value: '1,800+', label: 'students at the fair' },
+        { value: '40+', label: 'companies on campus' },
+        { value: 'R$ 1M', label: 'annual budget managed' },
+        { value: '45', label: 'people in 5 directorates' },
+      ],
+      photoAlt: 'The ITA career fair',
+    },
     work: {
       kicker: 'Side projects',
       title: 'Built on <span class="serif">nights and weekends</span>',
@@ -69,7 +80,18 @@ export const day = {
       title: 'Onde aprendi <span class="serif">a entregar</span>',
       lead: 'Uma fintech onde resposta errada custa dinheiro de verdade, modelos de crédito para uma credora na Bélgica, o time de vendas do LinkedIn em Nova York e, antes disso, estágios no Safra, no BTG Pactual e na XP.',
     },
-    apiceHead: 'Feito pela Ápice, a software house que eu e meu irmão tocamos',
+    fair: {
+      kicker: 'Presidente da Comissão de Estágios e Empregos do ITA · 2023–24',
+      title: 'A maior feira de carreiras do interior do Brasil',
+      body: 'Liderei a comissão de alunos que liga o ITA às empresas que contratam seus engenheiros: 45 pessoas em cinco diretorias, a feira anual no campus, capacitações e parcerias com empresas. O primeiro patrocínio, que fechei pessoalmente, R$ 30 mil da SumUp, reformou o cinema do alojamento e abriu a porta para os outros.',
+      stats: [
+        { value: '1.800+', label: 'alunos na feira' },
+        { value: '40+', label: 'empresas no campus' },
+        { value: 'R$ 1 mi', label: 'de orçamento anual' },
+        { value: '45', label: 'pessoas em 5 diretorias' },
+      ],
+      photoAlt: 'A feira de carreiras do ITA',
+    },
     work: {
       kicker: 'Projetos paralelos',
       title: 'Feitos em <span class="serif">noites e fins de semana</span>',

@@ -209,7 +209,6 @@ export const earlier = [
 
 export const building = [
   { name: 'Comissão de Estágios do ITA', role: 'Presidente', dates: '2023 — 2024', note: 'A maior feira de carreiras do interior do país, 1.800+ pessoas' },
-  { name: 'Fundação Estudar', role: 'Multiplicador', dates: 'mar — out 2024', note: 'Workshops e mentoria para estudantes de grupos sub-representados' },
   { name: 'Iniciativa Feynman', role: 'Cofundador e Coordenador', dates: 'set 2019 — abr 2021', note: '0 → 81 voluntários em menos de 6 meses, 350+ alunos de escola pública na pandemia' },
 ];
 
