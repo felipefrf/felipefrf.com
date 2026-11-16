@@ -69,7 +69,22 @@ const videoIO = new IntersectionObserver(
   },
   { threshold: 0.25 },
 );
-document.querySelectorAll<HTMLVideoElement>('video[data-inview]').forEach((v) => videoIO.observe(v));
+// They start downloading only when they come near (preload="none" in the markup).
+const videoNear = new IntersectionObserver(
+  (entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const v = e.target as HTMLVideoElement;
+      v.preload = 'auto';
+      videoNear.unobserve(v);
+    }
+  },
+  { rootMargin: '400px 0px' },
+);
+document.querySelectorAll<HTMLVideoElement>('video[data-inview]').forEach((v) => {
+  videoIO.observe(v);
+  videoNear.observe(v);
+});
 
 // Medals tilt toward the pointer.
 if (!reduced) {
