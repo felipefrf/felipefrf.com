@@ -419,7 +419,7 @@ html.day .imp-glow {
 .film-label.l-saving small {
   color: #fff;
 }
-@media (max-width: 860px) {
+@media (max-width: 860px), (max-aspect-ratio: 4/5) {
   .film {
     height: 300vh;
   }
@@ -1279,7 +1279,7 @@ html.day .toolchips li {
 .film {
   overflow-x: clip; /* the zoomed render never widens the page */
 }
-@media (min-width: 861px) {
+@media (min-width: 861px) and (min-aspect-ratio: 4/5) {
   .film:not(.compact) .film-stage {
     /* the stage fills the screen and the render is as big as the screen allows,
        so there is no dead band above or below it */
@@ -1311,8 +1311,8 @@ html.day .toolchips li {
     z-index: 2;
   }
 }
-@media (max-width: 860px) {
-  /* phones: the render on top, full width, one step of copy under it */
+@media (max-width: 860px), (max-aspect-ratio: 4/5) {
+  /* phones and tall screens: the render on top, full width, one step of copy under it */
   .film:not(.compact) .film-stage {
     grid-template-columns: 1fr;
     align-content: center;
