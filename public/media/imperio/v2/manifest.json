@@ -5,9 +5,9 @@
     "type": "video",
     "w": 1440,
     "h": 900,
-    "title_en": "The office's morning, in one screen",
+    "title_en": "The office’s morning, in one screen",
     "title_pt": "A manhã do escritório numa tela só",
-    "body_en": "The office system opens on what needs someone today: a crew stuck waiting at a venue, open incidents, rented-in items still to return. Next to it, every event in the field and the stage it's at.",
+    "body_en": "The office system opens on what needs someone today: a crew stuck waiting at a venue, open incidents, rented-in items still to return. Next to it, every event in the field and the stage it’s at.",
     "body_pt": "O sistema do escritório abre no que precisa de alguém hoje: uma equipe esperando no local, ocorrências abertas, peças sublocadas para devolver. Ao lado, cada evento em campo e a etapa em que está."
   },
   {
@@ -18,7 +18,7 @@
     "h": 900,
     "title_en": "Every truck on the map",
     "title_pt": "Cada caminhão no mapa",
-    "body_en": "Today's events and the trucks on the road, live from the crew's phones. Click an event to fly to it and see who is going, in which truck and when. Below the map, where each vehicle is right now.",
+    "body_en": "Today’s events and the trucks on the road, live from the crew’s phones. Click an event to fly to it and see who is going, in which truck and when. Below the map, where each vehicle is right now.",
     "body_pt": "Os eventos do dia e os caminhões na estrada, ao vivo pelo celular da equipe. Um clique no evento leva até ele e mostra quem vai, em qual caminhão e a que horas. Embaixo, onde cada veículo está agora."
   },
   {
@@ -51,7 +51,7 @@
     "h": 1688,
     "title_en": "One tap to tell the crew",
     "title_pt": "Um toque para avisar a equipe",
-    "body_en": "From the phone, the office picks what the crew has to do (check the event, confirm they're coming, call the office) and the notice reaches everyone on that job.",
+    "body_en": "From the phone, the office picks what the crew has to do (check the event, confirm they’re coming, call the office) and the notice reaches everyone on that job.",
     "body_pt": "Pelo celular, o escritório escolhe o que a equipe precisa fazer (conferir o evento, confirmar presença, falar com a coordenação) e o aviso chega a todos daquele serviço."
   },
   {
@@ -71,7 +71,7 @@
     "type": "video",
     "w": 1440,
     "h": 900,
-    "title_en": "The week's bookings",
+    "title_en": "The week’s bookings",
     "title_pt": "A agenda da semana",
     "body_en": "Every setup, teardown and pre-setup of the week, by day, with how many people and trucks each one needs and what is late. A new work day comes with suggested times for the crew to arrive at the warehouse and leave.",
     "body_pt": "Cada montagem, desmontagem e pré-montagem da semana, dia a dia, com quantas pessoas e caminhões cada uma precisa e o que está atrasado. Um novo dia de trabalho já sugere o horário de chegada na empresa e de saída da equipe."
@@ -126,7 +126,7 @@
     "type": "image",
     "w": 2880,
     "h": 1800,
-    "title_en": "Problems don't get lost",
+    "title_en": "Problems don’t get lost",
     "title_pt": "Problema não se perde",
     "body_en": "Delays, blocked access, damage and missing items reported from the field, with the most serious on top, who reported it and who is handling it.",
     "body_pt": "Atrasos, acesso bloqueado, avarias e itens faltando registrados em campo, com o mais grave no topo, quem registrou e quem está tratando."
@@ -148,9 +148,9 @@
     "type": "image",
     "w": 780,
     "h": 1688,
-    "title_en": "What's on me now",
+    "title_en": "What’s on me now",
     "title_pt": "O que é comigo agora",
-    "body_en": "The app opens on the one thing the crew member has to do next, with a big button to do it, plus pending job invites and tonight's hotel.",
+    "body_en": "The app opens on the one thing the crew member has to do next, with a big button to do it, plus pending job invites and tonight’s hotel.",
     "body_pt": "O app abre na única coisa que a pessoa tem que fazer em seguida, com um botão grande para fazer já, além dos convites de trabalho e do hotel da noite."
   },
   {
