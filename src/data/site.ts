@@ -77,7 +77,7 @@ export const featured: Project[] = [
     kind: 'Side project',
     year: '2026',
     blurb:
-      'A WhatsApp-first patient-care layer for Brazilian specialists and clinics: one conversation for the patient, while Curo talks to the doctor, the hospital and the insurer. Built with my brother Rafael (MIT). We took it seriously for a while, far enough to interview with Y Combinator.',
+      'Patient care that runs itself over WhatsApp: the clinic describes its process, the agent builds the journey and talks to the doctor, hospital and insurer. Built with my brother Rafael (MIT); it got us a Y Combinator interview.',
     points: [
       'The clinic describes its process in plain words and the agent builds the care journey: steps, what depends on what, deadlines',
       'Move a surgery date and the whole plan re-plans itself: dependent steps fall, the undo work opens, every deadline moves',

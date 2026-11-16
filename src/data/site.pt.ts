@@ -65,7 +65,7 @@ export const featured: Project[] = [
     kind: 'Side project',
     year: '2026',
     blurb:
-      'Uma camada de atendimento ao paciente, nativa do WhatsApp, para especialistas e clínicas: o paciente tem uma conversa só, e o Curo fala com o médico, o hospital e o convênio. Feito com meu irmão Rafael (MIT). Levamos a sério por um tempo, a ponto de fazer entrevista na Y Combinator.',
+      'Atendimento ao paciente que anda sozinho pelo WhatsApp: a clínica descreve o processo, o agente monta a jornada e fala com médico, hospital e convênio. Feito com meu irmão Rafael (MIT); nos levou a uma entrevista na Y Combinator.',
     points: [
       'A clínica descreve o processo com as próprias palavras e o agente monta a jornada de cuidado: etapas, o que depende do quê, prazos',
       'Mude a data de uma cirurgia e o plano inteiro se refaz: as etapas dependentes caem, o trabalho de desfazer abre, todos os prazos andam',

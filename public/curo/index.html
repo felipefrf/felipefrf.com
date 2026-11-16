@@ -45,7 +45,7 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
 h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);margin:0;text-wrap:balance}
-h1{font-size:clamp(44px,5.9vw,86px);line-height:.98;letter-spacing:-.032em}
+h1{font-size:clamp(44px,5.3vw,76px);line-height:.98;letter-spacing:-.032em}
 h2{font-size:clamp(31px,4.1vw,52px);line-height:1.04;letter-spacing:-.025em;max-width:20ch}
 h1 .dot{color:var(--accent);font-weight:400}
 h3{font-size:21px;line-height:1.2;letter-spacing:-.01em}
@@ -83,14 +83,6 @@ p{margin:0 0 14px;color:var(--ink-2)}
 /* revelacao: so esconde sob .js; reduced-motion mostra tudo */
 .js [data-r]{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
 .js [data-r].in{opacity:1;transform:none}
-
-/* ── hero ───────────────────────────────────────────────────────────── */
-.hero{display:grid;gap:26px;padding-top:clamp(40px,8vh,96px);padding-bottom:clamp(30px,5vh,52px)}
-.hero .lead{font-size:clamp(17px,1.45vw,19.5px);line-height:1.55;color:var(--ink-2);max-width:47ch;margin:0}
-.ctas{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:26px}
-@media(min-width:960px){
- .hero{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);column-gap:64px;align-items:end}
-}
 
 /* ── o estudio: a conversa que vira jornada ─────────────────────────── */
 .studio{position:relative;background:var(--sheet);border:1px solid var(--line-2);border-left:3px solid var(--accent);
@@ -245,7 +237,7 @@ p{margin:0 0 14px;color:var(--ink-2)}
 }
 
 /* ── secoes ─────────────────────────────────────────────────────────── */
-.sec{padding:clamp(72px,11vh,132px) 0 0}
+.sec{padding:clamp(64px,10vh,120px) 0 0}
 .sec-h{display:grid;gap:18px;margin-bottom:clamp(30px,5vh,52px)}
 .sec-h p{font-size:18px;line-height:1.6;max-width:58ch;margin:0}
 @media(min-width:960px){.sec-h{grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:64px;align-items:end}}
@@ -456,16 +448,78 @@ footer a:hover{border-color:var(--ink)}
  *,*::before,*::after{animation:none!important;transition:none!important}
  .js [data-r],.js .wl li[data-i],.js .au li{opacity:1;transform:none}
 }
+
+/* ── v2: hero desenhado, secoes com um visual cada ─────────────────── */
+main p.k{font-size:11px;line-height:1.2;margin:0 0 16px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"t" "v" "b";gap:18px;padding-top:clamp(20px,3.5vh,44px);padding-bottom:clamp(24px,4vh,56px)}
+.ht{grid-area:t}.hv{grid-area:v}.hb{grid-area:b}
+.hero h1{font-size:clamp(44px,4.7vw,68px);line-height:.98}
+.hero .lead{font-size:clamp(17px,1.4vw,19.5px);line-height:1.55;color:var(--ink-2);max-width:40ch;margin:0}
+.ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:24px}
+.hkey{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:30px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3)}
+.hkey>span{display:inline-flex;align-items:center;gap:7px}
+.hkey i{width:10px;height:10px;display:inline-block}
+.hkey i.g{background:var(--green)}.hkey i.r{background:var(--red)}
+.hkey b{color:var(--red);font-weight:700}
+@media(min-width:960px){
+ .hero{grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);grid-template-areas:"t v" "b v";grid-template-rows:auto 1fr;column-gap:56px;row-gap:26px;align-items:start}
+ .ht{padding-top:26px}
+}
+@media(max-width:959px){.hkey{display:none}.hero .ctas{margin-top:20px}}
+.viz{display:block;width:100%;height:auto;overflow:visible}
+.viz text{font-family:var(--sans)}
+.vl{font-size:14px;fill:#4A6170;text-anchor:middle;font-weight:500}
+.vp{font-size:15px;fill:#2C4351;font-weight:600}
+.vp2{font-size:16px;fill:#2C4351;font-weight:600;text-anchor:middle}
+.vb{font-size:15.5px;fill:#101E28}
+.vbs{font-size:14.5px;fill:#101E28;font-weight:500}
+.vbs.vw{fill:#fff}
+.viz .vhub{font-family:var(--serif);font-size:21px;fill:#fff;text-anchor:middle}
+.viz .vhub2{font-family:var(--serif);font-size:25px;fill:#fff;text-anchor:middle}
+.viz .vt2{font-family:var(--serif);font-size:18px;fill:#101E28}
+.vk{font-size:11.5px;font-weight:700;letter-spacing:.12em;fill:#4A6170}
+.vm{font-size:11.5px;fill:#4A6170}
+.vr{font-size:15px;font-weight:700;fill:#6B1A22;text-anchor:end}
+.vc{font-size:14px;font-weight:700;text-anchor:middle}
+.vd{font-size:15px;font-weight:700;fill:#fff;text-anchor:middle}
+.vn{font-size:20px;font-weight:600;text-anchor:end}
+.vu{font-size:13.5px}
+
+.vs{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;align-items:center}
+.vs h2{font-size:clamp(30px,3.5vw,46px);max-width:13ch}
+.cap{font-size:17.5px;line-height:1.55;color:var(--ink-2);max-width:34ch;margin:16px 0 0}
+.cap2{margin:20px 0 0}
+.vbox{background:var(--sheet);border:1px solid var(--line-2);padding:clamp(12px,2.2vw,26px);
+ box-shadow:0 2px 3px rgba(16,30,40,.04),0 26px 50px -38px rgba(16,30,40,.35)}
+@media(min-width:960px){.vs{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);column-gap:64px}.vs.rev{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr)}.vs.rev>.vt{order:2}}
+.pw{grid-template-columns:minmax(0,1fr)!important}
+.pw-hd{padding:14px 18px 12px}.pw-hd h3{font-size:24px}
+.dh{margin-bottom:26px;max-width:760px}.dh .cap{max-width:56ch}
+#cascata{margin-top:22px;scroll-margin-top:80px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tile{background:var(--sheet);border:1px solid var(--line-2);padding:24px 20px;display:grid;gap:12px;align-content:start}
+.tile svg{width:46px;height:46px}
+.tile b{font:400 21px/1.2 var(--serif)}
+.tile span{font-size:13px;color:var(--ink-3)}
+@media(max-width:640px){.tiles{grid-template-columns:1fr}.tile{grid-template-columns:46px 1fr;column-gap:16px;row-gap:2px;padding:16px}.tile svg{grid-row:1/3}}
+.fqw{display:grid;gap:22px}
+@media(min-width:960px){.fqw{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);column-gap:64px}}
+.faq{max-width:none}
+.fq summary{font-size:19px;padding:15px 0}
+.fq p{font-size:15.5px;margin:-2px 0 16px}
+.close{padding-top:clamp(72px,11vh,120px)}
+.close h2{margin-bottom:28px}
 </style>
 
 <header class="top"><div class="wrap">
   <a class="logo" href="/curo/">Curo<b>.</b></a>
   <nav class="nav" aria-label="Seções">
-    <a href="#jornadas" data-i18n="n.j">Jornadas</a>
+    <a href="#jornada" data-i18n="n.j">Jornada</a>
     <a href="#remarcar" data-i18n="n.r">Remarcação</a>
     <a href="#whatsapp" data-i18n="n.w">WhatsApp</a>
     <a href="#portal" data-i18n="n.p">Portal</a>
     <a href="#lgpd" data-i18n="n.l">LGPD</a>
+    <a href="#dentro" data-i18n="n.d">Por dentro</a>
   </nav>
   <div class="lang" role="group" aria-label="Idioma / Language">
     <button type="button" data-lang="pt" aria-pressed="true">PT</button>
@@ -477,78 +531,134 @@ footer a:hover{border-color:var(--ink)}
 <main>
 <div class="wrap">
   <div class="hero">
-    <div data-r>
+    <div class="ht">
       <p class="k" data-i18n="h.k">Para clínicas, especialistas e dentistas</p>
       <h1 data-i18n="h.t">Você descreve.<br>A Curo conduz<b class="dot">.</b></h1>
     </div>
-    <div data-r style="--d:.12s">
-      <p class="lead" data-i18n="h.lead">Conte, por texto ou por voz, como um paciente anda pela sua clínica. O agente da Curo transforma isso numa jornada, com etapas, dependências e prazos, e conduz cada paciente por ela no WhatsApp, falando com médico, hospital e convênio. Se uma data muda, o resto se reorganiza sozinho.</p>
+    <div class="hv">
+      <svg class="viz" data-viz="hero" role="img" aria-label="Animação: o paciente escreve no WhatsApp, a Curo aciona médico, hospital, convênio e laboratório, a jornada se completa; a data da cirurgia muda, as etapas presas a ela caem, viram tarefas de desfazer e voltam a fechar na nova data."></svg>
+    </div>
+    <div class="hb">
+      <p class="lead" data-i18n="h.lead">O agente monta a jornada de cuidado da sua clínica e conduz cada paciente por ela no WhatsApp, com médico, hospital e convênio.</p>
       <div class="ctas">
         <a class="btn" data-wa href="https://wa.me/5571982725910" target="_blank" rel="noopener"><span data-i18n="h.cta">Conversar 20 minutos no WhatsApp</span></a>
-        <a class="lnk" data-painel href="/curo/painel/" data-i18n="h.demo">Abrir o portal de demonstração →</a>
+        <a class="lnk" href="#dentro" data-i18n="h.demo">Veja por dentro ↓</a>
       </div>
+      <div class="hkey"><span><i class="g"></i><span data-i18n="h.k1">etapa fechada</span></span><span><i class="r"></i><span data-i18n="h.k2">caiu com a data</span></span><span><b>↺</b><span data-i18n="h.k3">tarefa de desfazer</span></span></div>
     </div>
   </div>
-
-  <!-- O estudio: a conversa vira jornada. Tudo e desenhado pelo script a partir dos dados
-       do roteiro (SC); sem JS fica a frase do <noscript>. -->
-  <section id="jornadas" aria-label="Demonstração: o agente monta uma jornada a partir de uma conversa" data-r style="--d:.22s">
-    <div class="studio" data-studio>
-      <div class="st-top">
-        <div class="st-id"><i></i><span data-i18n="s.scr">Jornadas</span><span data-st-sub></span></div>
-        <div class="tabs" role="tablist" aria-label="Exemplos">
-          <button type="button" role="tab" data-scn="lca" aria-selected="true">Cirurgia · LCA</button>
-          <button type="button" role="tab" data-scn="imp" aria-selected="false">Odonto · implante</button>
-          <button type="button" class="rp" data-replay><span data-i18n="s.rp">↻ Rever</span></button>
-        </div>
-      </div>
-      <div class="st-body">
-        <div class="st-chat">
-          <ol class="msgs" data-msgs aria-live="polite"></ol>
-          <div class="val">
-            <div class="val-h"><span data-i18n="s.val">Validador</span><span class="val-n" data-valn>—</span></div>
-            <ul data-vall></ul>
-          </div>
-          <div class="comp" data-comp aria-hidden="true">
-            <span class="mic"><svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="1" width="6" height="9" rx="3"/><path d="M1.5 7.5a5.5 5.5 0 0 0 11 0M7 13v2.5"/></svg></span>
-            <span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-            <span class="ph" data-ph></span>
-            <span class="send" data-i18n="s.send">Enviar</span>
-          </div>
-        </div>
-        <div class="st-sheet">
-          <div class="sh-head">
-            <div><h3 data-sh-name></h3><small data-sh-sub></small></div>
-            <ol class="stt" data-stt>
-              <li data-i18n="s.st1">Rascunho</li><li data-i18n="s.st2">Validado</li><li data-i18n="s.st3">Em revisão</li><li data-i18n="s.st4">No ar</li>
-            </ol>
-          </div>
-          <div class="sheet build" data-st-sheet></div>
-          <div class="sh-foot">
-            <div class="leg"><span><i class="ag"></i><span data-i18n="s.lg1">o agente conduz</span></span><span><i></i><span data-i18n="s.lg2">a equipe conduz</span></span><span><b>↺</b><span data-i18n="s.lg3">sabe se desfazer</span></span></div>
-            <span data-st-sum></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <noscript><p class="st-note">Esta demonstração precisa de JavaScript.</p></noscript>
-    <p class="st-note"><span data-i18n="s.note">Demonstração encenada, com nomes fictícios: as falas foram escritas para esta página. As pendências são o texto do validador do produto, e é ele que decide quando um rascunho pode ir para revisão.</span> <a class="lnk st-next" href="#remarcar" data-stnext data-i18n="s.next">Agora mude a data da cirurgia ↓</a></p>
-  </section>
-
-  <ol class="how">
-    <li data-r><b><span>01</span><span data-i18n="w1.t" style="font:inherit;color:inherit">Você descreve</span></b><p data-i18n="w1.d">Do jeito que explicaria a uma secretária nova: o que vem antes do quê, quem faz, em quanto tempo. Por texto ou por voz; o áudio vira texto e é descartado.</p></li>
-    <li data-r style="--d:.08s"><b><span>02</span><span data-i18n="w2.t" style="font:inherit;color:inherit">O agente monta, o validador confere</span></b><p data-i18n="w2.d">Cada pergunta do agente nasce de uma pendência do validador: um responsável que ninguém declarou, um prazo sem data de referência, uma reserva que não sabe se desfazer. A conversa acaba quando a lista esvazia.</p></li>
-    <li data-r style="--d:.16s"><b><span>03</span><span data-i18n="w3.t" style="font:inherit;color:inherit">O dono publica</span></b><p data-i18n="w3.d">Nada vai ao ar sozinho. O dono da clínica revisa e publica, com segundo fator, ou devolve com um parecer. Quem já está no meio do caminho termina na versão em que começou.</p></li>
-  </ol>
 </div>
 
-<!-- ── 02 remarcacao ───────────────────────────────────────────────── -->
-<section class="sec" id="remarcar"><div class="wrap">
-  <div class="sec-h">
-    <div data-r><p class="k" data-i18n="r.k">02 · Remarcação</p><h2 data-i18n="r.t">Uma data muda. A jornada inteira se reorganiza.</h2></div>
-    <p data-r style="--d:.1s" data-i18n="r.p">Num CRM, mudar a data da cirurgia muda uma data. Na Curo, o motor percorre a jornada: o que já estava reservado para o dia antigo cai e vira trabalho de desfazer com dono, o que dependia disso volta a esperar, e cada prazo preso à cirurgia anda junto. Arraste a data e veja.</p>
+<section class="sec" id="jornada"><div class="wrap vs">
+  <div class="vt" data-r><p class="k" data-i18n="a.k">01 · Jornada por conversa</p><h2 data-i18n="a.t">Você fala. O agente desenha.</h2><p class="cap" data-i18n="a.c">Descreva o processo por texto ou voz. O agente monta etapas, dependências e prazos, e o validador confere antes de ir ao ar.</p></div>
+  <div class="vbox" data-r style="--d:.08s"><svg class="viz" data-viz="describe" role="img" aria-label="Animação: a voz vira palavras, as palavras viram etapas ligadas num grafo, o validador aponta pendências e a jornada vai ao ar."></svg></div>
+</div></section>
+
+<section class="sec" id="remarcar"><div class="wrap vs rev">
+  <div class="vt" data-r><p class="k" data-i18n="b.k">02 · Remarcação</p><h2 data-i18n="b.t">Mudou a data? O resto se reorganiza.</h2><p class="cap" data-i18n="b.c">O que estava reservado cai e vira tarefa de desfazer com dono. Todo prazo seguinte anda junto.</p></div>
+  <div class="vbox" data-r style="--d:.08s"><svg class="viz" data-viz="cascade" role="img" aria-label="Animação: a data da cirurgia anda, guia, sala e anestesista caem em vermelho, viram tarefas no Concierge, são resolvidas e as etapas voltam a fechar na nova data."></svg></div>
+</div></section>
+
+<section class="sec" id="whatsapp"><div class="wrap vs">
+  <div class="vt" data-r><p class="k" data-i18n="c.k">03 · Um número</p><h2 data-i18n="c.t">Quatro partes, uma conversa.</h2><p class="cap" data-i18n="c.c">Paciente, médico, hospital e convênio falam com o mesmo WhatsApp, e cada mensagem anda o caso certo.</p></div>
+  <div class="vbox" data-r style="--d:.08s"><svg class="viz" data-viz="hub" role="img" aria-label="Animação: mensagens curtas vão e voltam entre a Curo e paciente, médico, hospital e convênio, e o caso avança a cada uma."></svg></div>
+</div></section>
+
+<section class="sec" id="portal"><div class="wrap vs rev">
+  <div class="vt" data-r><p class="k" data-i18n="p.k">04 · Portal da clínica</p><h2 data-i18n="p.t">A passagem de plantão.</h2><p class="cap" data-i18n="p.c">Em que etapa cada paciente está, o que travou e o que só uma pessoa decide.</p>
+    <p class="cap2"><a class="lnk" data-painel href="/curo/painel/" data-i18n="p.cta">Abrir o portal de demonstração →</a></p></div>
+  <div class="pw" data-r style="--d:.08s">
+    <div class="pw-main">
+      <div class="pw-tabs" role="tablist" aria-label="Telas do portal">
+        <button type="button" role="tab" aria-selected="true" data-pt="casos" data-i18n="p.tb1">Livro de casos</button>
+        <button type="button" role="tab" aria-selected="false" data-pt="cg">Concierge</button>
+      </div>
+      <div class="pw-panel" data-pp="casos">
+        <div class="pw-hd">
+          <h3 data-i18n="p.h1">Livro de casos</h3>
+          <div class="bal"><div><b>7</b><span data-i18n="p.b1">abertos</span></div><div class="r"><b>2</b><span data-i18n="p.b2">a desfazer</span></div><div class="y"><b>12</b><span data-i18n="p.b3">prontas agora</span></div></div>
+        </div>
+        <div class="board">
+          <div class="col"><h4><span data-i18n="p.c1" style="all:unset">Pré</span><span>5<em data-i18n="p.c1d">2 a desfazer</em></span></h4>
+            <div class="cd x"><b>Marta Nogueira</b><span data-i18n="p.k1">Reconstrução do LCA · Dr. Tiago Brandão</span><div class="why" data-i18n="p.k1w">3 etapas caíram: há trabalho de desfazer aberto</div><div class="ft"><span>939CE0</span><em data-i18n="p.k1r">4 prontas</em></div></div>
+            <div class="cd"><b>Antônia Vilela</b><span data-i18n="p.k2">Artrodese lombar · Dra. Paula Andrade</span><div class="ft"><span>E08A21</span><em data-i18n="p.k2r">1 pronta</em></div><div class="lt r" data-i18n="p.k2l">prazo há 2d · 15/11</div></div>
+          </div>
+          <div class="col"><h4><span data-i18n="p.c2" style="all:unset">Procedimento</span><span>1</span></h4>
+            <div class="cd"><b>Lúcia Prado</b><span data-i18n="p.k4">Artroscopia de joelho · Dra. Paula Andrade</span><div class="ft"><span>AD1380</span><em data-i18n="p.k4r">1 pronta</em></div><div class="lt" data-i18n="p.k4l">prazo amanhã · 18/11</div></div>
+          </div>
+          <div class="col"><h4><span data-i18n="p.c3" style="all:unset">Pós</span><span>1</span></h4>
+            <div class="cd"><b>Rubens Kawamoto</b><span data-i18n="p.k5">Artroscopia de ombro · Dra. Paula Andrade</span><div class="ft"><span>A266EE</span><em data-i18n="p.k5r">2 prontas</em></div><div class="lt r" data-i18n="p.k5l">prazo ontem · 16/11</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="pw-panel" data-pp="cg" hidden>
+        <div class="pw-hd">
+          <h3>Concierge</h3>
+          <div class="bal"><div class="r"><b>8</b><span data-i18n="p.q1">pendentes</span></div><div><b>8</b><span data-i18n="p.q2">atrasadas</span></div><div class="y"><b>7</b><span data-i18n="p.q3">sem dono</span></div></div>
+        </div>
+        <ol class="cq">
+          <li><b data-i18n="p.i3">Desfazer: Liberar a sala de 26/11 no hospital</b><small data-i18n="p.i3s">Marta Nogueira · recepção</small><span class="w"><em class="d" data-i18n="p.undo">desfazer</em>17/11 10:21</span></li>
+          <li><b data-i18n="p.i1">Prazo: Receber os exames pré-operatórios</b><small data-i18n="p.i1s">Antônia Vilela · já assumida</small><span class="w"><em data-i18n="p.late">atrasada</em>15/11 11:00</span></li>
+          <li><b data-i18n="p.i2">Prazo: Pedir o OPME ao hospital</b><small>Cecília Braga</small><span class="w"><em data-i18n="p.late">atrasada</em>16/11 07:00</span></li>
+        </ol>
+      </div>
+    </div>
   </div>
-  <div class="cas" data-r>
+</div></section>
+
+<section class="sec" id="lgpd"><div class="wrap vs">
+  <div class="vt" data-r><p class="k" data-i18n="l.k">05 · LGPD</p><h2 data-i18n="l.t">Privacidade por construção.</h2><p class="cap" data-i18n="l.c">Quem vê o quê é regra do servidor, não boa vontade de quem clica.</p></div>
+  <div class="tiles" data-r style="--d:.08s">
+    <div class="tile"><svg viewBox="0 0 44 44" fill="none" stroke="#101E28" stroke-width="2" aria-hidden="true"><path d="M3 22s7-12 19-12 19 12 19 12-7 12-19 12S3 22 3 22Z"/><circle cx="22" cy="22" r="5.5" fill="#6B1A22" stroke="#6B1A22"/><path d="M30 38h11M30 42h7" stroke="#4A6170"/></svg><b data-i18n="l.1">Toda leitura registrada</b><span data-i18n="l.1s">quem, o quê, quando</span></div>
+    <div class="tile"><svg viewBox="0 0 44 44" fill="none" stroke="#101E28" stroke-width="2" aria-hidden="true"><path d="M8 12h28M17 12V7h10v5M11 12l2 26h18l2-26"/><path d="M18 19v13M26 19v13" stroke="#6B1A22"/></svg><b data-i18n="l.2">Eliminação alcança tudo</b><span data-i18n="l.2s">art. 18, em todas as cópias</span></div>
+    <div class="tile"><svg viewBox="0 0 44 44" fill="none" stroke="#101E28" stroke-width="2" aria-hidden="true"><circle cx="14" cy="22" r="8"/><path d="M22 22h18M33 22v7M39 22v5"/><circle cx="14" cy="22" r="2.5" fill="#6B1A22" stroke="#6B1A22"/></svg><b data-i18n="l.3">Só o dono publica</b><span data-i18n="l.3s">com segundo fator</span></div>
+  </div>
+</div></section>
+
+<!-- ── 06 por dentro: a demonstracao detalhada (estudio + remarcacao do motor) ── -->
+<section class="sec" id="dentro"><div class="wrap">
+  <div class="dh" data-r><p class="k" data-i18n="d.k">06 · Veja por dentro</p><h2 data-i18n="d.t">O agente montando uma jornada de verdade.</h2><p class="cap" data-i18n="d.c">As pendências são o texto do validador do produto. Depois, arraste a data da cirurgia.</p></div>
+  <div class="studio" data-studio>
+    <div class="st-top">
+      <div class="st-id"><i></i><span data-i18n="s.scr">Jornadas</span><span data-st-sub></span></div>
+      <div class="tabs" role="tablist" aria-label="Exemplos">
+        <button type="button" role="tab" data-scn="lca" aria-selected="true">Cirurgia · LCA</button>
+        <button type="button" role="tab" data-scn="imp" aria-selected="false">Odonto · implante</button>
+        <button type="button" class="rp" data-replay><span data-i18n="s.rp">↻ Rever</span></button>
+      </div>
+    </div>
+    <div class="st-body">
+      <div class="st-chat">
+        <ol class="msgs" data-msgs aria-live="polite"></ol>
+        <div class="val">
+          <div class="val-h"><span data-i18n="s.val">Validador</span><span class="val-n" data-valn>—</span></div>
+          <ul data-vall></ul>
+        </div>
+        <div class="comp" data-comp aria-hidden="true">
+          <span class="mic"><svg width="14" height="16" viewBox="0 0 14 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="1" width="6" height="9" rx="3"/><path d="M1.5 7.5a5.5 5.5 0 0 0 11 0M7 13v2.5"/></svg></span>
+          <span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <span class="ph" data-ph></span>
+          <span class="send" data-i18n="s.send">Enviar</span>
+        </div>
+      </div>
+      <div class="st-sheet">
+        <div class="sh-head">
+          <div><h3 data-sh-name></h3><small data-sh-sub></small></div>
+          <ol class="stt" data-stt>
+            <li data-i18n="s.st1">Rascunho</li><li data-i18n="s.st2">Validado</li><li data-i18n="s.st3">Em revisão</li><li data-i18n="s.st4">No ar</li>
+          </ol>
+        </div>
+        <div class="sheet build" data-st-sheet></div>
+        <div class="sh-foot">
+          <div class="leg"><span><i class="ag"></i><span data-i18n="s.lg1">o agente conduz</span></span><span><i></i><span data-i18n="s.lg2">a equipe conduz</span></span><span><b>↺</b><span data-i18n="s.lg3">sabe se desfazer</span></span></div>
+          <span data-st-sum></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <noscript><p class="st-note">Esta demonstração precisa de JavaScript.</p></noscript>
+
+  <div class="cas" id="cascata">
     <div class="cas-main" data-cas>
       <div class="cas-head">
         <div><div class="pt-n">Marta Nogueira</div><div class="pt-s"><span data-i18n="r.case">Reconstrução do LCA · Dr. Tiago Brandão</span> · <span class="mono">caso 939CE0</span></div></div>
@@ -572,146 +682,23 @@ footer a:hover{border-color:var(--ink)}
       </div>
     </aside>
   </div>
-  <p class="note" data-i18n="r.note">Exemplo com nomes fictícios. O motivo de cada linha é o que o motor de casos do produto escreve: “a data do procedimento mudou depois que esta etapa fechou”, “uma dependência caiu”, “o prazo andou junto com a data”.</p>
+  <p class="note" data-i18n="d.n">Encenado, com nomes fictícios. Os motivos de cada linha são os que o motor de casos escreve.</p>
 </div></section>
 
-<!-- ── 03 whatsapp ─────────────────────────────────────────────────── -->
-<section class="sec" id="whatsapp"><div class="wrap">
-  <div class="sec-h">
-    <div data-r><p class="k" data-i18n="w.k">03 · Um número</p><h2 data-i18n="w.t">Paciente, médico, hospital e convênio. Uma conversa só.</h2></div>
-    <p data-r style="--d:.1s" data-i18n="w.p">Todo mundo fala com o mesmo WhatsApp da Curo, e cada mensagem cai no caso certo. A resposta do hospital fecha a etapa da sala; a decisão do médico fica registrada; a dúvida do paciente é respondida com o que o caso já sabe. Ninguém precisa procurar ninguém.</p>
-  </div>
-  <div class="wa" data-r data-wa-box>
-    <ul class="who-l">
-      <li data-p="pac"><i></i><b data-i18n="w.p1">Paciente</b><span data-i18n="w.p1d">pergunta e é avisado antes de perguntar</span></li>
-      <li data-p="med"><i></i><b data-i18n="w.p2">Médico</b><span data-i18n="w.p2d">decide só o que é dele</span></li>
-      <li data-p="hos"><i></i><b data-i18n="w.p3">Hospital</b><span data-i18n="w.p3d">sala, aviso de cirurgia, internação</span></li>
-      <li data-p="con"><i></i><b data-i18n="w.p4">Convênio</b><span data-i18n="w.p4d">guia, prazo, negativa</span></li>
-    </ul>
-    <ol class="wl">
-      <li class="wl-h" style="display:flex"><b data-i18n="w.h">Caso 939CE0 · Marta Nogueira</b><span data-i18n="w.hs">depois da remarcação</span></li>
-      <li data-i="0" data-p="hos"><time>10:24</time><div class="pty"><span data-i18n="w.t1" style="all:unset">Hospital</span><span data-i18n="w.s1">Central de agendamento</span></div><p data-i18n="w.m1">Reserva do dia 26/11 cancelada. Sala 3 confirmada para quinta, 10/12, às 14h.</p><div class="chips"><span class="chip" data-i18n="w.c1a">fechou · Liberar a sala de 26/11</span><span class="chip" data-i18n="w.c1b">fechou · Sala reservada</span></div></li>
-      <li data-i="1" class="cu"><time>10:31</time><div class="pty">Curo<span data-i18n="w.s2">para o Dr. Tiago</span></div><p data-i18n="w.m2">Dr. Tiago, a cirurgia da Marta foi para 10/12, às 14h, na mesma sala. Mantemos a mesma anestesista?</p></li>
-      <li data-i="2" data-p="med"><time>10:33</time><div class="pty"><span data-i18n="w.t3" style="all:unset">Médico</span><span>Dr. Tiago Brandão</span></div><p data-i18n="w.m3">Mantém. Pode avisar ela.</p><div class="chips"><span class="chip op" data-i18n="w.c3">decisão registrada no caso</span></div></li>
-      <li data-i="3" data-p="con"><time>11:02</time><div class="pty"><span data-i18n="w.t4" style="all:unset">Convênio</span><span data-i18n="w.s4">Autorização</span></div><p data-i18n="w.m4">Guia anterior cancelada. Nova solicitação para 10/12 recebida e em análise.</p><div class="chips"><span class="chip" data-i18n="w.c4a">fechou · Cancelar a guia</span><span class="chip op" data-i18n="w.c4b">aberta · Guia autorizada, prazo 03/12</span></div></li>
-      <li data-i="4" data-p="pac"><time>11:15</time><div class="pty"><span data-i18n="w.t5" style="all:unset">Paciente</span><span>Marta</span></div><p data-i18n="w.m5">Vi que mudou a data. Preciso refazer os exames?</p></li>
-      <li data-i="5" class="cu"><time>11:15</time><div class="pty">Curo<span data-i18n="w.s6">para a Marta</span></div><p data-i18n="w.m6">Não precisa: seus exames valem até fevereiro. A cirurgia ficou para quinta, 10/12, às 14h. Na véspera eu te mando o jejum e o horário de chegada.</p><div class="chips"><span class="chip" data-i18n="w.c6">fechou · Paciente avisada da nova data</span></div></li>
-    </ol>
-  </div>
-  <p class="note" data-i18n="w.note">Exemplo encenado, com nomes fictícios.</p>
-</div></section>
-
-<!-- ── 04 portal ───────────────────────────────────────────────────── -->
-<section class="sec" id="portal"><div class="wrap">
-  <div class="sec-h">
-    <div data-r><p class="k" data-i18n="p.k">04 · Portal da clínica</p><h2 data-i18n="p.t">Não é uma ferramenta para operar. É a passagem de plantão.</h2></div>
-    <p data-r style="--d:.1s" data-i18n="p.p">O portal responde “como está cada um dos meus casos”, e não “o que eu faço agora”: em que etapa cada paciente está, o que andou sozinho, o que travou, e o que só uma pessoa pode decidir, com prazo no relógio da clínica.</p>
-  </div>
-  <div class="pw" data-r>
-    <div class="pw-side" aria-hidden="true">
-      <div class="lg">Curo<b>.</b></div><small data-i18n="p.sd">Painel da clínica</small>
-      <div class="dm" data-i18n="p.dm">Demonstração com dados fictícios</div>
-      <ul><li data-pside="casos" class="cur" data-i18n="p.n1">Casos</li><li data-pside="cg">Concierge</li><li data-i18n="p.n3">Agenda</li><li data-i18n="p.n4">Jornadas</li><li data-i18n="p.n5">Perfil da clínica</li><li data-i18n="p.n6">Profissionais</li><li data-i18n="p.n7">Catálogo</li></ul>
-    </div>
-    <div class="pw-main">
-      <div class="pw-tabs" role="tablist" aria-label="Telas do portal">
-        <button type="button" role="tab" aria-selected="true" data-pt="casos" data-i18n="p.tb1">Livro de casos</button>
-        <button type="button" role="tab" aria-selected="false" data-pt="cg">Concierge</button>
-      </div>
-      <div class="pw-panel" data-pp="casos">
-        <div class="pw-hd">
-          <div><h3 data-i18n="p.h1">Livro de casos</h3><p data-i18n="p.h1s">Aberto em 17 de novembro · 7 casos abertos</p></div>
-          <div class="bal"><div><b>7</b><span data-i18n="p.b1">abertos</span></div><div class="r"><b>2</b><span data-i18n="p.b2">a desfazer</span></div><div class="y"><b>12</b><span data-i18n="p.b3">prontas agora</span></div></div>
-        </div>
-        <div class="board">
-          <div class="col"><h4><span data-i18n="p.c1" style="all:unset">Pré</span><span>5<em data-i18n="p.c1d">2 a desfazer</em></span></h4>
-            <div class="cd x"><b>Marta Nogueira</b><span data-i18n="p.k1">Reconstrução do LCA · Dr. Tiago Brandão</span><div class="why" data-i18n="p.k1w">3 etapas caíram: há trabalho de desfazer aberto</div><div class="ft"><span>939CE0</span><em data-i18n="p.k1r">4 prontas</em></div><div class="lt" data-i18n="p.k1l">prazo em 16d · 03/12</div></div>
-            <div class="cd"><b>Antônia Vilela</b><span data-i18n="p.k2">Artrodese lombar · Dra. Paula Andrade</span><div class="ft"><span>E08A21</span><em data-i18n="p.k2r">1 pronta</em></div><div class="lt r" data-i18n="p.k2l">prazo há 2d · 15/11</div></div>
-            <div class="cd"><b>Davi Andrade</b><span data-i18n="p.k3">Osteossíntese de antebraço · Dr. Tiago Brandão</span><div class="ft"><span>014914</span><em data-i18n="p.k3r">1 pronta</em></div><div class="lt" data-i18n="p.k3l">prazo em 2d · 19/11</div></div>
-          </div>
-          <div class="col"><h4><span data-i18n="p.c2" style="all:unset">Procedimento</span><span>1</span></h4>
-            <div class="cd"><b>Lúcia Prado</b><span data-i18n="p.k4">Artroscopia de joelho · Dra. Paula Andrade</span><div class="ft"><span>AD1380</span><em data-i18n="p.k4r">1 pronta</em></div><div class="lt" data-i18n="p.k4l">prazo amanhã · 18/11</div></div>
-          </div>
-          <div class="col"><h4><span data-i18n="p.c3" style="all:unset">Pós</span><span>1</span></h4>
-            <div class="cd"><b>Rubens Kawamoto</b><span data-i18n="p.k5">Artroscopia de ombro · Dra. Paula Andrade</span><div class="ft"><span>A266EE</span><em data-i18n="p.k5r">2 prontas</em></div><div class="lt r" data-i18n="p.k5l">prazo ontem · 16/11</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="pw-panel" data-pp="cg" hidden>
-        <div class="pw-hd">
-          <div><h3>Concierge</h3><p data-i18n="p.h2s">O trabalho que o relógio e o agente colocaram na mesa da clínica</p></div>
-          <div class="bal"><div class="r"><b>8</b><span data-i18n="p.q1">pendentes</span></div><div><b>8</b><span data-i18n="p.q2">atrasadas</span></div><div class="y"><b>7</b><span data-i18n="p.q3">sem dono</span></div></div>
-        </div>
-        <ol class="cq">
-          <li><b data-i18n="p.i1">Prazo: Receber os exames pré-operatórios</b><small data-i18n="p.i1s">Antônia Vilela · caso E08A21 · já assumida</small><span class="w"><em data-i18n="p.late">atrasada</em>15/11 11:00</span></li>
-          <li><b data-i18n="p.i2">Prazo: Pedir o OPME ao hospital</b><small data-i18n="p.i2s">Cecília Braga · caso A81531</small><span class="w"><em data-i18n="p.late">atrasada</em>16/11 07:00</span></li>
-          <li><b data-i18n="p.i3">Desfazer: Liberar a sala de 26/11 no hospital</b><small data-i18n="p.i3s">Marta Nogueira · caso 939CE0 · recepção</small><span class="w"><em class="d" data-i18n="p.undo">desfazer</em>17/11 10:21</span></li>
-          <li><b data-i18n="p.i4">Prazo: Emitir a nota fiscal do procedimento</b><small data-i18n="p.i4s">Rubens Kawamoto · caso A266EE</small><span class="w"><em data-i18n="p.late">atrasada</em>16/11 11:10</span></li>
-        </ol>
-      </div>
-    </div>
-  </div>
-  <div class="pw-cta" data-r>
-    <a class="btn" data-painel href="/curo/painel/"><span data-i18n="p.cta">Abrir o portal de demonstração</span> <span aria-hidden="true">→</span></a>
-    <span data-i18n="p.ctan">Dados fictícios. Roda inteiro no seu navegador, sem cadastro.</span>
-  </div>
-  <ul class="feat">
-    <li data-r><b data-i18n="p.f1">Livro de casos</b><p data-i18n="p.f1d">O funil da sua clínica. A coluna de cada caso é calculada pelo servidor: é a etapa aberta mais atrasada dele.</p></li>
-    <li data-r style="--d:.05s"><b>Concierge</b><p data-i18n="p.f2d">A fila do que precisa de uma mão, com dono, prazo no relógio da clínica e nota de resolução.</p></li>
-    <li data-r style="--d:.1s"><b data-i18n="p.f3">Agenda</b><p data-i18n="p.f3d">Semana, dia e mês. Clique num horário e veja quem é e do que se trata: a linha que o agente escreveu ao marcar.</p></li>
-    <li data-r><b data-i18n="p.f4">Jornadas</b><p data-i18n="p.f4d">A conversa com o agente, o grafo de cada versão e a fila do que espera publicação.</p></li>
-    <li data-r style="--d:.05s"><b data-i18n="p.f5">Catálogo</b><p data-i18n="p.f5d">Como o paciente chama cada procedimento, e o que ele pediu que a clínica ainda não oferece. Nada entra sem aprovação.</p></li>
-    <li data-r style="--d:.1s"><b data-i18n="p.f6">Perfil e profissionais</b><p data-i18n="p.f6d">O que o agente sabe para atender. Editar cria rascunho; o atendimento só muda quando alguém publica.</p></li>
-  </ul>
-</div></section>
-
-<!-- ── 05 lgpd ─────────────────────────────────────────────────────── -->
-<section class="sec" id="lgpd"><div class="wrap">
-  <div class="sec-h">
-    <div data-r><p class="k" data-i18n="l.k">05 · LGPD</p><h2 data-i18n="l.t">Privacidade por construção, não por anexo.</h2></div>
-    <p data-r style="--d:.1s" data-i18n="l.p">Dado de saúde pede mais do que um celular pessoal oferece. Na Curo, quem pode ver o quê é regra do servidor, não boa vontade de quem clica, e cada acesso deixa rastro.</p>
-  </div>
-  <div class="lg2">
-    <ul class="gl" data-r>
-      <li><b data-i18n="l.1t">Toda leitura deixa rastro</b><p data-i18n="l.1d">Quem abriu qual cadastro, que campos viu e quando, numa trilha que não se edita nem se apaga.</p></li>
-      <li><b data-i18n="l.2t">Eliminação que alcança tudo (art. 18)</b><p data-i18n="l.2d">Quando o paciente pede, a eliminação chega à conversa, ao caso, às pendências e à lista de espera. Fica o registro do pedido, não o dado.</p></li>
-      <li><b data-i18n="l.3t">Ditado sem gravação</b><p data-i18n="l.3d">A voz vira texto para você revisar, e o áudio é descartado logo depois.</p></li>
-      <li><b data-i18n="l.4t">Só o dono muda o processo</b><p data-i18n="l.4d">Publicar uma jornada exige o dono da clínica, com segundo fator.</p></li>
-      <li><b data-i18n="l.5t">Dado pessoal fora do log técnico</b><p data-i18n="l.5d">Nome e telefone saem antes de qualquer evento técnico ser gravado.</p></li>
-    </ul>
-    <div class="au" data-r data-au>
-      <div class="au-h"><span data-i18n="l.ah">Trilha de auditoria · hoje</span><span>append-only</span></div>
-      <ol>
-        <li><span>10:21:04</span><span>recepcao@</span><span data-i18n="l.a1">abriu o cadastro</span><em data-i18n="l.a1d">Marta N. · telefone, nascimento</em></li>
-        <li><span>10:21:40</span><span>dono@</span><span data-i18n="l.a2">abriu o caso</span><em>939CE0</em></li>
-        <li><span>10:22:13</span><span>recepcao@</span><span data-i18n="l.a3">abriu um horário</span><em data-i18n="l.a3d">ter 17/11 · 14:30</em></li>
-        <li><span>10:24:55</span><span>recepcao@</span><span data-i18n="l.a4">listou pacientes</span><em data-i18n="l.a4d">filtro por nome · 12 nomes</em></li>
-        <li class="t"><span>10:31:02</span><span data-i18n="l.a5w">titular</span><span data-i18n="l.a5">pediu eliminação</span><em data-i18n="l.a5d">pelo WhatsApp</em></li>
-        <li class="x"><span>10:31:03</span><span>Curo</span><span data-i18n="l.a6">eliminou</span><em data-i18n="l.a6d">conversa, caso, pendências, lista de espera</em></li>
-      </ol>
-      <div class="au-f" data-i18n="l.af">Ilustração com dados fictícios. No produto, a trilha registra quem, o quê e quando; o porquê fica de fora de propósito.</div>
-    </div>
-  </div>
-</div></section>
-
-<!-- ── 06 faq ──────────────────────────────────────────────────────── -->
-<section class="sec" id="faq"><div class="wrap">
-  <div class="sec-h"><div data-r><p class="k" data-i18n="q.k">06 · Perguntas</p><h2 data-i18n="q.t">O que costuma preocupar antes de começar.</h2></div></div>
+<section class="sec" id="faq"><div class="wrap fqw">
+  <div data-r><p class="k" data-i18n="q.k">Perguntas</p><h2 data-i18n="q.t">Antes de começar.</h2></div>
   <div class="faq" data-r>
-    <details class="fq" open name="fq"><summary data-i18n="q.1t">Preciso desenhar o fluxo num editor?</summary><p data-i18n="q.1d">Não, e a ausência do editor é de propósito: arrastar caixinha é devolver à clínica o trabalho que a Curo existe para tirar dela. Você descreve conversando; o agente monta, o validador confere e o dono publica.</p></details>
-    <details class="fq" name="fq"><summary data-i18n="q.2t">E quando o processo da clínica muda?</summary><p data-i18n="q.2d">Você conversa de novo. A mudança vira uma versão nova, que passa pelo mesmo validador e pela mesma publicação. Quem já está no meio do caminho termina na versão em que começou.</p></details>
-    <details class="fq" name="fq"><summary data-i18n="q.3t">O agente pode sair do roteiro?</summary><p data-i18n="q.3d">Pode, quando o caso pede, e fica escrito que saiu e por quê. O que ele não decide sozinho é autorização, identidade, agenda e LGPD: essas regras moram no servidor, não no modelo.</p></details>
-    <details class="fq" name="fq"><summary data-i18n="q.4t">Sou dentista. Serve para mim?</summary><p data-i18n="q.4d">Serve. A jornada é dado da clínica, não código: um implante tem orientação, receita, retirada de pontos e prótese; uma cirurgia tem guia, sala e anestesista. A mesma Curo conduz as duas.</p></details>
-    <details class="fq" name="fq"><summary data-i18n="q.5t">E o meu WhatsApp pessoal?</summary><p data-i18n="q.5d">Volta a ser seu. O atendimento acontece num número próprio da clínica, com registro de tudo.</p></details>
-    <details class="fq" name="fq"><summary data-i18n="q.6t">Já tem clínica usando?</summary><p data-i18n="q.6d">A Curo está em piloto. Ainda não temos números medidos nem depoimentos para mostrar; quando tivermos, eles entram aqui, e não antes.</p></details>
-    <details class="fq" name="fq"><summary data-i18n="q.7t">E se eu quiser sair?</summary><p data-i18n="q.7d">O histórico dos seus pacientes é seu e sai com você, em formato aberto.</p></details>
+    <details class="fq" name="fq"><summary data-i18n="q.1t">Preciso desenhar o fluxo num editor?</summary><p data-i18n="q.1d">Não. Você descreve conversando; o agente monta, o validador confere e o dono publica.</p></details>
+    <details class="fq" name="fq"><summary data-i18n="q.2t">E quando o processo muda?</summary><p data-i18n="q.2d">Você conversa de novo e vira uma versão nova. Quem já está no caminho termina na versão em que começou.</p></details>
+    <details class="fq" name="fq"><summary data-i18n="q.3t">Sou dentista. Serve?</summary><p data-i18n="q.3d">Serve. A jornada é dado da clínica, não código: implante e cirurgia rodam na mesma Curo.</p></details>
+    <details class="fq" name="fq"><summary data-i18n="q.4t">O agente decide tudo sozinho?</summary><p data-i18n="q.4d">Não. Autorização, identidade, agenda e LGPD são regras do servidor, não do modelo.</p></details>
+    <details class="fq" name="fq"><summary data-i18n="q.5t">Já tem clínica usando?</summary><p data-i18n="q.5d">A Curo está em piloto. Números e depoimentos entram aqui quando forem medidos, e não antes.</p></details>
   </div>
 </div></section>
 
 <div class="wrap close" id="conversa">
-  <h2 data-r data-i18n="c.t">Você opera. A gente cuida do resto.</h2>
-  <p data-r style="--d:.08s" data-i18n="c.p">Vinte minutos de conversa sobre como a sua clínica funciona hoje. Se a Curo puder ajudar, a gente mostra como; se não puder, diz também.</p>
-  <div data-r style="--d:.14s"><a class="btn" data-wa href="https://wa.me/5571982725910" target="_blank" rel="noopener"><span data-i18n="c.cta">Falar no WhatsApp</span> <span aria-hidden="true">→</span></a><span class="cn" data-i18n="c.n">Respondemos no mesmo dia útil.</span></div>
+  <h2 data-r data-i18n="c2.t">Você opera. A gente cuida do resto.</h2>
+  <div data-r style="--d:.1s"><a class="btn" data-wa href="https://wa.me/5571982725910" target="_blank" rel="noopener"><span data-i18n="c2.cta">Conversar 20 minutos no WhatsApp</span> <span aria-hidden="true">→</span></a><span class="cn" data-i18n="c2.n">Respondemos no mesmo dia útil.</span></div>
 </div>
 </main>
 
@@ -748,84 +735,45 @@ function dm(d){return lang==="en"?MN[d.getMonth()]+" "+d.getDate():pad(d.getDate
 function wdm(d){return WD[lang][d.getDay()]+", "+dm(d);}
 function rel(n){return n===0?"D":"D"+(n>0?"+":"−")+Math.abs(n);}
 
-/* ── textos ─────────────────────────────────────────────────────── */
 var EN={
- "n.j":"Journeys","n.r":"Rescheduling","n.w":"WhatsApp","n.p":"Portal","n.l":"Privacy","n.cta":"Talk to us",
+ "n.j":"Journeys","n.r":"Rescheduling","n.w":"WhatsApp","n.p":"Portal","n.l":"Privacy","n.d":"Inside","n.cta":"Talk to us",
  "h.k":"For clinics, specialists and dentists",
  "h.t":"You describe it.<br>Curo runs it<b class=\"dot\">.</b>",
- "h.lead":"Tell us, in writing or out loud, how a patient moves through your clinic. Curo’s agent turns that into a journey, with steps, dependencies and deadlines, and walks every patient through it on WhatsApp, talking to the doctor, the hospital and the insurer. When a date changes, everything else rearranges itself.",
- "h.cta":"20-minute chat on WhatsApp","h.demo":"Open the demo portal →",
+ "h.lead":"The agent builds your clinic’s care journey and walks every patient through it on WhatsApp, with the doctor, the hospital and the insurer.",
+ "h.cta":"20-minute chat on WhatsApp","h.demo":"See inside ↓","h.k1":"step closed","h.k2":"fell with the date","h.k3":"undo task",
+ "a.k":"01 · Journeys by conversation","a.t":"You talk. The agent draws.","a.c":"Describe the process in writing or out loud. The agent builds steps, dependencies and deadlines, and the validator checks it before it goes live.",
+ "b.k":"02 · Rescheduling","b.t":"Date moved? The rest rearranges.","b.c":"Whatever was booked falls and becomes an undo task with an owner. Every later deadline moves with it.",
+ "c.k":"03 · One number","c.t":"Four parties, one conversation.","c.c":"Patient, doctor, hospital and insurer talk to the same WhatsApp, and every message moves the right case forward.",
+ "p.k":"04 · Clinic portal","p.t":"The shift handover.","p.c":"Which step each patient is at, what’s stuck, and what only a person can decide.","p.cta":"Open the demo portal →",
+ "p.tb1":"Case book","p.h1":"Case book","p.b1":"open","p.b2":"to undo","p.b3":"ready now",
+ "p.c1":"Pre-op","p.c1d":"2 to undo","p.c2":"Procedure","p.c3":"Post-op",
+ "p.k1":"ACL reconstruction · Dr. Tiago Brandão","p.k1w":"3 steps fell: undo work is open","p.k1r":"4 ready",
+ "p.k2":"Lumbar fusion · Dra. Paula Andrade","p.k2r":"1 ready","p.k2l":"due 2d ago · Nov 15",
+ "p.k4":"Knee arthroscopy · Dra. Paula Andrade","p.k4r":"1 ready","p.k4l":"due tomorrow · Nov 18",
+ "p.k5":"Shoulder arthroscopy · Dra. Paula Andrade","p.k5r":"2 ready","p.k5l":"due yesterday · Nov 16",
+ "p.q1":"pending","p.q2":"overdue","p.q3":"unowned",
+ "p.i1":"Due: Receive the pre-op tests","p.i1s":"Antônia Vilela · already taken","p.i2":"Due: Order the implant material from the hospital",
+ "p.i3":"Undo: Release the Nov 26 OR at the hospital","p.i3s":"Marta Nogueira · front desk","p.late":"overdue","p.undo":"undo",
+ "l.k":"05 · Privacy (LGPD)","l.t":"Privacy by construction.","l.c":"Who sees what is a server rule, not the goodwill of whoever clicks.",
+ "l.1":"Every read logged","l.1s":"who, what, when","l.2":"Deletion reaches everything","l.2s":"art. 18, in every copy","l.3":"Only owners publish","l.3s":"with a second factor",
+ "d.k":"06 · See inside","d.t":"The agent building a real journey.","d.c":"The open issues are the product’s own validator text. Then drag the surgery date.",
+ "d.n":"Staged, with fictional names. Each line’s reason is what the case engine writes.",
  "s.scr":"Journeys","s.rp":"↻ Replay","s.val":"Validator","s.send":"Send",
  "s.st1":"Draft","s.st2":"Validated","s.st3":"In review","s.st4":"Live",
  "s.lg1":"the agent runs it","s.lg2":"the team runs it","s.lg3":"knows how to undo itself",
- "s.note":"A staged demo with fictional names: the lines were written for this page. The open issues are the product’s own validator text, and the validator decides when a draft can go to review.",
- "s.next":"Now change the surgery date ↓",
- "w1.t":"You describe it","w1.d":"The way you’d explain it to a new receptionist: what comes before what, who does it, how long it takes. In writing or out loud; the audio becomes text and is thrown away.",
- "w2.t":"The agent builds, the validator checks","w2.d":"Every question the agent asks comes from an open validator issue: someone responsible that nobody declared, a deadline with no reference date, a booking that doesn’t know how to undo itself. The conversation ends when the list is empty.",
- "w3.t":"The owner publishes","w3.d":"Nothing goes live on its own. The clinic owner reviews and publishes, with a second factor, or sends it back with notes. Patients already on the way finish on the version they started.",
- "r.k":"02 · Rescheduling","r.t":"One date changes. The whole journey rearranges itself.",
- "r.p":"In a CRM, moving the surgery date moves a date. In Curo, the engine walks the journey: whatever was booked for the old day falls and becomes undo work with an owner, whatever depended on it goes back to waiting, and every deadline tied to the surgery moves with it. Drag the date and see.",
  "r.case":"ACL reconstruction · Dr. Tiago Brandão","r.date":"Surgery date","r.b1":"Postpone 1 week","r.b2":"Postpone 2 weeks","r.b3":"Start over",
- "r.l1":"closed","r.l5":"today, Nov 17","r.l2":"ready","r.l3":"upcoming","r.l4":"fell, needs undoing",
+ "r.l1":"closed","r.l2":"ready","r.l3":"upcoming","r.l4":"fell, needs undoing","r.l5":"today, Nov 17",
  "r.cgs":"on the desk now","r.cgl":"See the Concierge in the portal →",
- "r.note":"Example with fictional names. Each line’s reason is what the product’s case engine writes: “the procedure date changed after this step closed”, “a dependency fell”, “the deadline moved with the date”.",
- "w.k":"03 · One number","w.t":"Patient, doctor, hospital and insurer. One conversation.",
- "w.p":"Everyone talks to the same Curo WhatsApp number, and every message lands in the right case. The hospital’s reply closes the OR step; the doctor’s decision is on record; the patient’s question is answered with what the case already knows. Nobody has to chase anybody.",
- "w.p1":"Patient","w.p1d":"asks, and is told before asking","w.p2":"Doctor","w.p2d":"decides only what is theirs","w.p3":"Hospital","w.p3d":"OR, surgery notice, admission","w.p4":"Insurer","w.p4d":"authorization, deadline, denial",
- "w.h":"Case 939CE0 · Marta Nogueira","w.hs":"after rescheduling",
- "w.t1":"Hospital","w.s1":"Scheduling desk","w.m1":"Booking for Nov 26 cancelled. OR 3 confirmed for Thursday, Dec 10, 2pm.","w.c1a":"closed · Release the Nov 26 OR","w.c1b":"closed · OR booked",
- "w.s2":"to Dr. Tiago","w.m2":"Dr. Tiago, Marta’s surgery moved to Dec 10, 2pm, same OR. Shall we keep the same anesthetist?",
- "w.t3":"Doctor","w.m3":"Keep her. Go ahead and let her know.","w.c3":"decision recorded in the case",
- "w.t4":"Insurer","w.s4":"Authorizations","w.m4":"Previous authorization cancelled. New request for Dec 10 received and under review.","w.c4a":"closed · Cancel the authorization","w.c4b":"open · Authorization approved, due Dec 3",
- "w.t5":"Patient","w.m5":"I saw the date changed. Do I need to redo my tests?",
- "w.s6":"to Marta","w.m6":"No need: your tests are valid until February. Surgery is now Thursday, Dec 10, at 2pm. The day before, I’ll send you fasting times and when to arrive.","w.c6":"closed · Patient told the new date",
- "w.note":"A staged example with fictional names.",
- "p.k":"04 · Clinic portal","p.t":"Not a tool to operate. A shift handover.",
- "p.p":"The portal answers “how is each of my cases doing”, not “what do I do now”: which step each patient is at, what moved on its own, what got stuck, and what only a person can decide, with deadlines on the clinic’s clock.",
- "p.sd":"Clinic portal","p.dm":"Demo with fictional data","p.n1":"Cases","p.n3":"Schedule","p.n4":"Journeys","p.n5":"Clinic profile","p.n6":"Practitioners","p.n7":"Catalog",
- "p.tb1":"Case book","p.h1":"Case book","p.h1s":"Opened on November 17 · 7 open cases","p.b1":"open","p.b2":"to undo","p.b3":"ready now",
- "p.c1":"Pre-op","p.c1d":"2 to undo","p.c2":"Procedure","p.c3":"Post-op",
- "p.k1":"ACL reconstruction · Dr. Tiago Brandão","p.k1w":"3 steps fell: undo work is open","p.k1r":"4 ready","p.k1l":"due in 16d · Dec 3",
- "p.k2":"Lumbar fusion · Dra. Paula Andrade","p.k2r":"1 ready","p.k2l":"due 2d ago · Nov 15",
- "p.k3":"Forearm fixation · Dr. Tiago Brandão","p.k3r":"1 ready","p.k3l":"due in 2d · Nov 19",
- "p.k4":"Knee arthroscopy · Dra. Paula Andrade","p.k4r":"1 ready","p.k4l":"due tomorrow · Nov 18",
- "p.k5":"Shoulder arthroscopy · Dra. Paula Andrade","p.k5r":"2 ready","p.k5l":"due yesterday · Nov 16",
- "p.h2s":"The work the clock and the agent put on the clinic’s desk","p.q1":"pending","p.q2":"overdue","p.q3":"unowned",
- "p.i1":"Due: Receive the pre-op tests","p.i1s":"Antônia Vilela · case E08A21 · already taken",
- "p.i2":"Due: Order the implant material from the hospital","p.i2s":"Cecília Braga · case A81531",
- "p.i3":"Undo: Release the Nov 26 OR at the hospital","p.i3s":"Marta Nogueira · case 939CE0 · front desk",
- "p.i4":"Due: Issue the procedure invoice","p.i4s":"Rubens Kawamoto · case A266EE",
- "p.late":"overdue","p.undo":"undo",
- "p.cta":"Open the demo portal","p.ctan":"Fictional data. Runs entirely in your browser, no sign-up.",
- "p.f1":"Case book","p.f1d":"Your clinic’s funnel. Each case’s column is computed by the server: it’s the most overdue open step.",
- "p.f2d":"The queue of what needs a hand, with an owner, a deadline on the clinic’s clock and a resolution note.",
- "p.f3":"Schedule","p.f3d":"Week, day and month. Click a slot to see who it is and what it’s about: the line the agent wrote when booking.",
- "p.f4":"Journeys","p.f4d":"The conversation with the agent, the graph of each version, and the queue of what awaits publishing.",
- "p.f5":"Catalog","p.f5d":"What patients call each procedure, and what they asked for that the clinic doesn’t offer yet. Nothing goes in without approval.",
- "p.f6":"Profile and practitioners","p.f6d":"What the agent knows in order to answer. Editing creates a draft; service only changes when someone publishes.",
- "l.k":"05 · Privacy (LGPD)","l.t":"Privacy by construction, not as an appendix.",
- "l.p":"Health data deserves more than a personal phone offers. In Curo, who can see what is a server rule, not the goodwill of whoever clicks, and every access leaves a trace.",
- "l.1t":"Every read leaves a trace","l.1d":"Who opened which record, which fields they saw and when, in a trail that can’t be edited or erased.",
- "l.2t":"Deletion that reaches everything (art. 18)","l.2d":"When the patient asks, deletion reaches the conversation, the case, the open tasks and the waitlist. The request stays on record, not the data.",
- "l.3t":"Dictation without recording","l.3d":"Your voice becomes text for you to review, and the audio is discarded right after.",
- "l.4t":"Only the owner changes the process","l.4d":"Publishing a journey takes the clinic owner, with a second factor.",
- "l.5t":"Personal data kept out of technical logs","l.5d":"Names and phone numbers are stripped before any technical event is written.",
- "l.ah":"Audit trail · today","l.a1":"opened the record","l.a1d":"Marta N. · phone, date of birth","l.a2":"opened the case","l.a3":"opened a slot","l.a3d":"Tue Nov 17 · 2:30pm",
- "l.a4":"listed patients","l.a4d":"filter by name · 12 names","l.a5w":"data subject","l.a5":"asked for deletion","l.a5d":"via WhatsApp","l.a6":"deleted","l.a6d":"conversation, case, tasks, waitlist",
- "l.af":"Illustration with fictional data. In the product, the trail records who, what and when; the why is left out on purpose.",
- "q.k":"06 · Questions","q.t":"What usually worries people before starting.",
- "q.1t":"Do I need to draw the flow in an editor?","q.1d":"No, and the missing editor is deliberate: dragging boxes around hands the clinic back the very work Curo exists to take away. You describe it in conversation; the agent builds it, the validator checks it, the owner publishes it.",
- "q.2t":"What happens when the clinic’s process changes?","q.2d":"You talk again. The change becomes a new version that goes through the same validator and the same publishing. Patients already on the way finish on the version they started.",
- "q.3t":"Can the agent go off-script?","q.3d":"Yes, when the case calls for it, and it’s written down that it did and why. What it doesn’t decide on its own is authorization, identity, scheduling and privacy: those rules live on the server, not in the model.",
- "q.4t":"I’m a dentist. Is this for me?","q.4d":"Yes. The journey is clinic data, not code: an implant has instructions, a prescription, stitch removal and a prosthesis; a surgery has an authorization, an OR and an anesthetist. The same Curo runs both.",
- "q.5t":"What about my personal WhatsApp?","q.5d":"It’s yours again. Patient service happens on the clinic’s own number, with a record of everything.",
- "q.6t":"Is any clinic using it yet?","q.6d":"Curo is in pilot. We don’t have measured results or testimonials to show yet; when we do, they’ll go here, and not before.",
- "q.7t":"What if I want to leave?","q.7d":"Your patients’ history is yours and leaves with you, in an open format.",
- "c.t":"You operate. We handle the rest.","c.p":"Twenty minutes about how your clinic works today. If Curo can help, we’ll show you how; if it can’t, we’ll say so.",
- "c.cta":"Chat on WhatsApp","c.n":"We reply the same business day.",
+ "q.k":"Questions","q.t":"Before you start.",
+ "q.1t":"Do I need to draw the flow in an editor?","q.1d":"No. You describe it in conversation; the agent builds it, the validator checks it and the owner publishes it.",
+ "q.2t":"What if the process changes?","q.2d":"You talk again and it becomes a new version. Patients already on the way finish on the version they started.",
+ "q.3t":"I’m a dentist. Is this for me?","q.3d":"Yes. The journey is clinic data, not code: implants and surgery run on the same Curo.",
+ "q.4t":"Does the agent decide everything on its own?","q.4d":"No. Authorization, identity, scheduling and privacy are server rules, not the model’s.",
+ "q.5t":"Is any clinic using it yet?","q.5d":"Curo is in pilot. Results and testimonials go here once they’re measured, and not before.",
+ "c2.t":"You operate. We handle the rest.","c2.cta":"20-minute chat on WhatsApp","c2.n":"We reply the same business day.",
  "f.1":"Patient service and operations for clinics, specialists and dentists.","f.2":"Demo portal",
  "_title":"Curo — you describe the process, Curo runs every patient through it",
- "_desc":"Tell Curo how your clinic works and its agent builds the journey — steps, dependencies and deadlines — and walks every patient through it on WhatsApp, with the doctor, the hospital and the insurer.",
+ "_desc":"Tell Curo how your clinic works and its agent builds the care journey and walks every patient through it on WhatsApp, with the doctor, the hospital and the insurer.",
  "wa.msg":"Hi! I saw the Curo site and I’d like to talk about my clinic."
 };
 var PT={"wa.msg":"Olá! Vi o site da Curo e queria conversar sobre a minha clínica."};
@@ -962,7 +910,7 @@ function setMark(r,x,cls,label){
 /* ── o estudio ──────────────────────────────────────────────────── */
 var st=$("[data-studio]"),stS,cur="lca",tok=null,touched=false,stVis=true,loopT=null;
 var msgsEl=$("[data-msgs]"),valN=$("[data-valn]"),valL=$("[data-vall]"),comp=$("[data-comp]"),ph=$("[data-ph]");
-var shSheet=$("[data-st-sheet]"),stt=$$("[data-stt] li"),stNext=$("[data-stnext]");
+var shSheet=$("[data-st-sheet]"),stt=$$("[data-stt] li"),stNext=document.createElement("i");
 function g(sc,d){var f=function(v){return(v<0?-1:1)*Math.sqrt(Math.abs(v));};return 4+92*(f(d)-f(sc.lo))/(f(sc.hi)-f(sc.lo));}
 function setStt(n){stt.forEach(function(li,i){li.className=i<n?"done":(i===n?"cur":"");});}
 function phIdle(){comp.className="comp";ph.textContent=lang==="en"?"Describe a step or answer the agent…":"Descreva uma etapa ou responda ao agente…";}
@@ -979,7 +927,7 @@ function stRender(key){
   var who=m.w==="c"?L(sc.me):(m.w==="a"?(lang==="en"?"Curo agent":"Agente Curo"):(lang==="en"?"Published":"Publicada"));
   var meta=m.dict?(lang==="en"?"dictated · "+m.dict+" · transcribed, audio discarded":"ditado · "+m.dict+" · transcrito, áudio descartado"):L(m.meta);
   li.innerHTML='<div class="who"><i></i>'+who+'<time>'+m.tm+'</time></div><p>'+L(m.t)+'</p>'+(meta?'<div class="meta">'+meta+'</div>':"")+
-   (m.w==="s"&&key==="lca"?'<div class="meta"><a href="#remarcar">'+(lang==="en"?"Now change the surgery date ↓":"Agora mude a data da cirurgia ↓")+'</a></div>':"");
+   (m.w==="s"&&key==="lca"?'<div class="meta"><a href="#cascata">'+(lang==="en"?"Now change the surgery date ↓":"Agora mude a data da cirurgia ↓")+'</a></div>':"");
   msgsEl.appendChild(li);
  });
  // folha
@@ -1039,39 +987,39 @@ async function typing(tk,ms){
 }
 async function dictate(tk,m){
  comp.className="comp rec";var t0=Date.now(),secs=parseInt(m.dict.split(":")[1],10);
- var iv=setInterval(function(){var s=Math.min(secs,Math.round((Date.now()-t0)/1800*secs));ph.textContent=(lang==="en"?"Dictating · ":"Ditando · ")+"0:"+pad(s);},60);
- try{await sleep(1900,tk);}finally{clearInterval(iv);}
+ var iv=setInterval(function(){var s=Math.min(secs,Math.round((Date.now()-t0)/800*secs));ph.textContent=(lang==="en"?"Dictating · ":"Ditando · ")+"0:"+pad(s);},60);
+ try{await sleep(850,tk);}finally{clearInterval(iv);}
  ph.textContent=lang==="en"?"Transcribing…":"Transcrevendo…";
- await sleep(650,tk);phIdle();
+ await sleep(250,tk);phIdle();
 }
 async function typed(tk,m){
  comp.className="comp typed";ph.textContent=L(m.t);
- await sleep(1300,tk);phIdle();
+ await sleep(650,tk);phIdle();
 }
 async function play(key){
- if(tok)tok.dead=true;var tk=tok={dead:false};
+ stStarted=true;if(tok)tok.dead=true;var tk=tok={dead:false};
  clearTimeout(loopT);
  stRender(key);
  if(!MO){stFinal();return;}
  var sc=SC[key];
  try{
-  await sleep(700,tk);
+  await sleep(40,tk);
   await dictate(tk,sc.msgs[0]);msgOn(0);
-  await sleep(500,tk);await typing(tk,1500);msgOn(1);
-  for(var i=0;i<sc.steps.length;i++){rowOn(stS,i);await sleep(150,tk);}
+  await sleep(120,tk);await typing(tk,600);msgOn(1);
+  for(var i=0;i<sc.steps.length;i++){rowOn(stS,i);await sleep(65,tk);}
   setStt(0);
-  await sleep(700,tk);pendOn();
-  await sleep(600,tk);await typing(tk,1200);msgOn(2);
-  await sleep(1500,tk);await typed(tk,sc.msgs[3]);msgOn(3);
-  await sleep(500,tk);await typing(tk,1300);pendFix();setStt(1);
-  await sleep(450,tk);msgOn(4);setStt(2);
-  await sleep(1800,tk);msgOn(5);setStt(3);
+  await sleep(250,tk);pendOn();
+  await sleep(200,tk);await typing(tk,550);msgOn(2);
+  await sleep(700,tk);await typed(tk,sc.msgs[3]);msgOn(3);
+  await sleep(150,tk);await typing(tk,550);pendFix();setStt(1);
+  await sleep(250,tk);msgOn(4);setStt(2);
+  await sleep(900,tk);msgOn(5);setStt(3);
   if(key==="lca")stNext.classList.add("on");
   loopT=setTimeout(function next(){
    if(touched||tk.dead)return;
    if(!stVis||document.hidden){loopT=setTimeout(next,1500);return;}
    play(key==="lca"?"imp":"lca");
-  },9000);
+  },6000);
  }catch(e){}
 }
 $$(".tabs [data-scn]").forEach(function(b){b.addEventListener("click",function(){touched=true;play(b.dataset.scn);});});
@@ -1167,10 +1115,10 @@ async function cascade(){
  // primeiro os prazos andam; depois cai, uma por vez, o que tinha sido reservado para o dia antigo
  if(casBusy||cas.fellN)return;casBusy=true;
  cas.moved=true;casPaint(true);
- if(MO)await sleep(550);
+ if(MO)await sleep(300);
  for(var k=0;k<FX.length;k++){
   cas.fellN=k+1;casPaint();cgPaint(FX[k]);
-  if(MO)await sleep(520);
+  if(MO)await sleep(330);
  }
  casBusy=false;
 }
@@ -1183,41 +1131,287 @@ async function casAutoplay(){
  if(cas.started||!MO)return;
  var tk=casAuto={dead:false};
  try{
-  await sleep(1300,tk);
+  await sleep(200,tk);
   var from=diff(R0,cas.anchor),to=from+14;
-  for(var v=from+1;v<=to;v++){await sleep(85,tk);cas.anchor=add(R0,v);cas.started=true;casPaint();}
+  for(var v=from+1;v<=to;v++){await sleep(50,tk);cas.anchor=add(R0,v);cas.started=true;casPaint();}
   casAuto=null;
-  await sleep(350);cascade();
+  await sleep(150);cascade();
  }catch(e){}
 }
 
-/* ── whatsapp, auditoria, portal ────────────────────────────────── */
-var waBox=$("[data-wa-box]"),waDone=false;
-async function waPlay(){
- if(waDone)return;waDone=true;
- var who=$$(".who-l li"),items=$$(".wl li[data-i]");
- if(!MO){items.forEach(function(li){li.classList.add("on");});return;}
- for(var i=0;i<items.length;i++){
-  var li=items[i],p=li.dataset.p;
-  li.classList.add("on");
-  who.forEach(function(w){w.classList.toggle("on",w.dataset.p===p);});
-  await sleep(i===items.length-1?0:650);
- }
- setTimeout(function(){who.forEach(function(w){w.classList.remove("on");});},1600);
+/* ── as animacoes desenhadas ────────────────────────────────────────
+   Cada uma e uma funcao pura do tempo: render(t) desenha o quadro t (em segundos) do loop.
+   E isso que deixa o loop sem emenda, o reduced-motion num quadro fixo, e a gravacao do
+   video quadro a quadro (window.__vz) sem depender do relogio do navegador. */
+var C={w:"#FFFFFF",ink:"#101E28",ink2:"#2C4351",ink3:"#4A6170",line:"#E0E7EB",line2:"#B6C5CE",acc:"#6B1A22",accs:"#F5EBEC",
+ red:"#B02A0F",reds:"#F8E9E5",grn:"#275F44",grns:"#E4EEE8",brass:"#6F5511",soft:"#F2F5F7",dot:"#C2454F"};
+function E(p,tag,a,txt){var e=sv(tag,a||{});if(txt!=null)e.textContent=txt;p.appendChild(e);return e;}
+function cl(v,a,b){return v<a?a:v>b?b:v;}
+function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
+function ez(x){return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;}
+function bo(x){if(x<=0)return 0;if(x>=1)return 1;var c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);}
+function lerp(a,b,k){return a+(b-a)*k;}
+function rgb(c){return c.charAt(0)==="#"?[parseInt(c.substr(1,2),16),parseInt(c.substr(3,2),16),parseInt(c.substr(5,2),16)]:c.match(/\d+/g).map(Number);}
+function mix(a,b,k){if(k<=0)return a;if(k>=1)return b;var A=rgb(a),B=rgb(b);return"rgb("+A.map(function(v,i){return Math.round(v+(B[i]-v)*k);}).join(",")+")";}
+function kf(t,st){var c=st[0][1];for(var i=1;i<st.length;i++){var s=st[i];if(t>=s[0])c=s[1];else{if(t>s[0]-.22)return mix(c,s[1],(t-(s[0]-.22))/.22);break;}}return c;}
+var FS={W:[C.w,C.ink3],G:[C.grn,C.grn],R:[C.red,C.red],K:[C.ink,C.ink],A:[C.acc,C.acc],P:[C.reds,C.red],B:[C.brass,C.brass]};
+function nst(t,l){return[kf(t,l.map(function(s){return[s[0],FS[s[1]][0]];})),kf(t,l.map(function(s){return[s[0],FS[s[1]][1]];}))];}
+function at(e,a){for(var k in a)e.setAttribute(k,a[k]);}
+function scl(x,y,s){return"translate("+x+" "+y+") scale("+s+") translate("+(-x)+" "+(-y)+")";}
+function mkN(p,dia,label){var g=E(p,"g"),r=E(g,"rect",{width:20,height:20,"stroke-width":2});return{g:g,r:r,t:label!=null?E(g,"text",{"class":"vl"},label):null,dia:dia};}
+function setN(n,x,y,c,s,lo){s=s==null?1:s;
+ at(n.r,{x:x-10,y:y-10,fill:c[0],stroke:c[1],transform:(n.dia?"rotate(45 "+x+" "+y+") ":"")+(s!==1?scl(x,y,s):"")});
+ if(n.t)at(n.t,{x:x,y:y+32,opacity:lo==null?1:lo});}
+function epath(a,b){var x1=a.x+11,x2=b.x-11;if(Math.abs(a.y-b.y)<1)return"M"+x1+" "+a.y+"H"+x2;var m=(x1+x2)/2;return"M"+x1+" "+a.y+"C"+m+" "+a.y+" "+m+" "+b.y+" "+x2+" "+b.y;}
+function glyph(g,k){
+ if(k==="med")E(g,"path",{d:"M-6 0H6M0-6V6"});
+ else if(k==="hos")E(g,"path",{d:"M-5-7V7M5-7V7M-5 0H5"});
+ else if(k==="con"){E(g,"rect",{x:-9,y:-6.5,width:18,height:13,rx:2});E(g,"path",{d:"M-9-2H9M-5 3H0"});}
+ else if(k==="lab")E(g,"path",{d:"M-3-8V-2L-8 7H8L3-2V-8M-5-8H5"});
+ else if(k==="pac"){E(g,"circle",{cx:0,cy:-5,r:5.5});E(g,"path",{d:"M-10 11C-10 2 10 2 10 11"});}}
+function chip(p){var g=E(p,"g"),r=E(g,"rect",{rx:5,height:24,"stroke-width":1.5}),t=E(g,"text",{"class":"vc",y:17});return{g:g,r:r,t:t};}
+function bubble(p,txt,fill,stroke,cls){var g=E(p,"g"),r=E(g,"rect",{x:0,y:0,height:30,rx:15,fill:fill,stroke:stroke,"stroke-width":1.5}),t=E(g,"text",{x:13,y:20,"class":cls||"vbs"},txt);var w=Math.ceil(t.getComputedTextLength())+26;r.setAttribute("width",w);return{g:g,w:w};}
+
+/* hero: 8 s — pergunta, a Curo aciona as quatro frentes, a jornada fecha; muda a data, cai, desfaz, refecha */
+var HERO_D=8;
+function vizHero(svg){
+ svg.innerHTML="";svg.setAttribute("viewBox","0 0 560 520");
+ var R=E(svg,"g");
+ var lp=E(R,"path",{d:"M84 132H229",fill:"none","stroke-width":2});
+ var PT=[{y:42,l:{pt:"Médico",en:"Doctor"},g:"med",f:[.95,2.75,5.95]},{y:102,l:{pt:"Hospital",en:"Hospital"},g:"hos",f:[2.3,5.75]},
+  {y:162,l:{pt:"Convênio",en:"Insurer"},g:"con",f:[1.85,5.55]},{y:222,l:{pt:"Laboratório",en:"Lab"},g:"lab",f:[1.4]}];
+ PT.forEach(function(p){p.sp=E(R,"path",{d:"M295 132C352 132 346 "+p.y+" 401 "+p.y,fill:"none","stroke-width":2});p.len=p.sp.getTotalLength();});
+ var pc=E(R,"circle",{cx:56,cy:132,r:26,fill:C.w,"stroke-width":2});
+ var pg=E(R,"g",{transform:"translate(56 133)",fill:"none",stroke:C.ink,"stroke-width":2,"stroke-linecap":"round"});glyph(pg,"pac");
+ E(R,"text",{x:56,y:180,"class":"vl"},L({pt:"Paciente",en:"Patient"}));
+ var hp=E(R,"rect",{x:230,y:100,width:64,height:64,fill:"none",stroke:C.acc,"stroke-width":2});
+ E(R,"rect",{x:230,y:100,width:64,height:64,fill:C.ink});
+ E(R,"text",{x:256,y:139,"class":"vhub"},"Curo");E(R,"rect",{x:280.5,y:133.5,width:4.5,height:4.5,fill:C.dot});
+ PT.forEach(function(p){
+  p.c=E(R,"circle",{cx:420,cy:p.y,r:18,"stroke-width":2});
+  p.gl=E(R,"g",{transform:"translate(420 "+p.y+")",fill:"none","stroke-width":2.2,"stroke-linecap":"round","stroke-linejoin":"round"});glyph(p.gl,p.g);
+  E(R,"text",{x:446,y:p.y+5,"class":"vp"},L(p.l));
+  p.pk=E(R,"circle",{r:4.5,fill:C.acc});});
+ var pk0=E(R,"circle",{r:4.5,fill:C.acc});
+ var BG=E(R,"g");
+ var b1=bubble(BG,L({pt:"Vou operar o joelho",en:"Booking my knee surgery"}),C.w,C.line2,"vb"),b2=bubble(BG,L({pt:"Preciso mudar a data",en:"I need to change the date"}),C.w,C.line2,"vb");
+ [b1,b2].forEach(function(b){E(b.g,"path",{d:"M20 29L26 39L33 29",fill:C.w,stroke:C.line2,"stroke-width":1.5});E(b.g,"rect",{x:19.5,y:27,width:15,height:3.2,fill:C.w});});
+ // a jornada
+ var J=E(R,"g");
+ E(J,"rect",{x:.75,y:262.75,width:558.5,height:250.5,fill:C.w,stroke:C.line2,"stroke-width":1.5});
+ E(J,"rect",{x:0,y:262,width:3.5,height:252,fill:C.acc});
+ E(J,"text",{x:20,y:293,"class":"vk"},L({pt:"JORNADA · LCA",en:"JOURNEY · ACL"}));
+ for(var i=0;i<21;i++)E(J,"rect",{x:300+i*11.5+1,y:302,width:9.5,height:16,fill:C.line});
+ E(J,"text",{x:301,y:336,"class":"vm"},lang==="en"?"Nov":"nov");E(J,"text",{x:301+9*11.5,y:336,"class":"vm"},lang==="en"?"Dec":"dez");
+ var Dy=E(J,"g");
+ var sel=E(Dy,"rect",{y:299,width:11.5,height:22,fill:C.acc});
+ var ro=E(Dy,"text",{x:541,y:293,"class":"vr"});
+ var al=E(Dy,"line",{y1:340,y2:394,stroke:C.acc,"stroke-width":1.5,"stroke-dasharray":"4 4",opacity:.5});
+ var eg=E(Dy,"g",{fill:"none",stroke:C.line2,"stroke-width":1.6});
+ var NN=[{id:"ind",x0:46,x1:46,y:410,l:{pt:"Indicação",en:"Indication"},s:[[0,"W"],[1.1,"G"]]},
+  {id:"exa",x0:110,x1:110,y:410,l:{pt:"Exames",en:"Tests"},s:[[0,"W"],[1.55,"G"]]},
+  {id:"gui",x0:188,x1:222,y:360,l:{pt:"Guia",en:"Auth."},s:[[0,"W"],[2,"G"],[4.85,"R"],[6.25,"W"],[6.45,"G"]],k:0},
+  {id:"sal",x0:188,x1:222,y:410,l:{pt:"Sala",en:"OR"},s:[[0,"W"],[2.45,"G"],[4.91,"R"],[6.45,"W"],[6.65,"G"]],k:1},
+  {id:"ane",x0:188,x1:222,y:460,l:{pt:"Anestesia",en:"Anesth."},s:[[0,"W"],[2.9,"G"],[4.97,"R"],[6.65,"W"],[6.85,"G"]],k:2},
+  {id:"avi",x0:270,x1:308,y:410,l:{pt:"Aviso",en:"Notice"},s:[[0,"W"],[3.15,"K"],[4.97,"W"],[7.05,"K"]]},
+  {id:"cir",x0:342,x1:392,y:410,l:{pt:"Cirurgia",en:"Surgery"},s:[[0,"W"],[1.1,"A"]],dia:1},
+  {id:"d1",x0:412,x1:456,y:410,l:"D+1",s:[[0,"W"]]},
+  {id:"ret",x0:500,x1:526,y:410,l:{pt:"Retorno",en:"Follow-up"},s:[[0,"W"]]}];
+ var by={};NN.forEach(function(n){by[n.id]=n;});
+ var ED=[["ind","exa"],["exa","gui"],["exa","sal"],["exa","ane"],["gui","avi"],["sal","avi"],["ane","avi"],["avi","cir"],["cir","d1"],["d1","ret"]].map(function(e){return{a:by[e[0]],b:by[e[1]],p:E(eg,"path")};});
+ NN.forEach(function(n){n.n=mkN(Dy,n.dia,L(n.l));});
+ var CH=NN.filter(function(n){return n.k!=null;}).map(function(n){var c=chip(Dy);c.r.setAttribute("width",30);c.t.setAttribute("x",15);c.n=n;return c;});
+ var cur=E(Dy,"path",{d:"M0 0L0 16L4.5 12L7.5 19L10.5 17.8L7.6 11H13Z",fill:C.ink,stroke:C.w,"stroke-width":1.3,"stroke-linejoin":"round"});
+ function flash(t,fs){var k=0;fs.forEach(function(f){var v=t<f-.05||t>f+.7?0:t<f+.05?seg(t,f-.05,f+.05):t<f+.3?1:1-seg(t,f+.3,f+.7);k=Math.max(k,v);});return k;}
+ return function(t){
+  var dip=t<7.45?1:t<7.75?1-.92*seg(t,7.45,7.75):.08+.92*seg(t,7.75,8),tt=t>=7.75?0:t;
+  // bolhas
+  var up=ez(seg(tt,3.35,3.7)),k1=bo(seg(tt,0,.34)),k2=bo(seg(tt,3.42,3.76));
+  at(b1.g,{transform:"translate(14 "+(56-34*up)+") "+scl(0,38,k1),opacity:seg(tt,0,.12)*(1-up)});
+  at(b2.g,{transform:"translate(14 56) "+scl(0,38,k2),opacity:seg(tt,3.42,3.52)});
+  BG.setAttribute("opacity",dip);
+  // paciente -> Curo
+  var sends=[[.32,.75],[3.7,4.08]],pk=null,lk=0;
+  sends.forEach(function(s){if(tt>=s[0]&&tt<=s[1])pk=lp.getPointAtLength(ez(seg(tt,s[0],s[1]))*145);lk=Math.max(lk,tt>=s[0]-.05&&tt<=s[1]+.5?(tt<=s[1]?1:1-seg(tt,s[1],s[1]+.5)):0);});
+  at(pk0,{cx:pk?pk.x:0,cy:pk?pk.y:0,opacity:pk?1:0});
+  lp.setAttribute("stroke",mix(C.line2,C.acc,lk));pc.setAttribute("stroke",mix(C.ink3,C.acc,lk));
+  var hk=0;[.75,4.08].forEach(function(h){var p=seg(tt,h,h+.55);if(p>0&&p<1)hk=p;});
+  at(hp,{transform:scl(262,132,1+.5*hk),opacity:hk>0?(1-hk):0});
+  // as frentes
+  PT.forEach(function(p){
+   var k=flash(tt,p.f),q=null;
+   p.f.forEach(function(f){if(tt>=f-.38&&tt<=f)q=p.sp.getPointAtLength(ez(seg(tt,f-.38,f))*p.len);});
+   at(p.pk,{cx:q?q.x:0,cy:q?q.y:0,opacity:q?1:0});
+   at(p.c,{fill:mix(C.w,C.acc,k),stroke:mix(C.ink3,C.acc,k)});p.gl.setAttribute("stroke",mix(C.ink,C.w,k));
+   p.sp.setAttribute("stroke",mix(C.line2,C.acc,Math.max(k*.9,q?.9:0)));});
+  // calendario e o deslize
+  var P=ez(seg(tt,4.12,5.0)),ix=lerp(4,18,P),di=Math.round(ix);
+  at(sel,{x:300+ix*11.5});
+  ro.textContent=(lang==="en"?"Surgery · ":"Cirurgia · ")+(di<9?(lang==="en"?"Nov "+(22+di):(22+di)+" nov"):(lang==="en"?"Dec "+(di-8):(di-8)+" dez"));
+  var ck=tt<3.95?0:tt<4.1?seg(tt,3.95,4.1):tt<5.05?1:1-seg(tt,5.05,5.3);
+  at(cur,{transform:"translate("+(306+ix*11.5)+" 312)",opacity:ck});
+  NN.forEach(function(n){
+   n.x=lerp(n.x0,n.x1,P);
+   if(n.k!=null){var a=4.85+n.k*.06;if(tt>a&&tt<a+.32)n.x+=Math.sin((tt-a)*55)*3.2*(1-seg(tt,a,a+.32));}
+   setN(n.n,n.x,n.y,nst(tt,n.s));});
+  ED.forEach(function(e){e.p.setAttribute("d",epath(e.a,e.b));});
+  at(al,{x1:by.cir.x,x2:by.cir.x});
+  CH.forEach(function(c,i){
+   var a=5.05+i*.08,s=bo(seg(tt,a,a+.26)),rs=5.6+i*.2,k=seg(tt,rs-.15,rs);
+   at(c.g,{transform:"translate("+(c.n.x+16)+" "+(c.n.y-12)+") "+scl(0,12,s),opacity:s>0?1-seg(tt,6.3,6.6):0});
+   at(c.r,{fill:mix(C.reds,C.grns,k),stroke:mix(C.red,C.grn,k)});c.t.textContent=tt<rs-.07?"↺":"✓";c.t.setAttribute("fill",mix(C.red,C.grn,k));});
+  Dy.setAttribute("opacity",dip);
+ };
 }
-var auDone=false;
-async function auPlay(){
- if(auDone)return;auDone=true;
- var li=$$("[data-au] li");
- for(var i=0;i<li.length;i++){li[i].classList.add("on");if(MO)await sleep(i===3?900:420);}
+
+/* 01: a voz vira palavras, as palavras viram o grafo, o validador confere, vai ao ar — 7 s */
+function vizDescribe(svg){
+ svg.innerHTML="";svg.setAttribute("viewBox","0 0 640 330");
+ var R=E(svg,"g");
+ E(R,"circle",{cx:44,cy:150,r:26,fill:C.acc});
+ var mg=E(R,"g",{transform:"translate(44 150)",fill:"none",stroke:C.w,"stroke-width":2.2,"stroke-linecap":"round"});
+ E(mg,"rect",{x:-5,y:-12,width:10,height:16,rx:5});E(mg,"path",{d:"M-9-1a9 9 0 0 0 18 0M0 8v5"});
+ var BR=[];for(var i=0;i<13;i++)BR.push(E(R,"rect",{x:84+i*10,width:5,rx:2.5,fill:C.acc}));
+ var eg=E(R,"g",{fill:"none",stroke:C.line2,"stroke-width":1.8});
+ var W=[{id:"exa",x:330,y:150,l:{pt:"exames",en:"tests"},f:"B"},{id:"gui",x:400,y:90,l:{pt:"guia",en:"auth"},f:"W"},{id:"sal",x:400,y:210,l:{pt:"sala",en:"OR"},f:"B"},
+  {id:"avi",x:470,y:150,l:{pt:"aviso",en:"notice"},f:"W"},{id:"cir",x:540,y:150,l:{pt:"cirurgia",en:"surgery"},f:"A",dia:1},{id:"d1",x:608,y:150,l:"D+1",f:"B"}];
+ var by={};W.forEach(function(w,i){w.i=i;w.ts=.25+i*.36;by[w.id]=w;});
+ var ED=[["exa","gui"],["exa","sal"],["gui","avi"],["sal","avi"],["avi","cir"],["cir","d1"]].map(function(e){return{a:by[e[0]],b:by[e[1]],p:E(eg,"path",{d:epath(by[e[0]],by[e[1]]),pathLength:1,"stroke-dasharray":"1 1"})};});
+ W.forEach(function(w){w.n=mkN(R,w.dia,L(w.l));var b=bubble(R,L(w.l),C.w,C.line2);w.c=b;});
+ var badge=E(R,"g"),bR=E(badge,"rect",{x:-110,y:-17,width:220,height:34,rx:17,"stroke-width":1.5}),bT=E(badge,"text",{"class":"vc",y:6});
+ return function(t){
+  var dip=t<6.4?1:t<6.7?1-.92*seg(t,6.4,6.7):.08+.92*seg(t,6.7,7),tt=t>=6.7?0:t;
+  var amp=seg(tt,0,.12)*(1-seg(tt,2.5,2.9));
+  BR.forEach(function(b,i){var h=5+34*amp*Math.abs(Math.sin(tt*7.5+i*1.25))*(.55+.45*Math.abs(Math.cos(i*.7)));at(b,{y:150-h/2,height:h});});
+  W.forEach(function(w){
+   var p=ez(seg(tt,w.ts,w.ts+.6));
+   var x=lerp(198,w.x,p)-w.c.w/2,y=lerp(150,w.y,p)-15;
+   at(w.c.g,{transform:"translate("+x+" "+y+")",opacity:seg(tt,w.ts,w.ts+.08)*(1-seg(tt,w.ts+.5,w.ts+.66))*dip});
+   var s=bo(seg(tt,w.ts+.48,w.ts+.76)),pend=(w.id==="gui"||w.id==="avi")&&tt>=3.05&&tt<3.95;
+   var st=[[0,"W"]];if(pend)st=[[0,"P"]];else if(tt>=4.75)st=[[0,"W"],[4.95,w.f]];
+   setN(w.n,w.x,w.y,nst(tt,st),s,s);w.n.g.setAttribute("opacity",dip);});
+  ED.forEach(function(e){e.p.setAttribute("stroke-dashoffset",1-ez(seg(tt,e.b.ts+.6,e.b.ts+.95)));e.p.setAttribute("opacity",dip);});
+  var ph=tt<3.05?0:tt<3.95?1:tt<4.75?2:3,bs=bo(seg(tt,3.05,3.35)),q=[0,[C.reds,C.red,lang==="en"?"! 2 open issues":"! 2 pendências"],[C.grns,C.grn,lang==="en"?"✓ validated":"✓ validado"],[C.accs,C.acc,lang==="en"?"● live · v1":"● no ar · v1"]][ph];
+  at(badge,{transform:"translate(470 290) scale("+bs+")",opacity:ph?dip:0});
+  if(q){at(bR,{fill:q[0],stroke:q[1]});bT.textContent=q[2];bT.setAttribute("fill",q[1]);}
+ };
 }
+
+/* 02: a cascata — 7 s */
+function vizCascade(svg){
+ svg.innerHTML="";svg.setAttribute("viewBox","0 0 640 360");
+ var R=E(svg,"g");
+ var al=E(R,"line",{y1:62,y2:136,stroke:C.acc,"stroke-width":1.5,"stroke-dasharray":"4 4",opacity:.5});
+ var dl=E(R,"g"),dr=E(dl,"rect",{x:-44,y:-18,width:88,height:30,fill:C.acc}),dt=E(dl,"text",{"class":"vd",y:3});
+ var cur=E(R,"path",{d:"M0 0L0 16L4.5 12L7.5 19L10.5 17.8L7.6 11H13Z",fill:C.ink,stroke:C.w,"stroke-width":1.3});
+ var eg=E(R,"g",{fill:"none",stroke:C.line2,"stroke-width":1.7});
+ var NN=[{id:"exa",x0:44,x1:44,y:150,l:{pt:"Exames",en:"Tests"},s:[[0,"G"]]},
+  {id:"gui",x0:134,x1:184,y:96,l:{pt:"Guia",en:"Auth."},s:[[0,"G"],[1.1,"R"],[3.25,"W"],[3.45,"G"]],k:0,u:{pt:"guia",en:"auth."}},
+  {id:"sal",x0:134,x1:184,y:150,l:{pt:"Sala",en:"OR"},s:[[0,"G"],[1.16,"R"],[3.65,"W"],[3.85,"G"]],k:1,u:{pt:"sala",en:"OR"}},
+  {id:"ane",x0:134,x1:184,y:204,l:{pt:"Anestesia",en:"Anesth."},s:[[0,"G"],[1.22,"R"],[4.05,"W"],[4.25,"G"]],k:2,u:{pt:"anestesia",en:"anesth."}},
+  {id:"avi",x0:226,x1:282,y:150,l:{pt:"Aviso",en:"Notice"},s:[[0,"K"],[1.25,"W"],[4.5,"K"]]},
+  {id:"cir",x0:312,x1:380,y:150,l:{pt:"Cirurgia",en:"Surgery"},s:[[0,"A"]],dia:1},
+  {id:"d1",x0:384,x1:446,y:150,l:"D+1",s:[[0,"W"]]},
+  {id:"ret",x0:478,x1:546,y:150,l:{pt:"Retorno",en:"Follow-up"},s:[[0,"W"]]}];
+ var by={};NN.forEach(function(n){by[n.id]=n;});
+ var ED=[["exa","gui"],["exa","sal"],["exa","ane"],["gui","avi"],["sal","avi"],["ane","avi"],["avi","cir"],["cir","d1"],["d1","ret"]].map(function(e){return{a:by[e[0]],b:by[e[1]],p:E(eg,"path")};});
+ NN.forEach(function(n){n.n=mkN(R,n.dia,L(n.l));});
+ // a bandeja do Concierge
+ var TR=E(R,"g",{transform:"translate(330 262)"});
+ E(TR,"rect",{x:.75,y:.75,width:296,height:94,fill:"#F4F7F9",stroke:C.line2,"stroke-width":1.5});E(TR,"rect",{x:0,y:0,width:3.5,height:96,fill:C.acc});
+ E(TR,"text",{x:16,y:26,"class":"vt2"},"Concierge");var cnt=E(TR,"text",{x:282,y:27,"class":"vn"});
+ var U=NN.filter(function(n){return n.k!=null;}).map(function(n){
+  var c=chip(R),lab="↺ "+L(n.u);c.t.textContent=lab;var w=Math.ceil(c.t.getComputedTextLength())+20;c.r.setAttribute("width",w);c.t.setAttribute("x",w/2);
+  var row=E(TR,"g"),sq=E(row,"rect",{x:16,y:-6,width:10,height:10}),tx=E(row,"text",{x:34,y:3.5,"class":"vu"},(lang==="en"?"Undo: ":"Desfazer: ")+L(n.u));
+  return{n:n,c:c,w:w,row:row,sq:sq,tx:tx,y:44+n.k*19};});
+ return function(t){
+  var dip=t<6.35?1:t<6.65?1-.92*seg(t,6.35,6.65):.08+.92*seg(t,6.65,7),tt=t>=6.65?0:t;
+  var P=ez(seg(tt,.12,1.1));
+  NN.forEach(function(n){n.x=lerp(n.x0,n.x1,P);if(n.k!=null){var a=1.1+n.k*.06;if(tt>a&&tt<a+.3)n.x+=Math.sin((tt-a)*55)*3*(1-seg(tt,a,a+.3));}
+   setN(n.n,n.x,n.y,nst(tt,n.s));n.n.g.setAttribute("opacity",dip);});
+  ED.forEach(function(e){e.p.setAttribute("d",epath(e.a,e.b));e.p.setAttribute("opacity",dip);});
+  var cx=by.cir.x;at(al,{x1:cx,x2:cx,opacity:.5*dip});
+  var day=Math.round(lerp(26,40,P));dt.textContent=day<=30?(lang==="en"?"Nov "+day:day+"/11"):(lang==="en"?"Dec "+(day-30):pad(day-30)+"/12");
+  at(dl,{transform:"translate("+cx+" 40)",opacity:dip});
+  var ck=tt<.02?seg(tt,0,.02):tt<1.15?1:1-seg(tt,1.15,1.4);at(cur,{transform:"translate("+(cx+30)+" 34)",opacity:ck*dip});
+  var open=0;
+  U.forEach(function(u,i){
+   var a=1.32+i*.07,s=bo(seg(tt,a,a+.26)),fl=ez(seg(tt,1.95+i*.14,2.55+i*.14)),arr=tt>=2.55+i*.14,rs=3.05+i*.4,done=tt>=rs;
+   var x0=u.n.x+16,y0=u.n.y-12,x1=346,y1=262+u.y-12;
+   at(u.c.g,{transform:"translate("+lerp(x0,x1,fl)+" "+lerp(y0,y1,fl)+") "+scl(0,12,s),opacity:s>0&&!arr?dip:0});
+   at(u.c.r,{fill:C.reds,stroke:C.red});u.c.t.setAttribute("fill",C.red);
+   at(u.row,{transform:"translate(0 "+u.y+")",opacity:arr?dip:0});
+   var k=seg(tt,rs-.18,rs);u.sq.setAttribute("fill",mix(C.red,C.grn,k));u.tx.setAttribute("fill",mix(C.ink,C.ink3,k));
+   u.tx.setAttribute("text-decoration",done?"line-through":"none");
+   if(arr&&!done)open++;});
+  cnt.textContent=String(open);cnt.setAttribute("fill",open?C.red:C.grn);cnt.setAttribute("opacity",dip);
+ };
+}
+
+/* 03: quatro partes, um numero — 8 s */
+function vizHub(svg){
+ svg.innerHTML="";svg.setAttribute("viewBox","0 0 640 380");
+ var R=E(svg,"g");
+ var H={x:320,y:186};
+ var PS={pac:{x:92,y:84,l:{pt:"Paciente",en:"Patient"},g:"pac",ly:-40},med:{x:548,y:84,l:{pt:"Médico",en:"Doctor"},g:"med",ly:-40},
+  hos:{x:92,y:290,l:{pt:"Hospital",en:"Hospital"},g:"hos",ly:52},con:{x:548,y:290,l:{pt:"Convênio",en:"Insurer"},g:"con",ly:52}};
+ Object.keys(PS).forEach(function(k){var p=PS[k];p.ln=E(R,"line",{x1:p.x,y1:p.y,x2:H.x,y2:H.y,"stroke-width":2});});
+ E(R,"rect",{x:H.x-38,y:H.y-38,width:76,height:76,fill:C.ink});
+ E(R,"text",{x:H.x-3,y:H.y+8,"class":"vhub2"},"Curo");E(R,"rect",{x:H.x+23,y:H.y+1.5,width:5,height:5,fill:C.dot});
+ var SQ=[];for(var i=0;i<8;i++)SQ.push(E(R,"rect",{x:H.x-56+i*14.5,y:H.y+54,width:10,height:10,"stroke-width":1.5}));
+ Object.keys(PS).forEach(function(k){var p=PS[k];
+  p.c=E(R,"circle",{cx:p.x,cy:p.y,r:26,fill:C.w,"stroke-width":2});
+  p.gl=E(R,"g",{transform:"translate("+p.x+" "+(p.y+1)+")",fill:"none",stroke:C.ink,"stroke-width":2.3,"stroke-linecap":"round","stroke-linejoin":"round"});glyph(p.gl,p.g);
+  E(R,"text",{x:p.x,y:p.y+p.ly,"class":"vp2"},L(p.l));});
+ var M=[["hos",1,{pt:"sala ✓",en:"OR ✓"}],["med",0,{pt:"mesma equipe?",en:"same team?"}],["med",1,{pt:"mantém",en:"keep it"}],
+  ["con",1,{pt:"guia ✓",en:"auth ✓"}],["pac",1,{pt:"refazer exames?",en:"redo tests?"}],["pac",0,{pt:"não precisa",en:"no need"}]].map(function(m,i){
+  var inb=m[1]===1,b=bubble(R,L(m[2]),inb?C.w:C.ink,inb?C.line2:C.ink,inb?"vbs":"vbs vw");return{p:PS[m[0]],inb:inb,b:b,s:.1+i*1.2};});
+ return function(t){
+  var tt=t>=7.7?0:t,dip=t<7.5?1:t<7.7?1-.9*seg(t,7.5,7.7):.1+.9*seg(t,7.7,8);
+  var lit={},filled=3;
+  M.forEach(function(m,i){
+   var p=ez(seg(tt,m.s,m.s+.95)),a=m.inb?m.p:H,b=m.inb?H:m.p;p=m.inb?lerp(.16,.72,p):lerp(.28,.84,p);
+   var x=lerp(a.x,b.x,p),y=lerp(a.y,b.y,p);
+   var o=seg(tt,m.s,m.s+.1)*(1-seg(tt,m.s+.85,m.s+1.05));
+   at(m.b.g,{transform:"translate("+(x-m.b.w/2)+" "+(y-15)+")",opacity:o});
+   if(tt>=m.s&&tt<=m.s+1.05)lit[Object.keys(PS).filter(function(k){return PS[k]===m.p;})[0]]=1;
+   if(i!==1&&tt>=m.s+.95)filled++;});
+  Object.keys(PS).forEach(function(k){var p=PS[k],on=lit[k]?1:0;p.ln.setAttribute("stroke",on?C.acc:C.line2);at(p.c,{stroke:on?C.acc:C.ink3});});
+  SQ.forEach(function(s,i){var on=i<filled;at(s,{fill:on?C.grn:C.w,stroke:on?C.grn:C.ink3,opacity:i<3?1:dip});});
+ };
+}
+/* ── o agendador das animacoes desenhadas ───────────────────────────
+   Uma volta de requestAnimationFrame para todas; so roda o que esta na tela, e cada uma
+   recomeca do quadro zero quando entra (a primeira coisa se mexe no primeiro quadro). */
+var VZ={},raf=0,FREEZE=/[?&]freeze=1\b/.test(QS);
+var BUILD={hero:vizHero,describe:vizDescribe,cascade:vizCascade,hub:vizHub};
+var DUR={hero:8,describe:7,cascade:7,hub:8};
+var STILL={hero:5.4,describe:5.6,cascade:2.9,hub:4.2};
+function vzBuild(){
+ $$("[data-viz]").forEach(function(svg){
+  var k=svg.dataset.viz,o=VZ[k]||(VZ[k]={svg:svg,vis:false,t0:0});
+  o.r=BUILD[k](svg);
+  o.r(!MO||FREEZE?STILL[k]:(o.vis?((performance.now()-o.t0)/1000)%DUR[k]:0));
+ });
+}
+function tick(now){
+ raf=0;var any=false;
+ for(var k in VZ){var o=VZ[k];if(!o.vis)continue;any=true;o.r(((now-o.t0)/1000)%DUR[k]);}
+ if(any&&!document.hidden)raf=requestAnimationFrame(tick);
+}
+function kick(){if(!raf&&MO&&!FREEZE)raf=requestAnimationFrame(tick);}
+function vzShow(k,on){var o=VZ[k];if(!o||o.vis===on)return;o.vis=on;if(on){o.t0=performance.now();kick();}}
+document.addEventListener("visibilitychange",function(){if(!document.hidden)kick();});
+window.__vz=function(k,t){VZ[k].r(t);};
+
+/* ── portal ─────────────────────────────────────────────────────── */
 $$("[data-pt]").forEach(function(b){b.addEventListener("click",function(){
  $$("[data-pt]").forEach(function(x){x.setAttribute("aria-selected",String(x===b));});
  $$("[data-pp]").forEach(function(p){p.hidden=p.dataset.pp!==b.dataset.pt;});
- $$("[data-pside]").forEach(function(li){li.classList.toggle("cur",li.dataset.pside===b.dataset.pt);});
 });});
 
 /* ── idioma ─────────────────────────────────────────────────────── */
+var stStarted=false;
 function apply(l,keep){
  lang=l;var T=l==="en"?EN:PT;
  nodes.forEach(function(el){var v=T[el.dataset.i18n];if(v==null)v=PT[el.dataset.i18n];if(v!=null)el.innerHTML=v;});
@@ -1225,31 +1419,32 @@ function apply(l,keep){
  $$("[data-lang]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.lang===l));});
  $$("[data-wa]").forEach(function(a){a.href="https://wa.me/5571982725910?text="+encodeURIComponent(T["wa.msg"]);});
  if(!keep)try{localStorage.setItem("curo.lang",l);}catch(e){}
- if(stS)play(cur);
+ if(stS){if(stStarted)play(cur);else stRender(cur);}
  if(casS){casBuild();cgPaint();}
+ if(VZ.hero)vzBuild();
 }
 $$("[data-lang]").forEach(function(b){b.addEventListener("click",function(){if(b.dataset.lang!==lang){touched=true;apply(b.dataset.lang);}});});
 
 /* ── boot ───────────────────────────────────────────────────────── */
 var saved=null;try{saved=localStorage.getItem("curo.lang");}catch(e){}
-var first=QL||(saved==="en"?"en":"pt");
-apply(first,true);
+apply(QL||(saved==="en"?"en":"pt"),true);
+vzBuild();
+vzShow("hero",true);
+stRender("lca");if(!MO)play("lca");
 casBuild();cgPaint();
-play("lca");
 
 var rt;addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(function(){if(stS)rail(stS);if(casS)rail(casS);},120);});
 
 if(IO){
- var rev=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");rev.unobserve(e.target);}});},{rootMargin:"0px 0px -8% 0px",threshold:.08});
+ var rev=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");rev.unobserve(e.target);}});},{rootMargin:"0px 0px -6% 0px",threshold:.06});
  $$("[data-r]").forEach(function(el){rev.observe(el);});
+ var vo=new IntersectionObserver(function(es){es.forEach(function(e){vzShow(e.target.dataset.viz,e.isIntersecting);});},{threshold:.15});
+ $$("[data-viz]").forEach(function(s){vo.observe(s);});
  new IntersectionObserver(function(es){stVis=es[0].isIntersecting;},{threshold:.25}).observe(st);
  var once=function(el,fn,th){var o=new IntersectionObserver(function(es){if(es[0].isIntersecting){o.disconnect();fn();}},{threshold:th||.35});o.observe(el);};
+ once(st,function(){if(!stStarted){stStarted=true;play(cur);}},.3);
  once($("[data-cas]"),casAutoplay,.45);
- once(waBox,waPlay,.3);
- once($("[data-au]"),auPlay,.4);
-}else{
- $$(".wl li[data-i],[data-au] li").forEach(function(li){li.classList.add("on");});
-}
+}else{stStarted=true;play("lca");}
 })();
 </script>
 </html>

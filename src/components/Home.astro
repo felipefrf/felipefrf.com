@@ -377,18 +377,12 @@ const ext = (href: string) => (href.startsWith('http') ? { target: '_blank', rel
                 </div>
               )}
               {p.slug === 'curo' && (
-                <div class="browser">
-                  <div class="browser-bar" aria-hidden="true">
-                    <i />
-                    <i />
-                    <i />
-                    <span>felipefrf.com/curo/painel</span>
-                  </div>
-                  <video data-inview muted loop playsinline preload="none" poster="/media/curo-painel-poster.jpg" aria-label={t.curoVideo}>
-                    <source src="/media/curo-painel.webm" type="video/webm" />
-                    <source src="/media/curo-painel.mp4" type="video/mp4" />
+                <a class="curo-loop" href="/curo/" aria-label={t.curoVideo}>
+                  <video data-inview muted loop playsinline preload="none" poster={lang === 'pt' ? '/media/curo/hero.jpg' : '/media/curo/hero-en.jpg'} aria-label={t.curoVideo}>
+                    <source src={lang === 'pt' ? '/media/curo/hero.webm' : '/media/curo/hero-en.webm'} type="video/webm" />
+                    <source src={lang === 'pt' ? '/media/curo/hero.mp4' : '/media/curo/hero-en.mp4'} type="video/mp4" />
                   </video>
-                </div>
+                </a>
               )}
               {p.slug === 'flights' && (
                 <a class="browser flights-shot" href="/flights/" aria-label={t.routeAria}>
