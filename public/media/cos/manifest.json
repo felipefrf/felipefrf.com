@@ -1,0 +1,52 @@
+[
+  {
+    "slug": "aprovar-e-enviar",
+    "device": "phone",
+    "w": 780,
+    "h": 1688,
+    "title_en": "Nothing goes out without your yes",
+    "title_pt": "Nada sai sem o seu ok",
+    "body_en": "It drafts the WhatsApp reply and the e-mail the way you write. One tap on each, and you watch both go out.",
+    "body_pt": "Ele rascunha a resposta no WhatsApp e o e-mail do seu jeito. Um toque em cada, e você vê os dois saírem."
+  },
+  {
+    "slug": "abre-uma-lane",
+    "device": "phone",
+    "w": 780,
+    "h": 1688,
+    "title_en": "Ask once, it does the work",
+    "title_pt": "Peça uma vez, ele faz o trabalho",
+    "body_en": "One message and it starts a Claude Code session on the right project, follows it live and tells you when the pull request is ready.",
+    "body_pt": "Uma mensagem e ele abre uma sessão do Claude Code no projeto certo, acompanha ao vivo e avisa quando o pull request fica pronto."
+  },
+  {
+    "slug": "ui-na-conversa",
+    "device": "phone",
+    "w": 780,
+    "h": 1688,
+    "title_en": "Answers you can tap",
+    "title_pt": "Respostas que você toca",
+    "body_en": "When something needs a decision, it builds the screen for it right in the chat: the numbers, the options, its recommendation. One tap and it carries on.",
+    "body_pt": "Quando algo pede uma decisão, ele monta a tela na própria conversa: os números, as opções e a recomendação. Um toque e ele segue."
+  },
+  {
+    "slug": "aprende-com-voce",
+    "device": "phone",
+    "w": 780,
+    "h": 1688,
+    "title_en": "Correct it once",
+    "title_pt": "Corrija uma vez",
+    "body_en": "Say what's off and it rewrites, remembers why, and the next message already comes out right.",
+    "body_pt": "Diga o que não ficou bom: ele reescreve, guarda o porquê, e a próxima mensagem já sai certa."
+  },
+  {
+    "slug": "tambem-na-web",
+    "device": "web",
+    "w": 1440,
+    "h": 900,
+    "title_en": "Same assistant, phone or desk",
+    "title_pt": "O mesmo assistente, no celular ou no computador",
+    "body_en": "The same app runs natively on Android and on the web: answer from the queue, see the reply alongside, check what every session is doing.",
+    "body_pt": "O mesmo app roda nativo no Android e na web: responda da fila, veja a resposta ao lado e confira o que cada sessão está fazendo."
+  }
+]
