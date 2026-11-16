@@ -9,7 +9,7 @@ export const day = {
     heroCta: 'See the work',
     impact: [
       { value: 'Hexagon', label: 'Founding engineer, building Milo', detail: 'San Francisco · since Sep 2026' },
-      { value: '189,157', label: 'questions in MedAlvo, the prep company I run', detail: 'Profitable · web, Android, Claude and ChatGPT' },
+      { value: '189,157', label: 'questions in MedAlvo, the prep company I run', detail: 'Paying customers · web, Android, Claude and ChatGPT' },
       { value: '−95%', label: 'manual review of court notices at NG.CASH', detail: 'Production AI in a fintech, 2026' },
       { value: '1st', label: 'overall, gold medal', detail: 'Iberoamerican Physics Olympiad 2020' },
     ],
@@ -69,7 +69,7 @@ export const day = {
     heroCta: 'Ver o trabalho',
     impact: [
       { value: 'Hexagon', label: 'Founding engineer, construindo o Milo', detail: 'San Francisco · desde set 2026' },
-      { value: '189.157', label: 'questões no MedAlvo, a empresa de preparação que eu toco', detail: 'Lucrativa · web, Android, Claude e ChatGPT' },
+      { value: '189.157', label: 'questões no MedAlvo, a empresa de preparação que eu toco', detail: 'Clientes pagantes · web, Android, Claude e ChatGPT' },
       { value: '−95%', label: 'de revisão manual de intimações na NG.CASH', detail: 'IA em produção numa fintech, 2026' },
       { value: '1º', label: 'lugar geral, ouro', detail: 'Olimpíada Iberoamericana de Física 2020' },
     ],
