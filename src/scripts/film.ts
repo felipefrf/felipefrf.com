@@ -53,7 +53,7 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
       canvas.height = d.h;
       const frames: (HTMLImageElement | null)[] = new Array(N).fill(null);
       const name = (i: number) => `${base}${d.w}/${String(i + 1).padStart(4, '0')}.webp`;
-      let want = reduced ? N - 1 : 0;
+      let want = reduced ? N - 1 : Math.min(N - 1, +(root.dataset.filmFrom || 0));
       let shown = -1;
 
       const draw = () => {
@@ -143,7 +143,8 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
           const r = root.getBoundingClientRect();
           const total = r.height - window.innerHeight;
           const p = Math.min(1, Math.max(0, -r.top / Math.max(1, total)));
-          want = Math.round(p * (N - 1));
+          const from = Math.min(N - 1, +(root.dataset.filmFrom || 0));
+          want = Math.round(from + p * (N - 1 - from));
           if (bar) bar.style.transform = `scaleX(${p})`;
           const n = steps.length;
           steps.forEach((s, i) => s.classList.toggle('on', p >= i / n - 0.001 && (p < (i + 1) / n || i === n - 1)));

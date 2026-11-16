@@ -14,7 +14,7 @@ const { lang, id, compact = false } = Astro.props;
 const f = films[lang][id];
 ---
 
-<div class:list={['film', { compact }]} data-film={f.src} data-film-lang={lang} data-film-mode={compact ? 'loop' : 'scroll'}>
+<div class:list={['film', { compact }]} data-film={f.src} data-film-lang={lang} data-film-mode={compact ? 'loop' : 'scroll'} data-film-from={f.from ?? 0}>
   <div class="film-stage">
     <div class="film-copy">
       <p class="film-kicker mono">{f.kicker}</p>

@@ -4,6 +4,8 @@ import type { Lang } from '../i18n/ui';
 
 export type Film = {
   src: string;
+  /** first frame the scroll shows (skip an empty opening) */
+  from?: number;
   kicker: string;
   steps: { title: string; body: string }[];
   labels: Record<string, string>;
@@ -13,6 +15,7 @@ export const films: Record<Lang, Record<string, Film>> = {
   en: {
     hexagon: {
       src: '/film/hexagon/',
+      from: 20,
       kicker: 'What I build at Hexagon',
       steps: [
         { title: 'One agent per person', body: 'Not one shared bot: each person gets their own.' },
@@ -38,6 +41,7 @@ export const films: Record<Lang, Record<string, Film>> = {
   pt: {
     hexagon: {
       src: '/film/hexagon/',
+      from: 20,
       kicker: 'O que eu construo na Hexagon',
       steps: [
         { title: 'Um agente por pessoa', body: 'Nada de bot compartilhado: cada pessoa tem o seu.' },
