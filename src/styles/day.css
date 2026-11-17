@@ -1267,34 +1267,54 @@ html.day .toolchips li {
 
 /* ---------- the big scroll film: desktop layout ---------- */
 .film {
-  overflow-x: clip; /* the zoomed render never widens the page */
+  overflow-x: clip; /* nothing in the film ever widens the page */
+}
+/* the stage is as tall as its content and pins under the nav (film.ts sets
+   its exact top, centred when the screen has room), so there is no empty band
+   above the film or blank tail after the last step */
+.film:not(.compact) .film-stage {
+  height: auto;
+  top: 72px;
+  padding: 0;
+}
+/* the frames are rendered to fill the view (2560 or 1280 wide, picked by
+   film.ts), so no zoom. They are flattened over white, which lossy WebP keeps
+   exact (the page colour it cannot), and multiplied onto the page colour: where
+   the render is empty the film is exactly the page. The frames already fade
+   out at their edges, so no mask. */
+.film:not(.compact) {
+  --zoom: 1;
+}
+.film:not(.compact) .film-view canvas,
+.film:not(.compact) .film-poster {
+  transform: scale(var(--zoom));
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+html.day .film:not(.compact) .film-view {
+  background: var(--paper);
+  isolation: isolate;
+}
+html.day .film:not(.compact) .film-view canvas,
+html.day .film:not(.compact) .film-poster {
+  mix-blend-mode: multiply;
+}
+.film:not(.compact) .film-label {
+  left: calc(50% + (var(--x) - 50%) * var(--zoom));
+  top: calc(50% + (var(--y) - 50%) * var(--zoom));
+}
+/* the team label hangs below its anchor (the first person's feet), clear of the machines behind */
+.film-label.l-team {
+  transform: translate(-50%, 8px);
 }
 @media (min-width: 861px) and (min-aspect-ratio: 4/5) {
   .film:not(.compact) .film-stage {
-    /* the stage fills the screen and the render is as big as the screen allows,
-       so there is no dead band above or below it */
-    height: 100vh;
-    top: 0;
     align-items: center;
-    padding-top: 64px;
     grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
   }
   .film:not(.compact) .film-view {
-    width: min(100%, calc((100vh - 120px) * 1.6));
+    width: min(100%, calc((100vh - 110px) * 1.6));
     justify-self: center;
-  }
-  /* the renders leave air around the scene; on the big film, zoom into it and
-     keep the labels on their anchors (positions scaled about the centre) */
-  .film:not(.compact) {
-    --zoom: 1.32;
-  }
-  .film:not(.compact) .film-view canvas,
-  .film:not(.compact) .film-poster {
-    transform: scale(var(--zoom));
-  }
-  .film:not(.compact) .film-label {
-    left: calc(50% + (var(--x) - 50%) * var(--zoom));
-    top: calc(50% + (var(--y) - 50%) * var(--zoom));
   }
   .film:not(.compact) .film-copy {
     position: relative;
@@ -1302,23 +1322,24 @@ html.day .toolchips li {
   }
 }
 @media (max-width: 860px), (max-aspect-ratio: 4/5) {
-  /* phones and tall screens: the render on top, full width, one step of copy under it */
+  /* phones and tall screens: the render on top, full width, one step of copy
+     under it, pinned near the top; a shorter scroll track */
+  .film:not(.compact) {
+    height: 230vh;
+    /* the view bleeds to the screen edges (exactly the screen wide): no clip
+       at the page gutter, or the film and its labels get cut there */
+    overflow-x: visible;
+  }
   .film:not(.compact) .film-stage {
     grid-template-columns: 1fr;
-    align-content: center;
-    padding-top: 70px;
+    align-content: start;
+    gap: 10px;
   }
   .film:not(.compact) .film-view {
     width: calc(100% + 2 * var(--gutter));
     margin: 0 calc(-1 * var(--gutter));
   }
-  .film:not(.compact) .film-view canvas,
-  .film:not(.compact) .film-poster {
-    transform: scale(1.18);
-  }
   .film:not(.compact) .film-label {
-    left: calc(50% + (var(--x) - 50%) * 1.18);
-    top: calc(50% + (var(--y) - 50%) * 1.18);
     font-size: 9px;
     padding: 3px 6px;
   }

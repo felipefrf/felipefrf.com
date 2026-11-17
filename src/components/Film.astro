@@ -38,7 +38,7 @@ const f = films[lang][id];
       <canvas aria-hidden="true"></canvas>
       {
         Object.entries(f.labels).map(([k, v]) => (
-          <span class:list={['film-label mono', `l-${k}`]} data-film-label={k} aria-hidden="true">
+          <span class:list={['film-label mono', `l-${k}`]} data-film-label={k} data-short={f.labelsShort?.[k]} aria-hidden="true">
             {v && <small>{v}</small>}
             <b />
           </span>

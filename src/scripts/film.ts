@@ -6,6 +6,8 @@ type FilmData = {
   count: number;
   w: number;
   h: number;
+  /** frame widths rendered (folders under the film); absent: just `w` */
+  sizes?: number[];
   labels: Record<string, ([number, number] | null)[]>;
   meta?: { origin?: string; dest?: string; beyond?: string; direct?: number; found?: number; currency?: string };
 };
@@ -21,6 +23,9 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
   const steps = [...root.querySelectorAll<HTMLElement>('[data-film-step]')];
   const labels = new Map([...root.querySelectorAll<HTMLElement>('[data-film-label]')].map((el) => [el.dataset.filmLabel!, el]));
   const bar = root.querySelector<HTMLElement>('[data-film-bar]');
+  const stage = root.querySelector<HTMLElement>('.film-stage')!;
+  const view = root.querySelector<HTMLElement>('.film-view')!;
+  const copy = root.querySelector<HTMLElement>('.film-copy');
 
   fetch(base + 'film.json')
     .then((r) => r.json())
@@ -49,10 +54,50 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
           if (!text[id]) labels.delete(id), el.remove();
         }
       }
-      canvas.width = d.w;
-      canvas.height = d.h;
+      // the smallest rendered size that covers the canvas as displayed (CSS
+      // pixels x devicePixelRatio), else the largest there is
+      const sizes = (d.sizes?.length ? [...d.sizes] : [d.w]).sort((a, b) => a - b);
+      const shownW = canvas.getBoundingClientRect().width || view.clientWidth || d.w;
+      const need = shownW * (window.devicePixelRatio || 1);
+      const fw = sizes.find((s) => s >= need) ?? sizes[sizes.length - 1];
+      const fh = Math.round((fw * d.h) / d.w);
+      canvas.width = fw;
+      canvas.height = fh;
       const frames: (HTMLImageElement | null)[] = new Array(N).fill(null);
-      const name = (i: number) => `${base}${d.w}/${String(i + 1).padStart(4, '0')}.webp`;
+      const name = (i: number) => `${base}${fw}/${String(i + 1).padStart(4, '0')}.webp`;
+
+      // narrow screens get the short label text where there is one
+      const setTexts = () => {
+        const narrow = view.clientWidth < 560;
+        for (const el of labels.values()) {
+          const sm = el.querySelector('small');
+          if (!sm || !el.dataset.short) continue;
+          el.dataset.long ??= sm.textContent || '';
+          sm.textContent = narrow ? el.dataset.short : el.dataset.long;
+        }
+      };
+      setTexts();
+
+      // keep every label whole: inside the film (and the screen), clear of the copy column
+      const clamp = () => {
+        const on = [...labels.values()].filter((el) => el.classList.contains('on'));
+        if (!on.length) return;
+        on.forEach((el) => (el.style.translate = '0px 0px'));
+        const v = view.getBoundingClientRect();
+        let lo = Math.max(v.left, 0) + 6;
+        const hi = Math.min(v.right, document.documentElement.clientWidth) - 6;
+        if (copy) {
+          const c = copy.getBoundingClientRect();
+          // the copy column beside the film (desktop), not under it (phones)
+          if (c.width && c.right <= v.left + v.width / 2 && c.bottom > v.top && c.top < v.bottom) lo = Math.max(lo, c.right + 12);
+        }
+        const rects = on.map((el) => el.getBoundingClientRect());
+        on.forEach((el, i) => {
+          const r = rects[i];
+          const dx = r.left < lo ? lo - r.left : r.right > hi ? hi - r.right : 0;
+          el.style.translate = `${dx.toFixed(1)}px 0px`;
+        });
+      };
       let want = reduced ? N - 1 : Math.min(N - 1, +(root.dataset.filmFrom || 0));
       let shown = -1;
 
@@ -65,7 +110,7 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
         }
         const img = frames[k];
         if (img && k !== shown) {
-          ctx.drawImage(img, 0, 0, d.w, d.h);
+          ctx.drawImage(img, 0, 0, fw, fh);
           shown = k;
         }
         for (const [id, el] of labels) {
@@ -76,6 +121,7 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
             el.classList.add('on');
           } else el.classList.remove('on');
         }
+        clamp();
       };
 
       // load coarse first (every 8th), then fill in, so scrubbing works at once
@@ -136,13 +182,27 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
         relayout();
         return;
       }
+      // the stage is as tall as its content and pins under the nav, centred
+      // when the screen has room; the film plays while it is pinned
+      let pinTop = 0;
+      let stageH = 0;
+      const measure = () => {
+        stageH = stage.offsetHeight;
+        // side by side: centred in the screen; stacked (phones, tall screens):
+        // right under the nav, so the film is not adrift in an empty screen
+        const stacked = !!copy && copy.getBoundingClientRect().top >= view.getBoundingClientRect().bottom - 1;
+        pinTop = stacked ? 72 : Math.max(72, Math.round((window.innerHeight - stageH) / 2));
+        stage.style.top = pinTop + 'px';
+        setTexts();
+      };
+      measure();
       let raf = 0;
       const onScroll = () => {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
           const r = root.getBoundingClientRect();
-          const total = r.height - window.innerHeight;
-          const p = Math.min(1, Math.max(0, -r.top / Math.max(1, total)));
+          const total = r.height - stageH;
+          const p = Math.min(1, Math.max(0, (pinTop - r.top) / Math.max(1, total)));
           const from = Math.min(N - 1, +(root.dataset.filmFrom || 0));
           want = Math.round(from + p * (N - 1 - from));
           if (bar) bar.style.transform = `scaleX(${p})`;
@@ -152,7 +212,10 @@ export function startFilm(root: HTMLElement, reduced: boolean) {
         });
       };
       addEventListener('scroll', onScroll, { passive: true });
-      addEventListener('resize', onScroll);
+      addEventListener('resize', () => {
+        measure();
+        onScroll();
+      });
       onScroll();
     })
     .catch(() => {

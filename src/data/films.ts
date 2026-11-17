@@ -9,13 +9,15 @@ export type Film = {
   kicker: string;
   steps: { title: string; body: string }[];
   labels: Record<string, string>;
+  /** shorter label texts for narrow screens */
+  labelsShort?: Record<string, string>;
 };
 
 export const films: Record<Lang, Record<string, Film>> = {
   en: {
     hexagon: {
       src: '/film/hexagon/',
-      from: 20,
+      from: 14,
       kicker: 'What I build at Hexagon',
       steps: [
         { title: 'One agent per person', body: 'Not one shared bot: each person gets their own.' },
@@ -25,6 +27,7 @@ export const films: Record<Lang, Record<string, Film>> = {
         { title: 'Nothing ships untested', body: 'Real production cases replayed before every release.' },
       ],
       labels: { team: 'Each person', machine: 'Their own machine', channels: 'Slack · WhatsApp · Teams · Chat', vault: 'Vault', tests: 'Real cases, replayed' },
+      labelsShort: { machine: 'Own machine', channels: 'Slack · Teams · …', tests: 'Real cases' },
     },
     flights: {
       src: '/film/flights/',
@@ -41,7 +44,7 @@ export const films: Record<Lang, Record<string, Film>> = {
   pt: {
     hexagon: {
       src: '/film/hexagon/',
-      from: 20,
+      from: 14,
       kicker: 'O que eu construo na Hexagon',
       steps: [
         { title: 'Um agente por pessoa', body: 'Nada de bot compartilhado: cada pessoa tem o seu.' },
@@ -51,6 +54,7 @@ export const films: Record<Lang, Record<string, Film>> = {
         { title: 'Nada sai sem teste', body: 'Casos reais de produção repetidos antes de cada versão.' },
       ],
       labels: { team: 'Cada pessoa', machine: 'A própria máquina', channels: 'Slack · WhatsApp · Teams · Chat', vault: 'Cofre', tests: 'Casos reais repetidos' },
+      labelsShort: { machine: 'Própria máquina', channels: 'Slack · Teams · …', tests: 'Casos reais' },
     },
     flights: {
       src: '/film/flights/',
