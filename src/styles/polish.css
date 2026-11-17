@@ -45,3 +45,10 @@
     font-size: clamp(30px, 8.5vw, 44px);
   }
 }
+
+/* fair mosaic: crop toward the top so faces stay in frame */
+html.day .fair-mosaic .m2 { object-position: 50% 8%; }
+html.day .fair-mosaic .m3 { object-position: 50% 12%; }
+html.day .fair-mosaic .m4 { object-position: 50% 10%; }
+html.day .fair-mosaic .m5 { object-position: 50% 4%; }
+html.day .fair-mosaic .m0 { object-position: 50% 30%; }
