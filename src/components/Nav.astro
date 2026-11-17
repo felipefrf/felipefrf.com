@@ -23,7 +23,15 @@ const t = ui[lang];
       <img src="/favicon.svg" alt="" width="26" height="26" />
       <span>{brand}</span>
     </a>
-    <ul class="nav-links">
+    {
+      links.length > 0 && (
+        <button class="nav-menu" type="button" aria-expanded="false" aria-controls="nav-links" data-nav-menu>
+          <i aria-hidden="true" />
+          <span class="sr-only">Menu</span>
+        </button>
+      )
+    }
+    <ul class="nav-links" id="nav-links">
       {
         links.map((l) => (
           <li>

@@ -1267,34 +1267,50 @@ html.day .toolchips li {
 
 /* ---------- the big scroll film: desktop layout ---------- */
 .film {
-  overflow-x: clip; /* the zoomed render never widens the page */
+  overflow-x: clip; /* nothing in the film ever widens the page */
+}
+/* the stage is as tall as its content and pins under the nav (film.ts sets
+   its exact top, centred when the screen has room), so there is no empty band
+   above the film or blank tail after the last step */
+.film:not(.compact) .film-stage {
+  height: auto;
+  top: 72px;
+  padding: 0;
+}
+/* the frames are rendered to fill the view (2560 or 1280 wide, picked by
+   film.ts), so no zoom. They are flattened over white, which lossy WebP keeps
+   exact (the page colour it cannot), and multiplied onto the page colour: where
+   the render is empty the film is exactly the page. The frames already fade
+   out at their edges, so no mask. */
+.film:not(.compact) {
+  --zoom: 1;
+}
+.film:not(.compact) .film-view canvas,
+.film:not(.compact) .film-poster {
+  transform: scale(var(--zoom));
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+html.day .film:not(.compact) .film-view {
+  background: var(--paper);
+  isolation: isolate;
+}
+html.day .film:not(.compact) .film-view canvas,
+html.day .film:not(.compact) .film-poster {
+  mix-blend-mode: multiply;
+}
+.film:not(.compact) .film-label {
+  left: calc(50% + (var(--x) - 50%) * var(--zoom));
+  top: calc(50% + (var(--y) - 50%) * var(--zoom));
 }
 @media (min-width: 861px) and (min-aspect-ratio: 4/5) {
   .film:not(.compact) .film-stage {
-    /* the stage fills the screen and the render is as big as the screen allows,
-       so there is no dead band above or below it */
-    height: 100vh;
-    top: 0;
     align-items: center;
-    padding-top: 64px;
     grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
   }
   .film:not(.compact) .film-view {
-    width: min(100%, calc((100vh - 120px) * 1.6));
+    width: min(100%, calc((100vh - 110px) * 1.6));
     justify-self: center;
-  }
-  /* the renders leave air around the scene; on the big film, zoom into it and
-     keep the labels on their anchors (positions scaled about the centre) */
-  .film:not(.compact) {
-    --zoom: 1.32;
-  }
-  .film:not(.compact) .film-view canvas,
-  .film:not(.compact) .film-poster {
-    transform: scale(var(--zoom));
-  }
-  .film:not(.compact) .film-label {
-    left: calc(50% + (var(--x) - 50%) * var(--zoom));
-    top: calc(50% + (var(--y) - 50%) * var(--zoom));
   }
   .film:not(.compact) .film-copy {
     position: relative;
@@ -1302,23 +1318,21 @@ html.day .toolchips li {
   }
 }
 @media (max-width: 860px), (max-aspect-ratio: 4/5) {
-  /* phones and tall screens: the render on top, full width, one step of copy under it */
+  /* phones and tall screens: the render on top, full width, one step of copy
+     under it, pinned near the top; a shorter scroll track */
+  .film:not(.compact) {
+    height: 230vh;
+  }
   .film:not(.compact) .film-stage {
     grid-template-columns: 1fr;
-    align-content: center;
-    padding-top: 70px;
+    align-content: start;
+    gap: 10px;
   }
   .film:not(.compact) .film-view {
     width: calc(100% + 2 * var(--gutter));
     margin: 0 calc(-1 * var(--gutter));
   }
-  .film:not(.compact) .film-view canvas,
-  .film:not(.compact) .film-poster {
-    transform: scale(1.18);
-  }
   .film:not(.compact) .film-label {
-    left: calc(50% + (var(--x) - 50%) * 1.18);
-    top: calc(50% + (var(--y) - 50%) * 1.18);
     font-size: 9px;
     padding: 3px 6px;
   }
@@ -1596,4 +1610,101 @@ html.day .mcp-chat {
   letter-spacing: -0.02em;
   color: var(--ink);
   font-size: 15px;
+}
+
+/* ---------- phones: a menu for the sections ---------- */
+.nav-menu {
+  display: none;
+}
+@media (max-width: 820px) {
+  .nav-menu {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    margin-left: auto;
+    margin-right: 6px;
+    border: 1px solid var(--rule-2);
+    border-radius: 50%;
+    background: var(--card);
+    cursor: pointer;
+  }
+  .nav-menu i,
+  .nav-menu i::before,
+  .nav-menu i::after {
+    display: block;
+    width: 14px;
+    height: 1.5px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.3s var(--ease), opacity 0.2s;
+  }
+  .nav-menu i {
+    position: relative;
+  }
+  .nav-menu i::before,
+  .nav-menu i::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+  .nav-menu i::before { top: -5px; }
+  .nav-menu i::after { top: 5px; }
+  .nav.menu-open .nav-menu i { background: transparent; }
+  .nav.menu-open .nav-menu i::before { transform: translateY(5px) rotate(45deg); }
+  .nav.menu-open .nav-menu i::after { transform: translateY(-5px) rotate(-45deg); }
+  html.day .nav.menu-open .nav-links {
+    display: grid;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: var(--gutter);
+    right: var(--gutter);
+    margin: 0;
+    padding: 8px;
+    gap: 2px;
+    border: 1px solid var(--rule-2);
+    border-radius: 20px;
+    background: rgba(252, 252, 250, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 24px 50px -24px rgba(14, 15, 17, 0.35);
+    animation: menu-in 0.25s var(--ease);
+  }
+  html.day .nav.menu-open .nav-links a {
+    padding: 12px 14px;
+    font-size: 17px;
+    border-radius: 12px;
+  }
+  html.day .lang-switch {
+    margin-left: 0;
+  }
+}
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+html.day .nav-pill {
+  position: relative;
+}
+@media (max-width: 820px) {
+  html.day .nav.menu-open .nav-links {
+    left: 0;
+    right: 0;
+  }
+}
+@media (max-width: 440px) {
+  html.day .brand span {
+    display: none;
+  }
+  .nav-menu {
+    margin-left: auto;
+  }
 }

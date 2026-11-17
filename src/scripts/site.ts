@@ -269,3 +269,17 @@ document.querySelectorAll<HTMLAnchorElement>('[data-set-lang]').forEach((a) => {
   });
 });
 
+
+// ---------- phones: the section links open from a menu button ----------
+const menuBtn = document.querySelector<HTMLButtonElement>('[data-nav-menu]');
+const navEl = document.getElementById('nav');
+if (menuBtn && navEl) {
+  const set = (open: boolean) => {
+    navEl.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+  };
+  menuBtn.addEventListener('click', () => set(!navEl.classList.contains('menu-open')));
+  navEl.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => set(false)));
+  addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
+  addEventListener('scroll', () => navEl.classList.contains('menu-open') && scrollY > 0 && set(false), { passive: true });
+}
