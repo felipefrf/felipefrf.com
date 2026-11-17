@@ -1,0 +1,24 @@
+/* Small finishing touches kept apart from day.css (which the film work edits). */
+
+/* phones: desktop recordings carry a hint that a tap opens them full screen */
+.sc-item.tap-zoom {
+  cursor: zoom-in;
+}
+.sc-item.tap-zoom .browser {
+  position: relative;
+}
+.sc-item.tap-zoom .browser::after {
+  content: '⤢';
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(14, 15, 17, 0.78);
+  color: #fff;
+  font-size: 16px;
+  pointer-events: none;
+}

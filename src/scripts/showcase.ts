@@ -78,3 +78,19 @@ export function startShowcase(root: HTMLElement, reduced: boolean) {
   ).observe(root);
   if (reduced) steps.forEach((s) => s.classList.add('open'));
 }
+
+// On phones a desktop recording is too small to read: tapping it opens the
+// clip full screen (iOS uses the native player).
+if (matchMedia('(max-width: 820px)').matches) {
+  document.querySelectorAll<HTMLElement>('[data-showcase] .sc-item.is-web').forEach((item) => {
+    const v = item.querySelector<HTMLVideoElement>('video');
+    if (!v) return;
+    item.classList.add('tap-zoom');
+    item.addEventListener('click', () => {
+      const anyV = v as HTMLVideoElement & { webkitEnterFullscreen?: () => void };
+      if (v.requestFullscreen) v.requestFullscreen().catch(() => anyV.webkitEnterFullscreen?.());
+      else anyV.webkitEnterFullscreen?.();
+      v.play().catch(() => {});
+    });
+  });
+}

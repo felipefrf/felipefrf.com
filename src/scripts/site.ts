@@ -142,7 +142,7 @@ function initHandwriting(el: HTMLElement) {
     if (replay) replay.hidden = true;
     el.classList.add('hw-on', 'hw-writing');
     grid();
-    const speed = 1.15; // source px per ms
+    const speed = 2.6; // source px per ms: the page fills in a few seconds
     let i = 0;
     let x = lines[0].x0;
     let last = performance.now();
@@ -169,7 +169,7 @@ function initHandwriting(el: HTMLElement) {
             return;
           }
           x = lines[i].x0;
-          pauseUntil = t + 200;
+          pauseUntil = t + 80;
         }
       }
       raf = requestAnimationFrame(step);
@@ -187,7 +187,7 @@ function initHandwriting(el: HTMLElement) {
           if (!e.isIntersecting && played && !el.classList.contains('hw-writing')) played = false;
         }
       },
-      { threshold: 0.35 },
+      { threshold: 0.15 },
     );
     hwIO.observe(el);
   };
